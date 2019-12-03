@@ -35,25 +35,11 @@
 	<script src="/js/slick/slick.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="js/script.js"></script>
-
 	<script>
 		var socket = io.connect('http://localhost:8000');
-		
 		socket.emit('login_client', {
-			msg: "Client connected !"
+			msg: "Browser is up !"
 		});
-
-  		socket.on('refreshPlayersCookie', function(data) {
-			logPlayer(true);
-		});
-		
-		function get_rte_key() { 
-				return "<%=config.api_tokens.rte.key %>" 
-			};
-			function get_atmo_key() { 
-				return "<%=config.api_tokens.atmo.key %>" 
-			};
-	
 	</script>
 	
 </body>

@@ -6,6 +6,7 @@ const conf = require('./config/config.json');
 
 var http = require('http').Server(app); //
 var io = require('socket.io')(http);
+var getJSON = require('get-json');
 
 // view engine setup and static routes
 app.set('view engine', 'ejs');
@@ -27,13 +28,13 @@ app.all('/', function (req, res, next) {
 
 // GET method route
 app.get('/', function (req, res) {
-  res.render('index', { config: conf});
+  res.render('index');
   //res.send('GET request to the homepage');
 });
 
 // POST method route
 app.post('/', function (req, res) {
-  res.render('index', { config: conf});
+  res.render('index');
   // res.send('POST request to the homepage');
 });
 
@@ -49,11 +50,20 @@ io.on('connection', function (socket) {
 
   socket.data = {};
   
-  socket.on('login_client', function(){
-    console.log('Browser is ready !')
+  socket.on('login_client', function(data){
+    console.log(data.msg);
   });
 
-	socket.on('get_atmo_data', function() {
+	socket.on('ask_for_atmo_data', function(send_response) {
+    var api_response = {};
+
+    getJSON( conf.api_tokens.atmo.url + conf.api_tokens.atmo.key )
+    .then(function(api_response) {
+      // socket.emit('get_atmo_data', { data: api_response });
+      send_response(api_response);
+    }).catch(function(error) {
+      console.log(error);
+    });
 
 	});
 });

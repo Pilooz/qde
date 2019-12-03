@@ -234,7 +234,7 @@ function init(callback){
 			get_rte_api = function(){
 
 				var myHeaders = new Headers();
-				myHeaders.append("Authorization", 'Basic '+btoa(get_rte_key()));
+				myHeaders.append("Authorization", 'Basic '+btoa("toto"));
 				
 				fetch("https://digital.iservices.rte-france.com/token/oauth/", {
 				    credentials: "include",
@@ -300,28 +300,31 @@ function init(callback){
 
 			}
 
+			/*----------------------------------------------------------------
+				Socket de récupération des données de qualité de l'air
+				chez ATMO
+			----------------------------------------------------------------*/
 			get_atmo_api = function(){
-
-
-				$.getJSON("http://api.atmo-aura.fr/communes/69123/indices?api_token=" + get_atmo_key(),function(data,index){
-						 pll_d = data.indices.data[1];
-						 pll_date = pll_d.date;
-						 pll_couleur = pll_d.couleur_html;
-						 pll_qualificatif = pll_d.qualificatif;
-						 pll_valeur = pll_d.valeur;
-						 homeSlider_data_0.data_apply(pll_valeur,pll_date);// attribuer data to slide 
-
-				})
+				socket.emit('ask_for_atmo_data', function(data){
+					console.log(data);
+					pll_d = data.indices.data[1];
+					pll_date = pll_d.date;
+					pll_couleur = pll_d.couleur_html;
+					pll_qualificatif = pll_d.qualificatif;
+					pll_valeur = pll_d.valeur;
+					homeSlider_data_0.data_apply(pll_valeur,pll_date);// attribuer data to slide 
+				});
 			}
-	
-
+			
 			callback();
 
 	})
 }
 
 
-
+/*----------------------------------------------------------------
+	Initalisation de l'application
+----------------------------------------------------------------*/
 init(function(){
 	get_questions();
 	get_slides();
@@ -329,7 +332,7 @@ init(function(){
 	slick_activation();
 	get_filters();
 	homeSlider.display();
-	get_rte_api();
+	// get_rte_api();
 	get_atmo_api();
 
 	dataRefresh();
@@ -337,7 +340,9 @@ init(function(){
 
 
 
-
+/*----------------------------------------------------------------
+	Listener sur l'élément 'blocker'
+----------------------------------------------------------------*/
 $(".blocker").click(function(){
 	if ($(".container").hasClass("off")) {
 				screen__on();
@@ -349,10 +354,12 @@ $(".blocker").click(function(){
 				$(".blocker").removeClass("off");
 				$(".container").addClass("off");
 			}
-		
 });
 
-
+/*----------------------------------------------------------------
+	Raffraichir les données de qualité de l'air 
+	à intervalles réguliers
+----------------------------------------------------------------*/
 function dataRefresh(){
 	data_refresh_timer = setInterval(function(){
 
@@ -361,28 +368,15 @@ function dataRefresh(){
 		var minutes = date.getMinutes();
 
 		if(hour == data_refresh_time[0] && minutes == data_refresh_time[1]){ // Check the time
-		 	$.getJSON("http://api.atmo-aura.fr/communes/69123/indices?api_token=" + get_atmo_key(),function(data,index){
-				 pll_d = data.indices.data[1];
-
-				 pll_date = pll_d.date;
-				 pll_couleur = pll_d.couleur_html;
-				 pll_qualificatif = pll_d.qualificatif;
-				 pll_valeur = pll_d.valeur;
-
-				 
-				homeSlider_data_0.data_apply(pll_valeur,pll_date);
-			});
-
-
-
-    	}
-
+			get_atmo_api();
+		}
 		
-
-	},10000)
+	}, 10000)
 }
 
+/*----------------------------------------------------------------
 
+----------------------------------------------------------------*/
 function screen__on(){
 
 	let current = $(".slick-current").attr("data-slick-index");
@@ -393,8 +387,6 @@ function screen__on(){
 	menu.move(".menu_slide_"+current,"","",function(){
 		homeSlider.open();
 	});
-	
-
 	
 	if(current == "0") {
 		homeSlider_slides[0].intro__play(function(){
@@ -407,6 +399,9 @@ function screen__on(){
 	
 }
 
+/*----------------------------------------------------------------
+	Eteindre l'écran
+----------------------------------------------------------------*/
 function screen__off(){
 	$(".container").removeClass("active");
 	btn__menu.clickAction();
@@ -414,14 +409,15 @@ function screen__off(){
 
 }
 
+/*----------------------------------------------------------------
+	Changer le slide courant
+----------------------------------------------------------------*/
 function changeCurrent(num){
 	let slide = slides_menu[num].menuSlide.el;
-
 	
 	$(".menuNav").find(".current").removeClass("current");
 	$(slide).addClass("current");
 	menu.move(slide,"zoom","noAnim");
-
 }
 
 var filtered = [];
@@ -431,10 +427,6 @@ var filterActive = false;
 
 function HomeSlider(){
 
-
-
-	
-	
 	this.display = function(){
 		$(".homeSlide").on("beforeChange",function(event,slick, currentSlide){
 			toCompare=currentSlide
