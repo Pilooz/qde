@@ -78,12 +78,11 @@ io.on('connection', function (socket) {
   // Récupération des données RTE
   //
   socket.on('ask_for_rte_data', function(send_response) {
-    console.log("You've asked for RTE data...");
     var credentialsB64 = Buffer.from(conf.api_tokens.rte.credentials).toString('base64');
 
     var options = {
-      host: "digital.iservices.rte-france.com",
-      path: "/token/oauth/",
+      host: conf.api_tokens.rte.host,
+      path: conf.api_tokens.rte.path_auth,
       method: "GET",
       headers: { "Authorization": "Basic " + credentialsB64 }
     };
@@ -102,8 +101,8 @@ io.on('connection', function (socket) {
         console.log("Got Authorisation token : " + res.access_token);
         // So lets get data with this access token.
         var options2 = {
-          host: "digital.iservices.rte-france.com",
-          path: "/open_api/actual_generation/v1/actual_generations_per_production_type",
+          host: conf.api_tokens.rte.host,
+          path: conf.api_tokens.rte.path_data,
           method: "GET",
           headers: { "Authorization" : "Bearer " + res.access_token }
         }
