@@ -1,0 +1,26 @@
+{
+  "name": "cnr-qde",
+  "version": "1.0.0",
+  "description": "Borne interactive pour le quai des énergies",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pilooz/qde.git"
+  },
+  "author": "Anooki, Jean-Loïc Anthunes, Pierre-Gilles Levallois",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Pilooz/qde/issues"
+  },
+  "homepage": "https://github.com/Pilooz/qde#readme",
+  "dependencies": {
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "jquery": "^3.4.1",
+    "slick-carousel": "^1.8.1",
+    "socket.io": "^2.3.0"
+  }
+}
