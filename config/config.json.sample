@@ -1,0 +1,6 @@
+{
+  "api_tokens" : {
+    "rte"  : { "key" : "paste here your api key" },
+    "atmo" : { "key" : "paste here your api key" }
+  }
+}

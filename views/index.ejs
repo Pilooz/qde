@@ -31,11 +31,18 @@
         <audio class="quizz_badSound"></audio>
 
 	</div>
+	<script>
+		
+		function get_rte_key() { 
+			return "<%=config.api_tokens.rte.key %>" 
+		};
+		function get_atmo_key() { 
+			return "<%=config.api_tokens.atmo.key %>" 
+		};
 
-
-	
-
-
+	</script>
+	<script src="/js/jquery/jquery.min.js"></script>
+	<script src="/js/slick/slick.min.js"></script>
 	<script src="js/script.js"></script>
 </body>
 </html>
