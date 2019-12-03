@@ -43,27 +43,34 @@ http.listen(port, function(){
 });
 
 
-/*
+/*------------------------------------------------------------------------
   Services de socket pour les mises à jours de données RTE et ATMO
-*/
+------------------------------------------------------------------------*/
 io.on('connection', function (socket) {
-
-  socket.data = {};
-  
+  //
+  // Connexion du client.
+  //
   socket.on('login_client', function(data){
     console.log(data.msg);
   });
 
+  //
+  // Récupération des données ATMO
+  //
 	socket.on('ask_for_atmo_data', function(send_response) {
     var api_response = {};
 
     getJSON( conf.api_tokens.atmo.url + conf.api_tokens.atmo.key )
     .then(function(api_response) {
-      // socket.emit('get_atmo_data', { data: api_response });
       send_response(api_response);
     }).catch(function(error) {
       console.log(error);
     });
 
-	});
+  });
+
+  //
+  // Récupération des données RTE
+  //
+
 });
