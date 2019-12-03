@@ -3,12 +3,12 @@
         "rte"  : { 
             "url" : "https://digital.iservices.rte-france.com/open_api/actual_generation/v1/actual_generations_per_production_type" ,
             "key": "my api token",
-            "bearer": "my bearer"
+            "credentials": "login:password"
         },
         "atmo" : { 
             "url" : "http://api.atmo-aura.fr/communes/69123/indices?api_token=" ,
             "key" : "my api token",
-            "bearer": "my bearer"
+            "credentials": "login:password"
         }
   }
 }

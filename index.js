@@ -1,10 +1,14 @@
+/*------------------------------------------------------------------------
+  Node server for CNR_QDE
+------------------------------------------------------------------------*/
 const port = 8000;
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 const conf = require('./config/config.json');
-// var index = require('./routes/index');
 
-var http = require('http').Server(app); //
+const https = require('https');
+var http = require('http').Server(app);
+
 var io = require('socket.io')(http);
 var getJSON = require('get-json');
 
@@ -12,7 +16,10 @@ var getJSON = require('get-json');
 app.set('view engine', 'ejs');
 // All resources in public dir
 app.use('/', express.static(__dirname + '/public'));
-// All application routes
+
+/*------------------------------------------------------------------------
+  // All application routes and path rewrites
+------------------------------------------------------------------------*/
 app.use('/data', express.static(__dirname + '/data')); // Routing data
 app.use('/media', express.static(__dirname + '/media'));
 app.use('/js/jquery', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
@@ -21,6 +28,9 @@ app.use('/js/socket.io', express.static(__dirname + '/node_modules/socket.io'));
 app.use('/css', express.static(__dirname + '/public/css')); // Routing css
 app.use('/font', express.static(__dirname + '/public/font')); // Routing font
 
+/*------------------------------------------------------------------------
+  Express routing for html views
+------------------------------------------------------------------------*/
 // For all routes, doing something common
 app.all('/', function (req, res, next) {
   next(); // pass control to the next handler
@@ -28,23 +38,18 @@ app.all('/', function (req, res, next) {
 
 // GET method route
 app.get('/', function (req, res) {
-  res.render('index');
-  //res.send('GET request to the homepage');
+  res.render('index', { port: port } );
 });
 
-// POST method route
-app.post('/', function (req, res) {
-  res.render('index');
-  // res.send('POST request to the homepage');
-});
-
+/*------------------------------------------------------------------------
+  Server listening
+------------------------------------------------------------------------*/
 http.listen(port, function(){
   console.log('Http server is listening on port %d', port);
 });
 
-
 /*------------------------------------------------------------------------
-  Services de socket pour les mises à jours de données RTE et ATMO
+  Sockets for data services
 ------------------------------------------------------------------------*/
 io.on('connection', function (socket) {
   //
@@ -72,5 +77,56 @@ io.on('connection', function (socket) {
   //
   // Récupération des données RTE
   //
+  socket.on('ask_for_rte_data', function(send_response) {
+    console.log("You've asked for RTE data...");
+    var credentialsB64 = Buffer.from(conf.api_tokens.rte.credentials).toString('base64');
 
+    var options = {
+      host: "digital.iservices.rte-france.com",
+      path: "/token/oauth/",
+      method: "GET",
+      headers: { "Authorization": "Basic " + credentialsB64 }
+    };
+
+    // 1. Sending request for authorization
+    https.get(options, (resp) => {
+      let data = '';
+    
+      resp.on('data', (chunk) => {
+        data += chunk;
+      });
+    
+      // The whole response has been received. Print out the result.
+      resp.on('end', () => {
+        res = JSON.parse(data);
+        console.log("Got Authorisation token : " + res.access_token);
+        // So lets get data with this access token.
+        var options2 = {
+          host: "digital.iservices.rte-france.com",
+          path: "/open_api/actual_generation/v1/actual_generations_per_production_type",
+          method: "GET",
+          headers: { "Authorization" : "Bearer " + res.access_token }
+        }
+        // 2. Sending request for data
+        https.get(options2, (resp2) => {
+          let data2 = '';
+
+          resp2.on('data', (chunk) => {
+            data2 += chunk;
+          });
+          resp2.on('end', () => {
+            res2 = JSON.parse(data2);
+            // So returning them to browser
+            send_response(res2);
+
+          }).on("error", (err) => {
+            console.log("Error in retrieving data from RTE : " + err.message);
+          });      
+        });
+    
+      }).on("error", (err) => {
+        console.log("Error in retrieving authorization for RTE : " + err.message);
+      });
+    });  
+  });
 });

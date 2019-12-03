@@ -231,71 +231,49 @@ function init(callback){
 				$(".container").addClass("slicked");
 			}
 
+			/*----------------------------------------------------------------
+				Socket de récupération des données des diverses productions 
+				électriques
+			----------------------------------------------------------------*/
 			get_rte_api = function(){
 
-				var myHeaders = new Headers();
-				myHeaders.append("Authorization", 'Basic '+btoa("toto"));
-				
-				fetch("https://digital.iservices.rte-france.com/token/oauth/", {
-				    credentials: "include",
-				    headers: myHeaders
-				}).then(function (response) {
-				    return response.json();
-
-				}).then(function (data) {
-				    var rte_token = data.access_token;
-
-				    var myHeaders_2 = new Headers();
-				    myHeaders_2.append("Authorization", 'Bearer '+rte_token);
-				    fetch("https://digital.iservices.rte-france.com/open_api/actual_generation/v1/actual_generations_per_production_type", {
-				    credentials: "include",
-				    headers: myHeaders_2
-					}).then(function (response) {
-					    return response.json();
-
-					}).then(function (data) {
-
-						let all_en = data.actual_generations_per_production_type;
-
-						ene_1 = all_en[7].values[all_en[7].values.length-1].value;
-						ene_2 = all_en[1].values[all_en[1].values.length-1].value;
-						ene_3 = all_en[2].values[all_en[2].values.length-1].value;
-						ene_4 = all_en[3].values[all_en[3].values.length-1].value;
-						ene_5 = all_en[10].values[all_en[10].values.length-1].value;
-						ene_6 = all_en[8].values[all_en[8].values.length-1].value;
-						ene_7 = all_en[4].values[all_en[4].values.length-1].value+all_en[5].values[all_en[5].values.length-1].value+all_en[6].values[all_en[6].values.length-1].value;
-						ene_8 = all_en[0].values[all_en[0].values.length-1].value;
-						ene_total = ene_1+ene_2+ene_3+ene_4+ene_5+ene_6+ene_7+ene_8;
-						ene_total = Math.round(ene_total*100)/100;
+				socket.emit('ask_for_rte_data', function(data){
+					console.log(data);
+					let all_en = data.actual_generations_per_production_type;
+		
+					ene_1 = all_en[7].values[all_en[7].values.length-1].value;
+					ene_2 = all_en[1].values[all_en[1].values.length-1].value;
+					ene_3 = all_en[2].values[all_en[2].values.length-1].value;
+					ene_4 = all_en[3].values[all_en[3].values.length-1].value;
+					ene_5 = all_en[10].values[all_en[10].values.length-1].value;
+					ene_6 = all_en[8].values[all_en[8].values.length-1].value;
+					ene_7 = all_en[4].values[all_en[4].values.length-1].value+all_en[5].values[all_en[5].values.length-1].value+all_en[6].values[all_en[6].values.length-1].value;
+					ene_8 = all_en[0].values[all_en[0].values.length-1].value;
+					ene_total = ene_1+ene_2+ene_3+ene_4+ene_5+ene_6+ene_7+ene_8;
+					ene_total = Math.round(ene_total*100)/100;
 
 
-						en_1 = (ene_1*100)/ene_total;
-						en_2 = (ene_2*100)/ene_total; 
-						en_3 = (ene_3*100)/ene_total;
-						en_4 = (ene_4*100)/ene_total;
-						en_5 = (ene_5*100)/ene_total;
-						en_6 = (ene_6*100)/ene_total;
-						en_7 = (ene_7*100)/ene_total;
-						en_8 = (ene_8*100)/ene_total;
+					en_1 = (ene_1*100)/ene_total;
+					en_2 = (ene_2*100)/ene_total; 
+					en_3 = (ene_3*100)/ene_total;
+					en_4 = (ene_4*100)/ene_total;
+					en_5 = (ene_5*100)/ene_total;
+					en_6 = (ene_6*100)/ene_total;
+					en_7 = (ene_7*100)/ene_total;
+					en_8 = (ene_8*100)/ene_total;
 
-						en_1 = Math.round(en_1*100)/100;
-						en_2 = Math.round(en_2*100)/100;
-						en_3 = Math.round(en_3*100)/100;
-						en_4 = Math.round(en_4*100)/100;
-						en_5 = Math.round(en_5*100)/100;
-						en_6 = Math.round(en_6*100)/100;
-						en_7 = Math.round(en_7*100)/100;
-						en_8 = Math.round(en_8*100)/100;
+					en_1 = Math.round(en_1*100)/100;
+					en_2 = Math.round(en_2*100)/100;
+					en_3 = Math.round(en_3*100)/100;
+					en_4 = Math.round(en_4*100)/100;
+					en_5 = Math.round(en_5*100)/100;
+					en_6 = Math.round(en_6*100)/100;
+					en_7 = Math.round(en_7*100)/100;
+					en_8 = Math.round(en_8*100)/100;
 
-						en_total = en_1+en_2+en_3+en_4+en_5+en_6+en_7+en_8;
+					en_total = en_1+en_2+en_3+en_4+en_5+en_6+en_7+en_8;
 
-
-
-						homeSlider_data_1.data_apply();
-
-					});
-
-
+					homeSlider_data_1.data_apply();
 				});
 
 			}
@@ -315,7 +293,7 @@ function init(callback){
 					homeSlider_data_0.data_apply(pll_valeur,pll_date);// attribuer data to slide 
 				});
 			}
-			
+
 			callback();
 
 	})
@@ -332,7 +310,7 @@ init(function(){
 	slick_activation();
 	get_filters();
 	homeSlider.display();
-	// get_rte_api();
+	get_rte_api();
 	get_atmo_api();
 
 	dataRefresh();
@@ -369,6 +347,7 @@ function dataRefresh(){
 
 		if(hour == data_refresh_time[0] && minutes == data_refresh_time[1]){ // Check the time
 			get_atmo_api();
+			get_rte_api();
 		}
 		
 	}, 10000)
