@@ -1,0 +1,4 @@
+# All installed libs
+node_modules/
+# config with sensible data
+config/config.json
