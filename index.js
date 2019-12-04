@@ -21,7 +21,7 @@ app.use('/', express.static(__dirname + '/public'));
   // All application routes and path rewrites
 ------------------------------------------------------------------------*/
 app.use('/data', express.static(__dirname + '/data')); // Routing data
-app.use('/media', express.static(__dirname + '/media'));
+app.use('/medias', express.static(__dirname + '/medias'));
 app.use('/js/jquery', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
 app.use('/js/slick', express.static(__dirname + '/node_modules/slick-carousel/slick')); // redirect to slick
 app.use('/js/socket.io', express.static(__dirname + '/node_modules/socket.io')); // redirect to socket.io
