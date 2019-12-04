@@ -3,4 +3,7 @@ node_modules/
 # config with sensible data
 config/config.json
 # do not track medias repository (it is done by git-lfs
-medias/
+#medias/animations/
+#medias/sounds/
+#medias/videos/
+#medias/previews/
