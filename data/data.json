@@ -144,7 +144,6 @@
       "type_en" : "Quiz",
       "title_en" : "Test your knowledge with 5 questions"
     },
-    
     "data_air" : {
       "filter_key" : "data",
       "color" : "#00bfa6",
@@ -164,16 +163,13 @@
         "#770000"
       ],
       "animations" : [
-
         "medias/animations/anooki-bravo.png",
         "medias/animations/anooki-jump.png",
         "medias/animations/anooki-bravo.png",
         "medias/animations/anooki-bravo.png",
         "medias/animations/anooki-bravo.png",
         "medias/animations/anooki-bravo.png"
-
       ],
-
       "sounds" : [
         "medias/animations/anooki-bravo.wav",
         "medias/animations/anooki-jump.wav",
@@ -181,8 +177,6 @@
         "medias/animations/anooki-bravo.wav",
         "medias/animations/anooki-bravo.wav",
         "medias/animations/anooki-bravo.wav"
-
-
       ]
     },
     "data_france" : {
@@ -662,11 +656,14 @@
   "settings" : {
     "durations" : {
       "duration_titles" : "3",
-      "duration_quiz" : "3",
+      "duration_quiz" : "4",
       "question__resultAnim__duration" : "2",
       "question_resultMessage_duration" : "4",
       "duration_infos" : "5",
-      "data_refresh_time" : ["16","28"]
+      "data_refresh_time" : [
+        "16",
+        "28"
+      ]
     },
     "filters" : {
       "filter_1" : [
