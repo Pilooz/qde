@@ -1,4 +1,5 @@
 .DS_store
+*.log
 # All installed libs
 node_modules/
 # config with sensible data

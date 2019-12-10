@@ -3,6 +3,8 @@
 ------------------------------------------------------------------------*/
 const port = 8000;
 const express = require('express');
+var bodyParser = require('body-parser');
+
 const app = express();
 const conf = require('./config/config.json');
 
@@ -17,6 +19,7 @@ app.set('view engine', 'ejs');
 // All resources in public dir
 app.use('/', express.static(__dirname + '/public'));
 
+
 /*------------------------------------------------------------------------
   // All application routes and path rewrites
 ------------------------------------------------------------------------*/
@@ -27,18 +30,32 @@ app.use('/js/slick', express.static(__dirname + '/node_modules/slick-carousel/sl
 app.use('/js/socket.io', express.static(__dirname + '/node_modules/socket.io')); // redirect to socket.io
 app.use('/css', express.static(__dirname + '/public/css')); // Routing css
 app.use('/font', express.static(__dirname + '/public/font')); // Routing font
+//Here we are configuring express to use body-parser as middle-ware.
+//app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 /*------------------------------------------------------------------------
   Express routing for html views
 ------------------------------------------------------------------------*/
+var dataPresence;
 // For all routes, doing something common
 app.all('/', function (req, res, next) {
+  dataPresence = req.body;
   next(); // pass control to the next handler
 });
 
 // GET method route
 app.get('/', function (req, res) {
   res.render('index', { port: port } );
+})
+
+// POST method route
+.post('/', function (req, res) { 
+  console.log('Got body:', dataPresence);
+
+  //var sensor_values = JSON.parse(req.query);
+  //console.log(sensor_values);
+  res.end();
 });
 
 /*------------------------------------------------------------------------
@@ -129,3 +146,4 @@ io.on('connection', function (socket) {
     });  
   });
 });
+
