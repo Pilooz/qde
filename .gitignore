@@ -5,5 +5,5 @@ config/config.json
 # do not track medias repository (it is done by git-lfs
 #medias/animations/
 #medias/sounds/
-#medias/videos/
+medias/videos/
 #medias/previews/
