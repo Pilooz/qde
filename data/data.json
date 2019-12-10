@@ -656,7 +656,7 @@
   "settings" : {
     "durations" : {
       "duration_titles" : "3",
-      "duration_quiz" : "4",
+      "duration_quiz" : "5",
       "question__resultAnim__duration" : "2",
       "question_resultMessage_duration" : "4",
       "duration_infos" : "5",
