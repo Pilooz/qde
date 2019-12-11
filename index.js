@@ -31,16 +31,17 @@ app.use('/js/socket.io', express.static(__dirname + '/node_modules/socket.io'));
 app.use('/css', express.static(__dirname + '/public/css')); // Routing css
 app.use('/font', express.static(__dirname + '/public/font')); // Routing font
 //Here we are configuring express to use body-parser as middle-ware.
-//app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 /*------------------------------------------------------------------------
   Express routing for html views
 ------------------------------------------------------------------------*/
 var dataPresence;
+var dataPresenceNewVal;
+var presence=1;
 // For all routes, doing something common
 app.all('/', function (req, res, next) {
-  dataPresence = req.body;
+  dataPresenceNewVal = req.body;
   next(); // pass control to the next handler
 });
 
@@ -51,10 +52,18 @@ app.get('/', function (req, res) {
 
 // POST method route
 .post('/', function (req, res) { 
-  console.log('Got body:', dataPresence);
+  // Sensors have updated their values
+  dataPresence = dataPresenceNewVal;
+  presence = dataPresence.detector0 || dataPresence.detector1
+  console.log("presence="+presence);
 
-  //var sensor_values = JSON.parse(req.query);
-  //console.log(sensor_values);
+  // If someone is detected (presence=0 : the sensors are active on low level), 
+  // send a socket to browser
+  if (presence==0) {
+	console.log("Hey ! Someone is here...");
+  	io.emit('presence', { "presence": 1 } );  
+  } 
+  // If not, let the browser timeout running to switch of app 
   res.end();
 });
 

@@ -42,7 +42,7 @@ int postData(int detector, int state)
 
     char *data_presence;
     data_presence=malloc(50);
-    sprintf(data_presence,"{\"detector\":%d,\"state\":%d}", detector, state);
+    sprintf(data_presence,"{\"detector%d\":\"%d\"}\r\n", detector, state);
 
     /* How big is the message? */
     message_size=2000;

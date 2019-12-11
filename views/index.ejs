@@ -31,6 +31,12 @@
         <audio class="quizz_badSound"></audio>
 
 	</div>
+	<script>
+	// Losrque présence vaut 1, les détecteurs ont détecté quelqu'un
+	// Il faut donc :
+	var presence = 0;
+	
+	</script>
 	<script src="/js/jquery/jquery.min.js"></script>
 	<script src="/js/slick/slick.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
@@ -39,6 +45,18 @@
 		var socket = io.connect('http://localhost:<%=port%>');
 		socket.emit('login_client', {
 			msg: "Browser has been connected at socket on port <%=port%>.\nBrowser is up !"
+		});
+		
+		socket.on('presence', function(data){
+			if (data.presence == 1 && presence == 0) {
+				// Il n'y avait personne, maintenant il y a quelqu'un
+				console.log("Il n'y avait personne, maintenant il y a quelqu'un");
+				// @TODO
+				// 1. réinitialiser le timeout d'extinction
+				// 2. Réveiller l'app
+				// 3. commencer à décompter
+				presence = data.presence;				
+			}
 		});
 	</script>
 	
