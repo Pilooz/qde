@@ -1,7 +1,9 @@
 /*------------------------------------------------------------------------
 	Projet : Quai des Energies - CNR
 	Démon qui interroge le Phiget et envoie un post au serveur nodeJS
-	Compilation : "gcc presence.c -o presence -lphidget22"
+	Compilation : 
+	- cd qde/presence/src
+	"gcc presence.c -o ../bin/presence -lphidget22"
 ------------------------------------------------------------------------*/
 #include <phidget22.h>
 #include <stdio.h>
@@ -11,6 +13,11 @@
 #include <sys/socket.h> /* socket, connect */
 #include <netinet/in.h> /* struct sockaddr_in, struct sockaddr */
 #include <netdb.h> /* struct hostent, gethostbyname */
+/*------------------------------------------------------------------------
+	Constantes et symboles
+------------------------------------------------------------------------*/
+#define PORT 8000
+#define HOST "localhost"
 
 /*------------------------------------------------------------------------
 	tracer les erreur
@@ -23,8 +30,8 @@ void error(const char *msg) { perror(msg); /*exit(0);*/ }
 int postData(int detector, int state)
 {
     int i;	
-    int portno = 8000;
-    char *host = "localhost";
+    int portno = PORT;
+    char *host = HOST;
 
     struct hostent *server;
     struct sockaddr_in serv_addr;
@@ -118,7 +125,6 @@ int postData(int detector, int state)
 	every time the associated event occurs.
 ------------------------------------------------------------------------*/
 static void CCONV onDigitalInput0_StateChange(PhidgetDigitalInputHandle ch, void * ctx, int state) {
-	printf("{\"detector\" : 0, \"state\" : %d }\n", state);
 	postData(0, state);
 }
 
@@ -127,7 +133,6 @@ static void CCONV onDigitalInput0_Error(PhidgetHandle ch, void * ctx, Phidget_Er
 }
 
 static void CCONV onDigitalInput1_StateChange(PhidgetDigitalInputHandle ch, void * ctx, int state) {
-	printf("{\"detector\" : 1, \"state\" : %d }\n", state);
 	postData(1, state);
 }
 
