@@ -18,6 +18,7 @@
 ------------------------------------------------------------------------*/
 #define PORT 8000
 #define HOST "localhost"
+#define LOGFILENAME "/tmp/presence.log"
 
 /*------------------------------------------------------------------------
 	tracer les erreur
@@ -153,7 +154,7 @@ int main() {
 	char errorDetail[100];
 	size_t errorDetailLen = 100;
 
-	PhidgetLog_enable(PHIDGET_LOG_INFO, "phidgetlog.log");
+	PhidgetLog_enable(PHIDGET_LOG_INFO, LOGFILENAME);
 
 	//Create your Phidget channels
 	PhidgetDigitalInput_create(&digitalInput0);
