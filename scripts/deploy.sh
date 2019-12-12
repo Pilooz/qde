@@ -66,30 +66,30 @@ etape "Préparer le travail"
 comment "repertoire de l'application : "$working_dir"/"$cur_rep_name
 cd $working_dir"/"$cur_rep_name
 current_commit=$(git rev-parse --short HEAD)
+
+# Vérifier s'il y a eu des modifs sur le repo en ligne
+comment "Vérifier si une nouvelle version est disponible"
+[ $(git rev-parse HEAD) = $(git ls-remote $(git rev-parse --abbrev-ref @{u} | sed 's/\// /g') | cut -f1) ] &&  need_update=0 ||  need_update=1
+check
+
 cd $working_dir
+if [ $need_update -eq 0 ]; then
+  # pas de nouvelle version
+  comment "\e[32mPas de changement."
+  # Pas de changement, sortie du script.
+  fin_normale  
+else
+  comment "\e[93mUne nouvelle version de l'application es disponible !\e[39m"
+fi;
 
 # Tirer le Repo
 etape "Tirer le Repo"
 git clone $online_git_repo $working_dir"/"$new_rep_name
 check 
-
-# Vérifier s'il y a eu des modifications
-etape "Vérifier s'il y a eu des modifications"
 cd $working_dir"/"$new_rep_name
 new_commit=$(git rev-parse --short HEAD)
 comment "commit version actuelle : \e[93m'$current_commit'\e[39m"
 comment "commit nouvelle version : \e[93m'$new_commit'\e[39m"
-
-if [ "x"$current_commit = "x"$new_commit ]; then
-  comment "\e[32mPas de changement."
-  cd $working_dir
-  comment "Suppression du répertoire '$new_rep_name'"
-  rm -rf $new_rep_name
-  # Pas de changement, sortie du script.
-  fin_normale
-else
-  comment "\e[93mL'application a changé !\e[39m"
-fi;
 
 cd $working_dir
 rep="qde_"$new_commit
