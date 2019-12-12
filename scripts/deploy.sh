@@ -8,14 +8,15 @@
 #---------------------------------------------------------------
 # Vars
 #---------------------------------------------------------------
+logfile="/tmp/qde_deploy.log"
 online_git_repo="https://github.com/Pilooz/qde.git"
 production_link="quai-des-energies"
 working_dir="/home/cnr/Documents"
 cur_rep_name="quai-des-energies" #nom répertoire de production courant comportant.
 new_rep_name="qde_new" #nom du futur répertoire de production
+
 current_commit=""
 new_commit=""
-
 etape=0
 line="\e[39m-----------------------------------------------"
 
@@ -31,7 +32,7 @@ etape () {
 }
 
 comment () {
-  echo -e "\e[39m  -> $1\e[39m"
+  echo -e "\e[39m\t-> $1\e[39m"
 }
 
 # Vérifier le retour d'une commande et lever une erreur si besoin
@@ -43,10 +44,23 @@ check () {
    exit 1
   fi;
 }
+
+fin_normale () {
+  comment "suppression des logs de travail"
+  if [ -f "*.log" ]; then
+    rm *.log
+  fi;
+  comment "\e[32mFin.\e[39m"
+  exit 0
+}
 #---------------------------------------------------------------
 # Main
 #---------------------------------------------------------------
 reset
+touch $logfile
+exec > >(tee -i $logfile)
+exec 2>&1
+
 # Préparer le travail
 etape "Préparer le travail"
 comment "repertoire de l'application : "$working_dir"/"$cur_rep_name
@@ -68,9 +82,11 @@ comment "commit nouvelle version : \e[93m'$new_commit'\e[39m"
 
 if [ "x"$current_commit = "x"$new_commit ]; then
   comment "\e[32mPas de changement."
-  comment "Fin.\e[39m"
+  cd $working_dir
+  comment "Suppression du répertoire '$new_rep_name'"
+  rm -rf $new_rep_name
   # Pas de changement, sortie du script.
-  exit 0
+  fin_normale
 else
   comment "\e[93mL'application a changé !\e[39m"
 fi;
@@ -142,11 +158,7 @@ comment "suppression de l'ancien répertoire qde_$current_commit"
 rm -rf "qde_"$current_commit
 check
 
-comment "suppression des logs de travail"
-rm *.log
-comment "\e[32mFin.\e[39m"
-
-exit 0
+fin_normale
 
 
 
