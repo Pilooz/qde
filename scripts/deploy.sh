@@ -62,12 +62,19 @@ git clone $online_git_repo $working_dir"/"$new_rep_name
 check 
 
 # Vérifier s'il y a eu des modifications
+log "Vérifier s'il y a eu des modifications"
 cd $working_dir"/"$new_rep_name
 new_commit=$(git rev-parse --short HEAD)
 comment "commit version actuelle : \e[93m'$current_commit'\e[39m"
 comment "commit nouvelle version : \e[93m'$new_commit'\e[39m"
-exit 0
 
+if [ "x"$current_commit = "x"$new_commit ]; then
+  comment "\e[32mPas de changement."
+  comment "Fin.\e[39m"
+  exit 0
+fi;
+
+exit 0
 
 # Installation
 log "Installation"
@@ -100,7 +107,7 @@ check
 
 # Router la production sur ce nouveau repo
 log "Router la production sur ce nouveau repo"
-ln -s qde_be1049c quai-des-energies
+rm -f quai-des-energies && ln -s qde_be1049c quai-des-energies
 
 # Redémarrer nodeJS
 log "Redémarrer nodeJS"
