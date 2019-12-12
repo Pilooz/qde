@@ -837,6 +837,9 @@ body{
         z-index: 30;
       }
 
+     
+
+
       .homeSlide__slide__titleBlock.off{
         top: 100vh;
       }
@@ -1010,7 +1013,7 @@ body{
     position :absolute;
     left:0;
     top:0;
-    z-index: 1;
+    z-index: 300;
     height:6px;
     background:white;
   }
