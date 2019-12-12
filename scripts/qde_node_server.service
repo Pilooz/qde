@@ -1,0 +1,23 @@
+#
+# Description du service de détection de presence qui remonte les information des détecteurs de presence.
+# Installation : 
+#  - cd /etc/systemd/system 
+#  - sudo ln -s /home/cnr/Docments/quai-des-energies/scripts/qde_node_server.service qde_node_server.service
+#  - sudo systemctl enable qde_node_server.service
+#  - sudo systemctl daemon-reload
+#
+[Unit]
+Description=Serveur Node - Quai des Energies
+
+[Service]
+PIDFile=/var/run/qde_node_server.pid
+User=cnr
+Group=cnr
+Restart=always
+KillSignal=SIGQUIT
+WorkingDirectory=/home/cnr/Documents/quai-des-energies
+ExecStart=/home/cnr/Documents/quai-des-energies/index.js
+
+[Install]
+WantedBy=multi-user.target
+

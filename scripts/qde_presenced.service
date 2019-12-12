@@ -1,0 +1,25 @@
+#
+# Description du service de détection de presence qui remonte les information des détecteurs de presence.
+# Installation : 
+#  - cd /etc/systemd/system 
+#  - ln -s /home/cnr/Docments/quai-des-energies/scripts/qde_presenced.service qde_presenced.service
+#  - sudo systemctl enable qde_presenced.service
+#  - sudo systemctl daemon-reload
+#
+[Unit]
+Description=qde_presence Daemon
+After=network-online.target
+DevicePolicy=auto
+ 
+[Service]
+Type=simple
+ 
+User=cnr
+Group=cnr
+ 
+ExecStart=/home/cnr/Documents/quai-des-energies/presence/bin/presence
+ 
+Restart=on-failure
+ 
+[Install]
+WantedBy=multi-user.target

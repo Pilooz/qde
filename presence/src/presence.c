@@ -197,7 +197,8 @@ int main() {
 	//Do stuff with your Phidgets here or in your event handlers.
 
 	//Wait until Enter has been pressed before exiting
-	getchar();
+	//getchar();
+	for(;;){}
 
 	//Close your Phidgets once the program is done.
 	ret = Phidget_close((PhidgetHandle)digitalInput0);

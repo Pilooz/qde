@@ -51,7 +51,7 @@ log "Préparer le travail"
 comment "repertoire de l'application : "$working_dir"/"$cur_rep_name
 cd $working_dir"/"$cur_rep_name
 current_commit=$(git rev-parse --short HEAD)
-comment "commit courant : \e[93m'$current_commit'\e[39m"
+comment "commit version actuelle : \e[93m'$current_commit'\e[39m"
 comment "Creation d'un nouve rep pour le nouveau code \e[93m'$working_dir/$new_rep_name'\e[39m"
 cd $working_dir
 #mkdir $working_dir"/"$new_rep_name
@@ -60,6 +60,14 @@ cd $working_dir
 log "Tirer le Repo"
 git clone $online_git_repo $working_dir"/"$new_rep_name
 check 
+
+# Vérifier s'il y a eu des modifications
+cd $working_dir"/"$new_rep_name
+new_commit=$(git rev-parse --short HEAD)
+comment "commit version actuelle : \e[93m'$current_commit'\e[39m"
+comment "commit nouvelle version : \e[93m'$new_commit'\e[39m"
+exit 0
+
 
 # Installation
 log "Installation"
@@ -80,22 +88,30 @@ check
 
 # Arrêter  NodeJs
 log "Arrêter  NodeJs"
-
+sudo service qde_node_server status
+sudo service qde_node_server stop
+check
 
 # Arrêter le démon de détection de présence
 log "Arrêter le démon de détection de présence"
-
+sudo service qde_presenced status
+sudo service qde_presenced stop
+check
 
 # Router la production sur ce nouveau repo
 log "Router la production sur ce nouveau repo"
-
+ln -s qde_be1049c quai-des-energies
 
 # Redémarrer nodeJS
 log "Redémarrer nodeJS"
-
+sudo service qde_node_server start
+check
+sudo service qde_node_server status
 
 # Redémarrer le démon de détection de présence
-log "Redémarrer le démon de détection de présence"
+sudo service qde_presenced start
+check
+sudo service qde_presenced status
 
 # Fin
 log "Fin normale"
