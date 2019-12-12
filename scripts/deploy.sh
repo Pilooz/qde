@@ -9,6 +9,7 @@
 # Vars
 #---------------------------------------------------------------
 online_git_repo="https://github.com/Pilooz/qde.git"
+production_link="quai-des-energies"
 working_dir="/home/cnr/Documents"
 cur_rep_name="quai-des-energies" #nom répertoire de production courant comportant.
 new_rep_name="qde_new" #nom du futur répertoire de production
@@ -22,7 +23,7 @@ line="\e[39m-----------------------------------------------"
 # Functions
 #---------------------------------------------------------------
 # Logging
-log () {
+etape () {
   echo -e $line
   echo -e "\e[96m$etape. $1\e[39m"
   echo -e $line
@@ -30,15 +31,15 @@ log () {
 }
 
 comment () {
-  echo -e "\e[39m  -> $1"
+  echo -e "\e[39m  -> $1\e[39m"
 }
 
 # Vérifier le retour d'une commande et lever une erreur si besoin
 check () {
   if [ $? -eq 0 ]; then
-   comment "\e[32mOk."
+   comment "\e[32mOk.\e[39m"
   else
-   comment "\e[31mERREUR ! à l'étape $etape..."
+   comment "\e[31mERREUR ! à l'étape $etape...\e[39m"
    exit 1
   fi;
 }
@@ -47,22 +48,19 @@ check () {
 #---------------------------------------------------------------
 reset
 # Préparer le travail
-log "Préparer le travail"
+etape "Préparer le travail"
 comment "repertoire de l'application : "$working_dir"/"$cur_rep_name
 cd $working_dir"/"$cur_rep_name
 current_commit=$(git rev-parse --short HEAD)
-comment "commit version actuelle : \e[93m'$current_commit'\e[39m"
-comment "Creation d'un nouve rep pour le nouveau code \e[93m'$working_dir/$new_rep_name'\e[39m"
 cd $working_dir
-#mkdir $working_dir"/"$new_rep_name
 
 # Tirer le Repo
-log "Tirer le Repo"
+etape "Tirer le Repo"
 git clone $online_git_repo $working_dir"/"$new_rep_name
 check 
 
 # Vérifier s'il y a eu des modifications
-log "Vérifier s'il y a eu des modifications"
+etape "Vérifier s'il y a eu des modifications"
 cd $working_dir"/"$new_rep_name
 new_commit=$(git rev-parse --short HEAD)
 comment "commit version actuelle : \e[93m'$current_commit'\e[39m"
@@ -71,17 +69,21 @@ comment "commit nouvelle version : \e[93m'$new_commit'\e[39m"
 if [ "x"$current_commit = "x"$new_commit ]; then
   comment "\e[32mPas de changement."
   comment "Fin.\e[39m"
+  # Pas de changement, sortie du script.
   exit 0
+else
+  comment "\e[93mL'application a changé !\e[39m"
 fi;
 
-exit 0
+cd $working_dir
+rep="qde_"$new_commit
+comment "le répertoire d'installation de la nouvelle version est \e[93m'$rep'\e[39m."
+mv $new_rep_name $rep
+check
+new_rep_name=$rep
 
 # Installation
-log "Installation"
-comment "Supprimer le répertoire \e[93m$working_dir"/"$new_rep_name/node_modules \e[39m"
-rm -rf $working_dir"/"$new_rep_name/node_modules
-check
-
+etape "Installation"
 comment "Ré-installer les dépendances"
 cd $working_dir"/"$new_rep_name
 npm install > $working_dir"/"output.$etape.log 2>&1
@@ -93,35 +95,57 @@ cp ../$cur_rep_name/config/config.json ./config/
 ls ./config/config.json
 check
 
+comment "rechargement de la définition des services"
+sudo systemctl daemon-reload
+check
+
 # Arrêter  NodeJs
-log "Arrêter  NodeJs"
-sudo service qde_node_server status
+etape "Arrêter  NodeJs"
+#sudo service qde_node_server status
 sudo service qde_node_server stop
 check
+sudo journalctl -n 10 --no-pager -u qde_node_server.service
 
 # Arrêter le démon de détection de présence
-log "Arrêter le démon de détection de présence"
-sudo service qde_presenced status
+etape "Arrêter le démon de détection de présence"
 sudo service qde_presenced stop
 check
+sudo journalctl -n 10 --no-pager -u qde_presenced.service
 
 # Router la production sur ce nouveau repo
-log "Router la production sur ce nouveau repo"
-rm -f quai-des-energies && ln -s qde_be1049c quai-des-energies
+etape "Router la production sur ce nouveau repo"
+cd $working_dir
+comment "suppression de l'ancien lien"
+rm -f $production_link
+check
+comment "création du nouveau lien"
+ln -s $new_rep_name $production_link
+# On vérifie le lien en essayant d'entrer dans le rep
+cd $production_link
+check
 
 # Redémarrer nodeJS
-log "Redémarrer nodeJS"
+etape "Redémarrer nodeJS"
 sudo service qde_node_server start
 check
-sudo service qde_node_server status
+sudo journalctl -n 10 --no-pager -u qde_node_server.service
 
 # Redémarrer le démon de détection de présence
 sudo service qde_presenced start
 check
-sudo service qde_presenced status
+sudo journalctl -n 10 --no-pager -u qde_presenced.service
 
 # Fin
-log "Fin normale"
+etape "Post-traitements"
+cd $working_dir
+comment "suppression de l'ancien répertoire qde_$current_commit"
+rm -rf "qde_"$current_commit
+check
+
+comment "suppression des logs de travail"
+rm *.log
+comment "\e[32mFin.\e[39m"
+
 exit 0
 
 
