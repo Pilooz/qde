@@ -655,6 +655,7 @@
   },
   "settings" : {
     "durations" : {
+      "menu_timer" : "600",
       "duration_titles" : "3",
       "duration_quiz" : "5",
       "question__resultAnim__duration" : "2",
@@ -684,7 +685,7 @@
       "filter_4" : [
         "Infos",
         "Infos",
-        ".info"
+        ".data"
       ]
     },
     "questions" : {
