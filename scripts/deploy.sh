@@ -11,6 +11,7 @@
 logfile="/tmp/qde_deploy.log"
 online_git_repo="https://github.com/Pilooz/qde.git"
 production_link="quai-des-energies"
+precedent_production_link="qde_old"
 working_dir="/home/cnr/Documents"
 cur_rep_name="quai-des-energies" #nom répertoire de production courant comportant.
 new_rep_name="qde_new" #nom du futur répertoire de production
@@ -95,6 +96,7 @@ cd $working_dir"/"$new_rep_name
 new_commit=$(git rev-parse --short HEAD)
 comment "commit version actuelle : \e[93m'$current_commit'\e[39m"
 comment "commit nouvelle version : \e[93m'$new_commit'\e[39m"
+git diff --compact-summary $current_commit $new_commit
 
 cd $working_dir
 rep="qde_"$new_commit
