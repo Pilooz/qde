@@ -142,11 +142,18 @@ cd $working_dir
 comment "suppression de l'ancien lien"
 rm -f $production_link
 check
+
+comment "changer les droits d'accès sur $new_rep_name"
+chown cnr:cnr $new_rep_name 
+
 comment "création du nouveau lien"
 ln -s $new_rep_name $production_link
 # On vérifie le lien en essayant d'entrer dans le rep
 cd $production_link
 check
+
+comment "changer les droits d'accès sur $production_link"
+chown cnr:cnr $production_link
 
 # Redémarrer nodeJS
 etape "Redémarrer nodeJS"
