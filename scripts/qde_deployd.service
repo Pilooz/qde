@@ -1,0 +1,22 @@
+#
+# Description du service deploiement automatique de l'application.
+# Installation : 
+#  - cd /etc/systemd/system 
+#  - sudo ln -s /home/cnr/Docments/quai-des-energies/scripts/qde_deployd.service qde_deployd.service
+#  - sudo systemctl enable qde_deploy.service
+#  - sudo systemctl daemon-reload
+#
+[Unit]
+Description=Service de déploiement automatique - Quai des Energies
+After=network.target
+
+[Service]
+PIDFile=/var/run/qde_deploy.pid
+User=nobody
+Group=nobody
+
+WorkingDirectory=/home/cnr/Documents
+ExecStart=/home/cnr/Documents/quai-des-energies/scripts/deploy.sh
+Type=oneshot
+
+

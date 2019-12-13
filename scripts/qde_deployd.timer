@@ -1,0 +1,29 @@
+#
+# Timer pour le déclenchement du déploiement automatique.
+# Installation : 
+#  - cd /etc/systemd/system 
+#  - sudo ln -s /home/cnr/Docments/quai-des-energies/scripts/qde_deploy.timer qde_deploy.timer
+#  - sudo systemctl enable qde_deploy.timer
+#  - sudo systemctl daemon-reload
+#
+[Unit]
+Description=Timer du service de déploiement automatique - Quai des Energies
+
+[Timer]
+# le service démarrera 15 minutes après le démarrage de la machine
+OnBootSec=1minutes   
+# le service démarrera toutes les trente minutes après la dernière activation du timer
+OnUnitActiveSec=15minutes  
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+
+#[Unit]
+#Description=Run foo
+
+#[Service]
+#User=%I
+#Restart=always
+#RestartSec=1800s
+#ExecStart=/bin/bash /home/user/script.sh
