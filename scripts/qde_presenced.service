@@ -9,7 +9,7 @@
 [Unit]
 Description=qde_presenced Daemon
 After=network-online.target
-DevicePolicy=auto
+#DevicePolicy=auto
  
 [Service]
 Type=simple

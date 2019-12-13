@@ -2,8 +2,8 @@
 # Timer pour le déclenchement du déploiement automatique.
 # Installation : 
 #  - cd /etc/systemd/system 
-#  - sudo ln -s /home/cnr/Docments/quai-des-energies/scripts/qde_deploy.timer qde_deploy.timer
-#  - sudo systemctl enable qde_deploy.timer
+#  - sudo ln -s /home/cnr/Documents/quai-des-energies/scripts/qde_deployd.timer qde_deployd.timer
+#  - sudo systemctl enable qde_deployd.timer
 #  - sudo systemctl daemon-reload
 #
 [Unit]

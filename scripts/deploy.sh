@@ -70,7 +70,7 @@ current_commit=$(git rev-parse --short HEAD)
 
 # Voir si on a bien le réseau 
 comment "Vérifier l'état du réseau..."
-ping -c 10 github.com
+ping -c 4 github.com
 check
 
 # Vérifier s'il y a eu des modifs sur le repo en ligne
