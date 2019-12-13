@@ -107,8 +107,9 @@ cat $working_dir"/"output.$etape.log
 check
 
 comment "Recopier la config de prod"
-cp ../$cur_rep_name/config/config.json ./config/
-ls ./config/config.json
+cd $working_dir
+cp $cur_rep_name/config/config.json $new_rep_name/config/
+ls ./$new_rep_name/config/config.json
 check
 
 comment "rechargement de la définition des services"
