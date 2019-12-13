@@ -11,6 +11,7 @@
 logfile="/tmp/qde_deploy.log"
 online_git_repo="https://github.com/Pilooz/qde.git"
 production_link="quai-des-energies"
+precedent_production_link="qde_old"
 working_dir="/home/cnr/Documents"
 cur_rep_name="quai-des-energies" #nom répertoire de production courant comportant.
 new_rep_name="qde_new" #nom du futur répertoire de production
@@ -67,6 +68,11 @@ comment "repertoire de l'application : "$working_dir"/"$cur_rep_name
 cd $working_dir"/"$cur_rep_name
 current_commit=$(git rev-parse --short HEAD)
 
+# Voir si on a bien le réseau 
+comment "Vérifier l'état du réseau..."
+ping -c 4 github.com
+check
+
 # Vérifier s'il y a eu des modifs sur le repo en ligne
 comment "Vérifier si une nouvelle version est disponible"
 [ $(git rev-parse HEAD) = $(git ls-remote $(git rev-parse --abbrev-ref @{u} | sed 's/\// /g') | cut -f1) ] &&  need_update=0 ||  need_update=1
@@ -90,6 +96,7 @@ cd $working_dir"/"$new_rep_name
 new_commit=$(git rev-parse --short HEAD)
 comment "commit version actuelle : \e[93m'$current_commit'\e[39m"
 comment "commit nouvelle version : \e[93m'$new_commit'\e[39m"
+git diff --compact-summary $current_commit $new_commit
 
 cd $working_dir
 rep="qde_"$new_commit
@@ -107,8 +114,9 @@ cat $working_dir"/"output.$etape.log
 check
 
 comment "Recopier la config de prod"
-cp ../$cur_rep_name/config/config.json ./config/
-ls ./config/config.json
+cd $working_dir
+cp $cur_rep_name/config/config.json $new_rep_name/config/
+ls ./$new_rep_name/config/config.json
 check
 
 comment "rechargement de la définition des services"
@@ -134,11 +142,18 @@ cd $working_dir
 comment "suppression de l'ancien lien"
 rm -f $production_link
 check
+
+comment "changer les droits d'accès sur $new_rep_name"
+chown cnr:cnr $new_rep_name 
+
 comment "création du nouveau lien"
 ln -s $new_rep_name $production_link
 # On vérifie le lien en essayant d'entrer dans le rep
 cd $production_link
 check
+
+comment "changer les droits d'accès sur $production_link"
+chown cnr:cnr $production_link
 
 # Redémarrer nodeJS
 etape "Redémarrer nodeJS"

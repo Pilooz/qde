@@ -1,4 +1,4 @@
-.DS_store
+*.DS_Store
 *.log
 # All installed libs
 node_modules/
