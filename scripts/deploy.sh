@@ -67,6 +67,11 @@ comment "repertoire de l'application : "$working_dir"/"$cur_rep_name
 cd $working_dir"/"$cur_rep_name
 current_commit=$(git rev-parse --short HEAD)
 
+# Voir si on a bien le réseau 
+comment "Vérifier l'état du réseau..."
+ping -c 10 github.com
+check
+
 # Vérifier s'il y a eu des modifs sur le repo en ligne
 comment "Vérifier si une nouvelle version est disponible"
 [ $(git rev-parse HEAD) = $(git ls-remote $(git rev-parse --abbrev-ref @{u} | sed 's/\// /g') | cut -f1) ] &&  need_update=0 ||  need_update=1
