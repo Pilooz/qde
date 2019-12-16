@@ -114,6 +114,7 @@ function init(callback){
 
 				$.each( data.slides , function(key, value) {
 					var filter_key = value.filter_key,
+						media_type = value.media_type,
 						intro_anim = value.intro_anim,
 						intro_audio = value.intro_audio,
 						color = value.color,
@@ -126,18 +127,19 @@ function init(callback){
 
 						shad = value.shad;
 						
+						console.log(media_type);
 						
 						
 
 					slides_menu[i] = new Menu_slides(filter_key,color,intro_img,type,title,type_en,title_en,i);
 					slides_menu[i].display();
 
-					if(filter_key == "video"){
+					if(media_type == "video"){
 						var video = value.video;
 						var video_en = value.video_en;
-						homeSlider_slides[i] = new HomeSlider_slide_vid(key,color,intro_anim,intro_audio,video,type,title,type_en,title_en,video_en,shad,i);
+						homeSlider_slides[i] = new HomeSlider_slide_vid(key,color,intro_anim,intro_audio,video,type,title,type_en,title_en,video_en,shad,media_type,filter_key,i);
 					
-					}else if (filter_key == "question"){
+					}else if (media_type == "quiz"){
 						let questions_selection = [];
 						var o=0;
 						$.each( value.questions , function(key, value) {
@@ -146,9 +148,9 @@ function init(callback){
 						})
 
 
-						homeSlider_slides[i] = new HomeSlider_slide_quiz(key,color,intro_anim,intro_audio,questions_selection,intro_img,type,title,type_en,title_en,shad,i);
+						homeSlider_slides[i] = new HomeSlider_slide_quiz(key,color,intro_anim,intro_audio,questions_selection,intro_img,type,title,type_en,title_en,shad,media_type,filter_key,i);
 					
-					}else if (filter_key == "data"){
+					}else if (media_type == "data"){
 
 						var data_num = value.data_num;
 						var color_states = value.color_states;
@@ -159,19 +161,19 @@ function init(callback){
 							var sounds =value.sounds;
 
 
-							homeSlider_slides[i] = new HomeSlider_slide_data_0(key,color,type,title,type_en,title_en,data_num,color_states,videos,sounds,duration,i);
+							homeSlider_slides[i] = new HomeSlider_slide_data_0(key,color,type,title,type_en,title_en,data_num,color_states,videos,sounds,duration,media_type,filter_key,i);
 							homeSlider_data_0 = homeSlider_slides[i];
 						}else if(data_num == 1){
-							homeSlider_slides[i] = new HomeSlider_slide_data_1(key,color,type,title,type_en,title_en,data_num,duration,i);
+							homeSlider_slides[i] = new HomeSlider_slide_data_1(key,color,type,title,type_en,title_en,data_num,duration,media_type,filter_key,i);
 							homeSlider_data_1 = homeSlider_slides[i];
 
 						}else if(data_num == 2){
 							var video = value.video;
 							var video_en = value.video_en;
-							homeSlider_slides[i] = new HomeSlider_slide_data_2(key,color,type,title,type_en,title_en,data_num,video,video_en,duration,i);
+							homeSlider_slides[i] = new HomeSlider_slide_data_2(key,color,type,title,type_en,title_en,data_num,video,video_en,duration,media_type,filter_key,i);
 
 						}else if(data_num == 3){
-							homeSlider_slides[i] = new HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,duration,i);
+							homeSlider_slides[i] = new HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,duration,media_type,filter_key,i);
 						}
 
 					}
@@ -312,7 +314,7 @@ function init(callback){
 			}
 
 			callback();
-
+			console.log(slides_menu);
 			
 
 	})
@@ -548,7 +550,7 @@ function HomeSlider(){
 		}
 }
 
-function HomeSlider_slide_vid(key,color,intro_anim,intro_audio,video,type,title,type_en,title_en,video_en,shad,i){
+function HomeSlider_slide_vid(key,color,intro_anim,intro_audio,video,type,title,type_en,title_en,video_en,shad,media_type,filter_key,i){
 
 	this.key = key;
 	this.color = color;
@@ -561,7 +563,7 @@ function HomeSlider_slide_vid(key,color,intro_anim,intro_audio,video,type,title,
 	this.shad = shad;
 
 
-	let homeSlide = new Box("div","homeSlide__slide video "+key,".homeSlide");
+	let homeSlide = new Box("div","homeSlide__slide "+filter_key+" "+media_type+" "+key,".homeSlide");
 		
 		let titleBlock= new Box("div","homeSlide__slide__titleBlock",homeSlide.el);
 		$(titleBlock.el).css("background", color);
@@ -775,7 +777,7 @@ function HomeSlider_slide_vid(key,color,intro_anim,intro_audio,video,type,title,
 }
 
 
-function HomeSlider_slide_quiz(key,color,intro_anim,intro_audio,questions_selection,scoreImg,type,title,type_en,title_en,shad,i){
+function HomeSlider_slide_quiz(key,color,intro_anim,intro_audio,questions_selection,scoreImg,type,title,type_en,title_en,shad,media_type,filter_key,i){
 	this.key = key;
 	this.color = color;
 	this.intro_anim = intro_anim;
@@ -792,7 +794,7 @@ function HomeSlider_slide_quiz(key,color,intro_anim,intro_audio,questions_select
 	
 
 
-	let homeSlide = new Box("div","homeSlide__slide question "+key,".homeSlide");
+	let homeSlide = new Box("div","homeSlide__slide "+media_type+" "+filter_key+" "+key,".homeSlide");
 		
 		let titleBlock= new Box("div","homeSlide__slide__titleBlock",homeSlide.el);
 		$(titleBlock.el).css("background", color);
@@ -1254,7 +1256,7 @@ function Question(num,response_ok,color_back,question,responses,message,question
 }
 
 
-function HomeSlider_slide_data_0(key,color,type,title,type_en,title_en,data_num,color_states,videos,sounds,duration,i){
+function HomeSlider_slide_data_0(key,color,type,title,type_en,title_en,data_num,color_states,videos,sounds,duration,media_type,filter_key,i){
 
 	this.key = key;
 	this.color = color;
@@ -1283,7 +1285,7 @@ function HomeSlider_slide_data_0(key,color,type,title,type_en,title_en,data_num,
 	
 
 
-	let homeSlide = new Box("div","homeSlide__slide data data_"+data_num+" "+key,".homeSlide");
+	let homeSlide = new Box("div","homeSlide__slide data_"+data_num+" "+key+" "+media_type+" "+filter_key,".homeSlide");
 
 
 		
@@ -1718,7 +1720,7 @@ function HomeSlider_slide_data_0(key,color,type,title,type_en,title_en,data_num,
 	}
 }
 
-function HomeSlider_slide_data_1(key,color,type,title,type_en,title_en,data_num,duration,i){
+function HomeSlider_slide_data_1(key,color,type,title,type_en,title_en,data_num,duration,media_type,filter_key,i){
 
 	this.key = key;
 	this.color = color;
@@ -1754,7 +1756,7 @@ function HomeSlider_slide_data_1(key,color,type,title,type_en,title_en,data_num,
 
 	
 
-	let homeSlide= new Box("div","homeSlide__slide data data_"+data_num+" "+key,".homeSlide");
+	let homeSlide= new Box("div","homeSlide__slide data_"+data_num+" "+key+" "+media_type+" "+filter_key,".homeSlide");
 		
 	let titleBlock= new Box("div","homeSlide__slide__titleBlock",homeSlide.el);
 		$(titleBlock.el).css("background", color);
@@ -2073,7 +2075,7 @@ function HomeSlider_slide_data_1(key,color,type,title,type_en,title_en,data_num,
 	}
 }
 
-function HomeSlider_slide_data_2(key,color,type,title,type_en,title_en,data_num,video,video_en,duration,i){
+function HomeSlider_slide_data_2(key,color,type,title,type_en,title_en,data_num,video,video_en,duration,media_type,filter_key,i){
 
 	this.key = key;
 	this.color = color;
@@ -2087,7 +2089,7 @@ function HomeSlider_slide_data_2(key,color,type,title,type_en,title_en,data_num,
 	let data_timer = 0;
 	let timer_content;
 
-	let homeSlide= new Box("div","homeSlide__slide data data_"+data_num+" "+key,".homeSlide");
+	let homeSlide= new Box("div","homeSlide__slide data_"+data_num+" "+key+" "+media_type+" "+filter_key,".homeSlide");
 	
 	
 
@@ -2250,7 +2252,7 @@ function Incr_anim(num,element,pre,un){
 		}
 }
 
-function HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,duration,i){
+function HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,duration,media_type,filter_key,i){
 	this.key = key;
 	this.color = color;
 	this.type = type;
@@ -2282,7 +2284,7 @@ function HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,
 	let data_timer = 0;
 	let timer_content;
 
-	let homeSlide = new Box("div","homeSlide__slide data data_"+data_num+" "+key,".homeSlide");
+	let homeSlide = new Box("div","homeSlide__slide data_"+data_num+" "+key+" "+media_type+" "+filter_key,".homeSlide");
 		
 	let titleBlock= new Box("div","homeSlide__slide__titleBlock",homeSlide.el);
 		$(titleBlock.el).css("background", color);
