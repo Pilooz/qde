@@ -3,8 +3,8 @@
     "tech_hydrogen" : {
       "filter_key" : "video",
       "color" : "#55B5CA",
-      "intro_anim" : "medias/animations/anooki_anim_1.png",
-      "intro_audio" : "medias/animations/anooki_sound_1.wav",
+      "intro_anim" : "medias/animations/anooki-ENR.png",
+      "intro_audio" : "medias/animations/Anooki-ENR.wav",
       "intro_img" : "medias/previews/tech-hydrogene.jpg",
       "type" : "Vidéo",
       "title" : "Comprendre l'hydrogène",
@@ -163,12 +163,12 @@
         "#770000"
       ],
       "animations" : [
-        "medias/animations/anooki-bravo.png",
-        "medias/animations/anooki-jump.png",
-        "medias/animations/anooki-bravo.png",
-        "medias/animations/anooki-bravo.png",
-        "medias/animations/anooki-bravo.png",
-        "medias/animations/anooki-bravo.png"
+        "medias/animations/Anooki-Air1.png",
+        "medias/animations/Anooki-Air2.png",
+        "medias/animations/Anooki-Air3.png",
+        "medias/animations/Anooki-Air4.png",
+        "medias/animations/Anooki-Air5.png",
+        "medias/animations/Anooki-Air6.png"
       ],
       "sounds" : [
         "medias/animations/anooki-bravo.wav",
@@ -655,6 +655,7 @@
   },
   "settings" : {
     "durations" : {
+      "menu_timer" : "600",
       "duration_titles" : "3",
       "duration_quiz" : "5",
       "question__resultAnim__duration" : "2",
@@ -684,7 +685,7 @@
       "filter_4" : [
         "Infos",
         "Infos",
-        ".info"
+        ".data"
       ]
     },
     "questions" : {
