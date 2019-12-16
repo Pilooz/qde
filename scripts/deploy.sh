@@ -153,7 +153,7 @@ cd $production_link
 check
 
 comment "changer les droits d'accès sur $production_link"
-chown cnr:cnr $production_link
+chown -R cnr:cnr $production_link
 
 # Redémarrer nodeJS
 etape "Redémarrer nodeJS"
