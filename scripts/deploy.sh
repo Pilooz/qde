@@ -169,8 +169,11 @@ sudo journalctl -n 10 --no-pager -u qde_presenced.service
 # Fin
 etape "Post-traitements"
 cd $working_dir
-comment "suppression de l'ancien répertoire qde_$current_commit"
-rm -rf "qde_"$current_commit
+
+comment "suppresion de la version n-2 contenue dans 'qde_old'"
+rm -rf qde_old
+comment "L'ancien répertoire qde_$current_commit devient qde_old"
+mv qde_$current_commit qde_old
 check
 
 fin_normale
