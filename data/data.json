@@ -146,7 +146,7 @@
     },
     "data_air" : {
       "filter_key" : "data",
-      "color" : "#00bfa6",
+      "color" : "#6691a8",
       "data_num" : "0",
       "duration" : "8",
       "intro_img" : "medias/previews/data_air.png",
@@ -192,20 +192,20 @@
     },
     "data_deplacer" : {
       "filter_key" : "data",
-      "color" : "#5598E8",
+      "color" : "#6FA0E5",
       "data_num" : "2",
-      "duration" : "10",
+      "duration" : "15",
       "intro_img" : "medias/previews/data_deplacer.png",
       "type" : "Emission de CO2",
       "title" : "Se déplacer",
       "type_en" : "Infos live",
-      "title_en" : "The French energy production",
-      "video" : "medias/videos/data_deplacements.mp4",
-      "video_en" : "medias/videos/data_deplacements.mp4"
+      "title_en" : "Travel",
+      "video" : "medias/videos/data_deplacements_FR.mp4",
+      "video_en" : "medias/videos/data_deplacements_EN.mp4"
     },
     "data_cnr" : {
       "filter_key" : "data",
-      "color" : "#78A700",
+      "color" : "#7b9344",
       "data_num" : "3",
       "duration" : "12",
       "intro_img" : "medias/previews/data_cnr.png",
@@ -215,7 +215,7 @@
       "title_en" : "CNR energy production"
     },
     "part_cea" : {
-      "filter_key" : "video",
+      "filter_key" : "partner",
       "color" : "#CB2C2C",
       "intro_anim" : "medias/animations/anooki-jump.png",
       "intro_audio" : "medias/animations/anooki-jump.wav",
@@ -224,12 +224,12 @@
       "title" : "CEA Tech",
       "video" : "medias/videos/part_CEA_FR.mp4",
       "type_en" : "Partner",
-      "title_en" : "CNR",
+      "title_en" : "CEA Tech",
       "video_en" : "medias/videos/part_CEA_EN.mp4",
       "shad" : "on"
     },
     "part_engie" : {
-      "filter_key" : "video",
+      "filter_key" : "partner",
       "color" : "#00AFE1",
       "intro_anim" : "medias/animations/anooki-jump.png",
       "intro_audio" : "medias/animations/anooki-jump.wav",
@@ -243,21 +243,21 @@
       "shad" : "on"
     },
     "part_cnr" : {
-      "filter_key" : "video",
+      "filter_key" : "partner",
       "color" : "#CB2C2C",
       "intro_anim" : "medias/animations/anooki-jump.png",
       "intro_audio" : "medias/animations/anooki-jump.wav",
-      "intro_img" : "medias/previews/part_CNR.png",
+      "intro_img" : "medias/previews/part_CNR.jpg",
       "type" : "Partenaire",
       "title" : "CNR",
-      "video" : "medias/videos/part_CNR_identite.mov",
+      "video" : "medias/videos/part_CNR_identite_FR.mov",
       "type_en" : "Partner",
       "title_en" : "CNR",
-      "video_en" : "medias/videos/part_CNR_identite.mov",
+      "video_en" : "medias/videos/part_CNR_identite_EN.mov",
       "shad" : "on"
     },
     "part_AuRA" : {
-      "filter_key" : "video",
+      "filter_key" : "partner",
       "color" : "#4095D8",
       "intro_anim" : "medias/animations/anooki-jump.png",
       "intro_audio" : "medias/animations/anooki-jump.wav",
@@ -657,9 +657,9 @@
     "durations" : {
       "menu_timer" : "600",
       "duration_titles" : "3",
-      "duration_quiz" : "5",
+      "duration_quiz" : "10",
       "question__resultAnim__duration" : "2",
-      "question_resultMessage_duration" : "4",
+      "question_resultMessage_duration" : "6",
       "duration_infos" : "5",
       "data_refresh_time" : [
         "16",
@@ -683,6 +683,11 @@
         ".question"
       ],
       "filter_4" : [
+        "Partenaires",
+        "Partners",
+        ".partner"
+      ],
+      "filter_5" : [
         "Infos",
         "Infos",
         ".data"
@@ -691,7 +696,7 @@
     "questions" : {
       "response__ok__anim" : "medias/animations/anooki-bravo.png",
       "response__ok__sound" : "medias/animations/anooki-bravo.wav",
-      "response__false__anim" : "",
+      "response__false__anim" : "medias/animations/anooki-no.png",
       "response__false__sound" : "medias/sounds/wrong_sound.mp3",
       "timer__sound" : "medias/sounds/timer_sound.wav",
       "score_text" : "Votre score est",
