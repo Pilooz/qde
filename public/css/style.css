@@ -1300,7 +1300,7 @@ body{
     }
     
 
-    .menuNav__slide.anim .menuNav__slide__image {
+    .menuNav__slide.anim:not(.question) .menuNav__slide__image {
     
       opacity: 0;
     }
