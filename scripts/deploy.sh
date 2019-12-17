@@ -176,6 +176,11 @@ comment "L'ancien répertoire qde_$current_commit devient qde_old"
 mv qde_$current_commit qde_old
 check
 
+# Pour l'instant, recopier les videos depuis /home/cnr/medias vers $production_link/medias/videos
+cd $working_dir
+comment "Synchroniser les vidéos depuis /home/cnr/medias/videos vers $production_link/medias/videos"
+cp  medias/videos/* $production_link/medias/videos/*
+
 fin_normale
 
 
