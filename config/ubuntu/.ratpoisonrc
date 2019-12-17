@@ -1,0 +1,5 @@
+unbind c
+unbind C-c
+unbind exclam
+unbind C-exclam
+unbind period
