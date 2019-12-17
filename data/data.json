@@ -153,14 +153,14 @@
       "type" : "Infos live",
       "title" : "Qualité de l'air à Lyon",
       "type_en" : "Infos live",
-      "title_en" : "Air quality at Lyon",
+      "title_en" : "Air quality in Lyon",
       "color_states" : [
-        "#00bfa6",
-        "#00d663",
-        "#d5f200",
-        "#fba500",
-        "#fb0000",
-        "#770000"
+        "#78A700",
+        "#7D8525",
+        "#6D6F1E",
+        "#945C29",
+        "#943C29",
+        "#463E3C"
       ],
       "animations" : [
         "medias/animations/Anooki-Air1.png",
