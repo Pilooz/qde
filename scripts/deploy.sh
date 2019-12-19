@@ -177,9 +177,10 @@ mv qde_$current_commit qde_old
 check
 
 # Pour l'instant, recopier les videos depuis /home/cnr/medias vers $production_link/medias/videos
-cd $working_dir
+cd $production_link/medias/
 comment "Synchroniser les vidéos depuis /home/cnr/medias/videos vers $production_link/medias/videos"
-cp  medias/videos/* $production_link/medias/videos/*
+#cp  medias/videos/* $production_link/medias/videos/*
+ln -s $working_dir/medias/videos videos
 
 fin_normale
 
