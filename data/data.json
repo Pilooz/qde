@@ -2,7 +2,7 @@
   "slides" : {
     "tech_hydrogen" : {
       "filter_key" : "video",
-      "media_type" : "video", 
+      "media_type" : "video",
       "color" : "#55B5CA",
       "intro_anim" : "medias/animations/anooki-pile.png",
       "intro_audio" : "",
@@ -227,19 +227,19 @@
       "type_en" : "Infos live",
       "title_en" : "CNR energy production"
     },
-    "part_cea" : {
+    "part_cnr" : {
       "filter_key" : "partner",
       "media_type" : "video",
       "color" : "#CB2C2C",
       "intro_anim" : "medias/animations/anooki-jump.png",
       "intro_audio" : "medias/animations/anooki-jump.wav",
-      "intro_img" : "medias/previews/part_CEA.png",
+      "intro_img" : "medias/previews/part_CNR.jpg",
       "type" : "Partenaire",
-      "title" : "CEA Tech",
-      "video" : "medias/videos/part_CEA_FR.mp4",
+      "title" : "CNR",
+      "video" : "medias/videos/part_CNR_identite_FR.mov",
       "type_en" : "Partner",
-      "title_en" : "CEA Tech",
-      "video_en" : "medias/videos/part_CEA_EN.mp4",
+      "title_en" : "CNR",
+      "video_en" : "medias/videos/part_CNR_identite_EN.mov",
       "shad" : "on"
     },
     "part_engie" : {
@@ -257,19 +257,19 @@
       "video_en" : "medias/videos/part_GNVert_FR.mp4",
       "shad" : "on"
     },
-    "part_cnr" : {
+    "part_cea" : {
       "filter_key" : "partner",
       "media_type" : "video",
       "color" : "#CB2C2C",
       "intro_anim" : "medias/animations/anooki-jump.png",
       "intro_audio" : "medias/animations/anooki-jump.wav",
-      "intro_img" : "medias/previews/part_CNR.jpg",
+      "intro_img" : "medias/previews/part_CEA.png",
       "type" : "Partenaire",
-      "title" : "CNR",
-      "video" : "medias/videos/part_CNR_identite_FR.mov",
+      "title" : "CEA Tech",
+      "video" : "medias/videos/part_CEA_FR.mp4",
       "type_en" : "Partner",
-      "title_en" : "CNR",
-      "video_en" : "medias/videos/part_CNR_identite_EN.mov",
+      "title_en" : "CEA Tech",
+      "video_en" : "medias/videos/part_CEA_EN.mp4",
       "shad" : "on"
     },
     "part_AuRA" : {
@@ -661,13 +661,13 @@
         "reponse_3" : "Trois missions"
       },
       "message" : "Les 3 missions de la CNR sont : produire de l’hydroélectricité, promouvoir la navigation, favoriser l’irrigation.",
-      "question_en" : "How many missions were assigned to CNR during the concession of the Rhône by the French government?",
+      "question_en" : "How many missions were entrusted to CNR when the French government awarded it the Rhone concession?",
       "responses_en" : {
         "reponse_1" : "One mission",
         "reponse_2" : "Two missions",
         "reponse_3" : "Three missions"
       },
-      "message_en" : "The 3 missions of the CNR are: to produce hydroelectricity, to promote navigation and to promote irrigation."
+      "message_en" : "CNR’s 3 missions are: producing hydroelectricity, promoting navigation, favouring irrigation."
     }
   },
   "settings" : {
@@ -699,15 +699,15 @@
         "Quiz",
         ".question"
       ],
-      "filter_4" : [
-        "Partenaires",
-        "Partners",
-        ".partner"
-      ],
       "filter_5" : [
         "Infos",
         "Infos",
         ".data"
+      ],
+      "filter_4" : [
+        "Partenaires",
+        "Partners",
+        ".partner"
       ]
     },
     "questions" : {
