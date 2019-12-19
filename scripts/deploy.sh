@@ -144,7 +144,7 @@ rm -f $production_link
 check
 
 comment "changer les droits d'accès sur $new_rep_name"
-chown cnr:cnr $new_rep_name 
+chown -R cnr:cnr $new_rep_name 
 
 comment "création du nouveau lien"
 ln -s $new_rep_name $production_link
