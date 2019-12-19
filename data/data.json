@@ -661,13 +661,13 @@
         "reponse_3" : "Trois missions"
       },
       "message" : "Les 3 missions de la CNR sont : produire de l’hydroélectricité, promouvoir la navigation, favoriser l’irrigation.",
-      "question_en" : "How many missions were assigned to CNR during the concession of the Rhône by the French government?",
+      "question_en" : "How many missions were entrusted to CNR when the French government awarded it the Rhone concession?",
       "responses_en" : {
         "reponse_1" : "One mission",
         "reponse_2" : "Two missions",
         "reponse_3" : "Three missions"
       },
-      "message_en" : "The 3 missions of the CNR are: to produce hydroelectricity, to promote navigation and to promote irrigation."
+      "message_en" : "CNR’s 3 missions are: producing hydroelectricity, promoting navigation, favouring irrigation."
     }
   },
   "settings" : {
