@@ -158,7 +158,7 @@
       "media_type" : "data",
       "color" : "#6691a8",
       "data_num" : "0",
-      "duration" : "8",
+      "duration" : "11",
       "intro_img" : "medias/previews/data_air.png",
       "type" : "Infos live",
       "title" : "Qualité de l'air à Lyon",
@@ -181,12 +181,12 @@
         "medias/animations/Anooki-Air6.png"
       ],
       "sounds" : [
-        "medias/animations/anooki-bravo.wav",
-        "medias/animations/anooki-jump.wav",
-        "medias/animations/anooki-bravo.wav",
-        "medias/animations/anooki-bravo.wav",
-        "medias/animations/anooki-bravo.wav",
-        "medias/animations/anooki-bravo.wav"
+        "medias/animations/Anooki-Air1.wav",
+        "medias/animations/Anooki-Air2.wav",
+        "medias/animations/Anooki-Air3.wav",
+        "medias/animations/Anooki-Air4.wav",
+        "medias/animations/Anooki-Air5.wav",
+        "medias/animations/Anooki-Air6.wav"
       ]
     },
     "data_france" : {
