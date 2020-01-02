@@ -204,7 +204,7 @@
     "data_deplacer" : {
       "filter_key" : "data",
       "media_type" : "data",
-      "color" : "#6FA0E5",
+      "color" : "#638289",
       "data_num" : "2",
       "duration" : "15",
       "intro_img" : "medias/previews/data_deplacer.png",
