@@ -15,6 +15,7 @@ var http = require('http').Server(app);
 
 var io = require('socket.io')(http);
 var getJSON = require('get-json');
+const fs = require('fs');
 
 // view engine setup and static routes
 app.set('view engine', 'ejs');
@@ -88,9 +89,17 @@ io.on('connection', function (socket) {
   });
 
   //
-  // Récupération des données ATMO
+  // Récupération des données de production CNR
   //
-	socket.on('ask_for_atmo_data', function(send_response) {
+  socket.on('ask_for_cnr_data', function(send_response) {
+   var api_response = fs.readFileSync(conf.api_token_cnr.url);
+   send_response(api_response);
+  });
+
+  //
+  // Récupération des données ATMO
+  // 
+  socket.on('ask_for_atmo_data', function(send_response) {
     var api_response = {};
 
     getJSON( conf.api_tokens.atmo.url + conf.api_tokens.atmo.key )

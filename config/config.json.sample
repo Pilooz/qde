@@ -6,9 +6,15 @@
             "path_data" : "/open_api/actual_generation/v1/actual_generations_per_production_type",
             "credentials": "login:password"
         },
+
         "atmo" : { 
             "url" : "http://api.atmo-aura.fr/communes/69123/indices?api_token=" ,
             "key" : "my api token"
+        },
+
+        "cnr" : { 
+            "url" : "/tmp/PuissanceCNR.json",
+            "key" : ""
         }
   }
 }
