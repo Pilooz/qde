@@ -1,8 +1,8 @@
-#! /bin/bash
+#!/bin/bash
 # 
 # Session kiosk pour l'application Quai des Energies
 #
-# ce fichier est à installer dane home de l'utuilisateur
+# ce fichier est à installer dans home de l'utuilisateur
 #
 ratpoison &
 xscreensaver -nosplash &
