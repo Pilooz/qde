@@ -144,7 +144,7 @@ rm -f $production_link
 check
 
 comment "changer les droits d'accès sur $new_rep_name"
-chown cnr:cnr $new_rep_name 
+chown -R cnr:cnr $new_rep_name 
 
 comment "création du nouveau lien"
 ln -s $new_rep_name $production_link
@@ -175,6 +175,12 @@ rm -rf qde_old
 comment "L'ancien répertoire qde_$current_commit devient qde_old"
 mv qde_$current_commit qde_old
 check
+
+# Pour l'instant, recopier les videos depuis /home/cnr/medias vers $production_link/medias/videos
+cd $production_link/medias/
+comment "Synchroniser les vidéos depuis /home/cnr/medias/videos vers $production_link/medias/videos"
+#cp  medias/videos/* $production_link/medias/videos/*
+ln -s $working_dir/medias/videos videos
 
 fin_normale
 

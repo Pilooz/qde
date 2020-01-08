@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=Quai des Energies
+Comment=Kiosk pour l'application Quai des Energies
+Exec=/home/cnr/.xsession
+X-Ubuntu-Gettext-Domain=<gnome-session-3.0>

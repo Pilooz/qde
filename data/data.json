@@ -2,10 +2,10 @@
   "slides" : {
     "tech_hydrogen" : {
       "filter_key" : "video",
-      "media_type" : "video", 
+      "media_type" : "video",
       "color" : "#55B5CA",
       "intro_anim" : "medias/animations/anooki-pile.png",
-      "intro_audio" : "",
+      "intro_audio" : "medias/animations/anooki-pile.wav",
       "intro_img" : "medias/previews/tech-hydrogene.jpg",
       "type" : "Vidéo",
       "title" : "Comprendre l'hydrogène",
@@ -20,7 +20,7 @@
       "media_type" : "video",
       "color" : "#42B398",
       "intro_anim" : "medias/animations/anooki-eolienne.png",
-      "intro_audio" : "",
+      "intro_audio" : "medias/animations/anooki-eolienne.wav",
       "intro_img" : "medias/previews/tech_eolien.png",
       "type" : "Vidéo",
       "title" : "Comprendre les éoliennes",
@@ -35,7 +35,7 @@
       "media_type" : "video",
       "color" : "#158ABE",
       "intro_anim" : "medias/animations/anooki-hydro.png",
-      "intro_audio" : "",
+      "intro_audio" : "medias/animations/anooki-hydro.wav",
       "intro_img" : "medias/previews/tech_hydroelec.png",
       "type" : "Vidéo",
       "title" : "Comprendre l'hydroélectricité",
@@ -50,7 +50,7 @@
       "media_type" : "video",
       "color" : "#FFA41B",
       "intro_anim" : "medias/animations/anooki-solaire.png",
-      "intro_audio" : "",
+      "intro_audio" : "medias/animations/anooki-solaire.wav",
       "intro_img" : "medias/previews/tech_solaire.png",
       "type" : "Vidéo",
       "title" : "Comprendre l'énergie solaire",
@@ -158,19 +158,19 @@
       "media_type" : "data",
       "color" : "#6691a8",
       "data_num" : "0",
-      "duration" : "8",
+      "duration" : "11",
       "intro_img" : "medias/previews/data_air.png",
       "type" : "Infos live",
       "title" : "Qualité de l'air à Lyon",
       "type_en" : "Infos live",
-      "title_en" : "Air quality at Lyon",
+      "title_en" : "Air quality in Lyon",
       "color_states" : [
-        "#00bfa6",
-        "#00d663",
-        "#d5f200",
-        "#fba500",
-        "#fb0000",
-        "#770000"
+        "#78A700",
+        "#7D8525",
+        "#6D6F1E",
+        "#945C29",
+        "#943C29",
+        "#463E3C"
       ],
       "animations" : [
         "medias/animations/Anooki-Air1.png",
@@ -181,12 +181,12 @@
         "medias/animations/Anooki-Air6.png"
       ],
       "sounds" : [
-        "medias/animations/anooki-bravo.wav",
-        "medias/animations/anooki-jump.wav",
-        "medias/animations/anooki-bravo.wav",
-        "medias/animations/anooki-bravo.wav",
-        "medias/animations/anooki-bravo.wav",
-        "medias/animations/anooki-bravo.wav"
+        "medias/animations/Anooki-Air1.wav",
+        "medias/animations/Anooki-Air2.wav",
+        "medias/animations/Anooki-Air3.wav",
+        "medias/animations/Anooki-Air4.wav",
+        "medias/animations/Anooki-Air5.wav",
+        "medias/animations/Anooki-Air6.wav"
       ]
     },
     "data_france" : {
@@ -204,7 +204,7 @@
     "data_deplacer" : {
       "filter_key" : "data",
       "media_type" : "data",
-      "color" : "#6FA0E5",
+      "color" : "#638289",
       "data_num" : "2",
       "duration" : "15",
       "intro_img" : "medias/previews/data_deplacer.png",
@@ -227,19 +227,19 @@
       "type_en" : "Infos live",
       "title_en" : "CNR energy production"
     },
-    "part_cea" : {
+    "part_cnr" : {
       "filter_key" : "partner",
       "media_type" : "video",
       "color" : "#CB2C2C",
       "intro_anim" : "medias/animations/anooki-jump.png",
       "intro_audio" : "medias/animations/anooki-jump.wav",
-      "intro_img" : "medias/previews/part_CEA.png",
+      "intro_img" : "medias/previews/part_CNR.jpg",
       "type" : "Partenaire",
-      "title" : "CEA Tech",
-      "video" : "medias/videos/part_CEA_FR.mp4",
+      "title" : "CNR",
+      "video" : "medias/videos/part_CNR_identite_FR.mov",
       "type_en" : "Partner",
-      "title_en" : "CEA Tech",
-      "video_en" : "medias/videos/part_CEA_EN.mp4",
+      "title_en" : "CNR",
+      "video_en" : "medias/videos/part_CNR_identite_EN.mov",
       "shad" : "on"
     },
     "part_engie" : {
@@ -257,19 +257,19 @@
       "video_en" : "medias/videos/part_GNVert_FR.mp4",
       "shad" : "on"
     },
-    "part_cnr" : {
+    "part_cea" : {
       "filter_key" : "partner",
       "media_type" : "video",
       "color" : "#CB2C2C",
       "intro_anim" : "medias/animations/anooki-jump.png",
       "intro_audio" : "medias/animations/anooki-jump.wav",
-      "intro_img" : "medias/previews/part_CNR.jpg",
+      "intro_img" : "medias/previews/part_CEA.png",
       "type" : "Partenaire",
-      "title" : "CNR",
-      "video" : "medias/videos/part_CNR_identite_FR.mov",
+      "title" : "CEA Tech",
+      "video" : "medias/videos/part_CEA_FR.mp4",
       "type_en" : "Partner",
-      "title_en" : "CNR",
-      "video_en" : "medias/videos/part_CNR_identite_EN.mov",
+      "title_en" : "CEA Tech",
+      "video_en" : "medias/videos/part_CEA_EN.mp4",
       "shad" : "on"
     },
     "part_AuRA" : {
@@ -661,13 +661,13 @@
         "reponse_3" : "Trois missions"
       },
       "message" : "Les 3 missions de la CNR sont : produire de l’hydroélectricité, promouvoir la navigation, favoriser l’irrigation.",
-      "question_en" : "How many missions were assigned to CNR during the concession of the Rhône by the French government?",
+      "question_en" : "How many missions were entrusted to CNR when the French government awarded it the Rhone concession?",
       "responses_en" : {
         "reponse_1" : "One mission",
         "reponse_2" : "Two missions",
         "reponse_3" : "Three missions"
       },
-      "message_en" : "The 3 missions of the CNR are: to produce hydroelectricity, to promote navigation and to promote irrigation."
+      "message_en" : "CNR’s 3 missions are: producing hydroelectricity, promoting navigation, favouring irrigation."
     }
   },
   "settings" : {
@@ -675,7 +675,7 @@
       "menu_timer" : "600",
       "duration_titles" : "3",
       "duration_quiz" : "10",
-      "question__resultAnim__duration" : "2",
+      "question__resultAnim__duration" : "3",
       "question_resultMessage_duration" : "6",
       "duration_infos" : "5",
       "data_refresh_time" : [
@@ -699,22 +699,22 @@
         "Quiz",
         ".question"
       ],
-      "filter_4" : [
-        "Partenaires",
-        "Partners",
-        ".partner"
-      ],
       "filter_5" : [
         "Infos",
         "Infos",
         ".data"
+      ],
+      "filter_4" : [
+        "Partenaires",
+        "Partners",
+        ".partner"
       ]
     },
     "questions" : {
       "response__ok__anim" : "medias/animations/anooki-bravo.png",
       "response__ok__sound" : "medias/animations/anooki-bravo.wav",
       "response__false__anim" : "medias/animations/anooki-no.png",
-      "response__false__sound" : "medias/sounds/wrong_sound.mp3",
+      "response__false__sound" : "medias/animations/anooki-no.wav",
       "timer__sound" : "medias/sounds/timer_sound.wav",
       "score_text" : "Votre score est",
       "score_text_en" : "Your score is"
