@@ -16,7 +16,7 @@ Type=simple
 User=cnr
 Group=cnr
  
-ExecStart=ngrok tcp 22
+ExecStart=/snap/bin/ngrok tcp 22
  
 Restart=on-failure
 RestartSec=60s
