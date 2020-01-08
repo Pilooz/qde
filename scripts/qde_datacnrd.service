@@ -1,0 +1,24 @@
+#
+# Description du service récupération des données de la CNR sur le serveur fileshare.cnr.tm.fr.
+# Installation : 
+#  - cd /etc/systemd/system 
+#  - sudo ln -s /home/cnr/Documents/quai-des-energies/scripts/qde_datacnrd.service qde_datacnrd.service
+#  - sudo systemctl enable qde_datacnrd.service
+#  - sudo systemctl daemon-reload
+#
+
+[Unit]
+Description=Service de récupération automatique des données CNR - Quai des Energies
+After=network.target
+
+[Service]
+#User=%I
+Restart=always
+RestartSec=3600s
+ExecStart=sftp -i /home/cnr/.ssh/id_rsa_cnr anooki@fileshare.cnr.tm.fr:/home/PuissanceCNR.json /tmp/PuissanceCNR.json
+PIDFile=/var/run/qde_datacnrd.pid
+
+[Install]
+WantedBy=multi-user.target
+
+
