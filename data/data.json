@@ -61,7 +61,7 @@
       "shad" : "on"
     },
     "Quiz5" : {
-      "filter_key" : "question partner",
+      "filter_key" : "question",
       "media_type" : "quiz",
       "color" : "#5B70DE",
       "questions" : [
