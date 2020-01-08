@@ -16,7 +16,7 @@ After=network.target
 Restart=always
 RestartSec=3600s
 ExecStart=sftp -i /home/cnr/.ssh/id_rsa_cnr anooki@fileshare.cnr.tm.fr:/home/PuissanceCNR.json /tmp/PuissanceCNR.json
-PIDFile=/var/run/qde_datacnrd.pid
+#PIDFile=/var/run/qde_datacnrd.pid
 
 [Install]
 WantedBy=multi-user.target
