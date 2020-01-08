@@ -110,8 +110,8 @@ etape "Installation"
 comment "Ré-installer les dépendances"
 cd $working_dir"/"$new_rep_name
 npm install > $working_dir"/"output.$etape.log 2>&1
-cat $working_dir"/"output.$etape.log
 check
+cat $working_dir"/"output.$etape.log
 
 comment "Recopier la config de prod"
 cd $working_dir
