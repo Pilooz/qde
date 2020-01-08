@@ -3,3 +3,6 @@ unbind C-c
 unbind exclam
 unbind C-exclam
 unbind period
+
+#Banish the mouse with each screenchange
+addhook switchwin banish
