@@ -17,6 +17,11 @@ var io = require('socket.io')(http);
 var getJSON = require('get-json');
 const fs = require('fs');
 
+// Logging
+const morgan = require('morgan');
+const  accessLogStream = fs.createWriteStream('/tmp/access.log', {flags: 'a'});
+app.use(morgan('combined', {stream: accessLogStream}));
+
 // view engine setup and static routes
 app.set('view engine', 'ejs');
 // All resources in public dir
