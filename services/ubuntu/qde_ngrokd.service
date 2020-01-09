@@ -2,7 +2,7 @@
 # Description du service ngrok.
 # Installation : 
 #  - cd /etc/systemd/system 
-#  - sudo ln -s /home/cnr/Documents/quai-des-energies/scripts/qde_ngrokd.service qde_ngrokd.service
+#  - sudo ln -s /home/cnr/Documents/quai-des-energies/services/ubuntu/qde_ngrokd.service qde_ngrokd.service
 #  - sudo systemctl enable qde_ngrokd.service
 #  - sudo systemctl daemon-reload
 #

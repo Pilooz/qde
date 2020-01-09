@@ -2,7 +2,7 @@
 # Description du service de détection de presence qui remonte les information des détecteurs de presence.
 # Installation : 
 #  - cd /etc/systemd/system 
-#  - sudo ln -s /home/cnr/Docments/quai-des-energies/scripts/qde_node_server.service qde_node_server.service
+#  - sudo ln -s /home/cnr/Docments/quai-des-energies/services/ubuntu/qde_node_server.service qde_node_server.service
 #  - sudo systemctl enable qde_node_server.service
 #  - sudo systemctl daemon-reload
 #
