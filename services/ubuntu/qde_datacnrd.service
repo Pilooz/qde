@@ -12,11 +12,9 @@ Description=Service de récupération automatique des données CNR - Quai des En
 After=network.target
 
 [Service]
-#User=%I
 Restart=always
-RestartSec=3600s
+RestartSec=1h
 ExecStart=sftp -i /home/cnr/.ssh/id_rsa_cnr anooki@fileshare.cnr.tm.fr:/home/PuissanceCNR.json /home/cnr/Documents/quai-des-energies/public/data/PuissanceCNR.json
-#PIDFile=/var/run/qde_datacnrd.pid
 
 [Install]
 WantedBy=multi-user.target
