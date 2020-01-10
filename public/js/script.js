@@ -313,6 +313,9 @@ function init(callback){
 				});
 			}
 	
+			/*------------------------------------------------------------
+			 Socket de récupération des données de production de la CNR
+			 ------------------------------------------------------------*/
 			get_cnr_api = function() {
   				socket.emit('ask_for_cnr_data', function(data) {
     					 // Ici tu charges les data dans les variables deton app...
@@ -327,9 +330,15 @@ function init(callback){
 	})
 }
 
-$(window).on("load",function(){
-		$(".blocker2").addClass("off");
-	})
+
+$( document ).ready(function() {
+    console.log( "ready!" );
+   $(".blocker2").addClass("off");
+});
+
+//$(window).on("load",function(){
+//		$(".blocker2").addClass("off");
+//	})
 
 /*----------------------------------------------------------------
 	Initalisation de l'application
@@ -388,6 +397,7 @@ function dataRefresh(){
 		if(hour == data_refresh_time[0] && minutes == data_refresh_time[1]){ // Check the time
 			get_atmo_api();
 			get_rte_api();
+			get_cnr_api();
 		}
 		
 	}, 10000)
