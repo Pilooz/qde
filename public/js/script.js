@@ -366,21 +366,27 @@ Empêcher le click droit / long touch sur tactile
 document.addEventListener('contextmenu', event => event.preventDefault());
 
 
+/*----------------------------------------------------------------
+Fonction de réveil de l'application appelée par le listener sur
+l'élément 'blocker', mais aussi par le la socket de gestion de présence
+-----------------------------------------------------------------*/
+function reveiller_application() {
+  if ($(".container").hasClass("off")) {
+	screen__on();
+	$(".blocker").addClass("off");
+	$(".container").removeClass("off");
+  } else {
+	screen__off();
+	$(".blocker").removeClass("off");
+	$(".container").addClass("off");
+  }
+}
 
 /*----------------------------------------------------------------
 	Listener sur l'élément 'blocker', supprimer l'ecran noir au click et lancer l'appli
 ----------------------------------------------------------------*/
 $(".blocker").click(function(){
-	if ($(".container").hasClass("off")) {
-				screen__on();
-				$(".blocker").addClass("off");
-
-				$(".container").removeClass("off");
-			}else {
-				screen__off();
-				$(".blocker").removeClass("off");
-				$(".container").addClass("off");
-			}
+	reveiller_application();
 });
 
 /*----------------------------------------------------------------

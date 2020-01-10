@@ -53,11 +53,8 @@
 			if (data.presence == 1 && presence == 0) {
 				// Il n'y avait personne, maintenant il y a quelqu'un
 				console.log("Il n'y avait personne, maintenant il y a quelqu'un");
-				// @TODO
-				// 1. réinitialiser le timeout d'extinction
-				// 2. Réveiller l'app
-				// 3. commencer à décompter
 				presence = data.presence;				
+				reveiller_application();
 			}
 		});
 	</script>
