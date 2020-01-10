@@ -312,6 +312,13 @@ function init(callback){
 					homeSlider_data_0.data_apply(pll_valeur,pll_date);// attribuer data to slide 
 				});
 			}
+	
+			get_cnr_api = function() {
+  				socket.emit('ask_for_cnr_data', function(data) {
+    					 // Ici tu charges les data dans les variables deton app...
+					 console.log(data);
+  				});
+			}
 
 			callback();
 			console.log(slides_menu);
@@ -336,7 +343,7 @@ init(function(){
 	homeSlider.display();
 	get_rte_api();
 	get_atmo_api();
-
+	get_cnr_api();
 	dataRefresh();
 
 

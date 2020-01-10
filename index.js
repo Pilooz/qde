@@ -97,8 +97,8 @@ io.on('connection', function (socket) {
   // Récupération des données de production CNR
   //
   socket.on('ask_for_cnr_data', function(send_response) {
-   var api_response = fs.readFileSync(conf.api_token_cnr.url);
-   send_response(api_response);
+   var api_response = fs.readFileSync(conf.api_tokens.cnr.url);
+   send_response(JSON.parse(api_response));
   });
 
   //
