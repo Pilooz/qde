@@ -13,8 +13,8 @@ After=network.target
 
 [Service]
 Restart=always
-RestartSec=1h
-ExecStart=su - cnr; sftp -i /home/cnr/.ssh/id_rsa_cnr anooki@fileshare.cnr.tm.fr:/home/PuissanceCNR.json /home/cnr/Documents/quai-des-energies/public/data/PuissanceCNR.json
+RestartSec=60s
+ExecStart=sftp -i /home/cnr/.ssh/id_rsa_cnr anooki@fileshare.cnr.tm.fr:/home/PuissanceCNR.json /home/cnr/Documents/quai-des-energies/public/data/PuissanceCNR.json
 
 [Install]
 WantedBy=multi-user.target
