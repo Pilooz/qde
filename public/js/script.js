@@ -41,6 +41,9 @@ $(function(){
 	var pll_couleur;
 	var pll_qualificatif;
 	var pll_valeur;
+
+	var dt_1;
+	var dt_2;
 	
 	var lang ="fr";
 	var homeSlider_data_0;
@@ -174,6 +177,7 @@ function init(callback){
 
 						}else if(data_num == 3){
 							homeSlider_slides[i] = new HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,duration,media_type,filter_key,i);
+							homeSlider_data_3 = homeSlider_slides[i];
 						}
 
 					}
@@ -282,6 +286,8 @@ function init(callback){
 					en_7 = (ene_7*100)/ene_total;
 					en_8 = (ene_8*100)/ene_total;
 
+					
+
 					en_1 = Math.round(en_1*100)/100;
 					en_2 = Math.round(en_2*100)/100;
 					en_3 = Math.round(en_3*100)/100;
@@ -318,8 +324,14 @@ function init(callback){
 			 ------------------------------------------------------------*/
 			get_cnr_api = function() {
   				socket.emit('ask_for_cnr_data', function(data) {
-    					 // Ici tu charges les data dans les variables deton app...
-					 console.log(data);
+    				// Ici tu charges les data dans les variables deton app...
+
+					dt_1 = data[0].puissancetempsreel;
+					dt_2 = data[1].puissancetempsreel;
+
+					homeSlider_data_3.data_apply(dt_1,dt_2);
+					
+
   				});
 			}
 
@@ -938,25 +950,6 @@ function HomeSlider_slide_quiz(key,color,intro_anim,intro_audio,questions_select
 
 		quiz_timer_sound.play();
 		questionRestart();
-		//timer_content = setInterval(questionRunning,22);
-
-		// Definir comment activer le quiz : pause pendant quiz, pause pendant score,ou normal ; 
-		/*if (questionEnded){
-			questionEnd("pause",function(){
-					questionRestart()
-				});
-		}else if(scoreOn){
-
-			timer_nextSlick = setTimeout(function(){
-
-				$('.homeSlide').slick('slickNext');
-
-			},3000);
-
-		}else{
-			quiz_timer_sound.play();
-			timer_content = setInterval(questionRunning,22);
-		}*/
 
 		// Click sur une réponse 
 		$(document).unbind("click").on("click",".questionnaire__reponses__li",function(){
@@ -980,7 +973,6 @@ function HomeSlider_slide_quiz(key,color,intro_anim,intro_audio,questions_select
 		// Questions réactions 
 		function questionRunning(){
 
-			console.log("question Running")
 
 			questionEnded = false;
 			
@@ -994,18 +986,35 @@ function HomeSlider_slide_quiz(key,color,intro_anim,intro_audio,questions_select
 					
 					if (percent >= 100.00){
 
-							if (counter < counter_max){
+							console.log(counter);
+
+							/*let resp1 = $(questions[questions_selection[counter-1]].content.el).find(".reponse_1");
+							let resp2 = $(questions[questions_selection[counter-1]].content.el).find(".reponse_2");
+							let resp3 = $(questions[questions_selection[counter-1]].content.el).find(".reponse_3");*/
+							
+							if(counter==1){
+								$('.homeSlide').slick('slickNext');
+							
+							}else{
+
+								if (counter < counter_max){
 									questionEnd("",function(){
 									questionRestart();
 									
-								});
+									});
 								
-							}else{
-								questionEnd("",function(){
-								questionScore();
+								}else{
+									questionEnd("",function(){
+									questionScore();
 
-								});
+									});
+								}
+
 							}
+
+
+							
+
 
 							
 
@@ -1120,10 +1129,6 @@ function HomeSlider_slide_quiz(key,color,intro_anim,intro_audio,questions_select
 
 
 		}
-
-		
-
-
 	}
 
 	this.content__reset = function(element){
@@ -1153,9 +1158,6 @@ function HomeSlider_slide_quiz(key,color,intro_anim,intro_audio,questions_select
 		for (i=1; i<questions_selection.length;i++){
 			$(questions[questions_selection[i]].content.el).removeClass("active");
 		}
-		
-
-
 	}
 
 	this.content__pause = function(){
@@ -1786,8 +1788,13 @@ function HomeSlider_slide_data_1(key,color,type,title,type_en,title_en,data_num,
 
 			let titleText = new Box("div","homeSlide__slide__titleBlock__title homeSlide__slide__titleBlock__title__pie",titleBlock.el);
 				
+				var d = new Date();
+  				var j = d.getDate();
+  				var m = d.getMonth();
+  				var y = d.getFullYear();
+
 				let title_type = new Box("h3","homeSlide__slide__titleBlock__title__type ",titleText.el);
-				$(title_type.el).text("info date");
+				$(title_type.el).text("info "+ j+"/"+m+1+"/"+y);
 
 				let title_name = new Box("h2","homeSlide__slide__titleBlock__title__name",titleText.el);
 								
@@ -1842,24 +1849,34 @@ function HomeSlider_slide_data_1(key,color,type,title,type_en,title_en,data_num,
 		en_clean = en_5+en_6+en_7+en_8;
 		en_clean = Math.round(en_clean * 100) / 100;
 
-		let deg_1 = en_1*3.6;
+		
+		let en_add3 = en_3+1.5;
+		let en_add4 = en_4+1.5;
+		let en_add8 = en_8+1.5;
+		let en_less = en_1-(1.5*3);
+
+
+		let deg_1 = en_less*3.6;
 		let deg_2 = deg_1+en_2*3.6;
-		let deg_3 = deg_2+en_3*3.6;
-		let deg_4 = deg_3+en_4*3.6;
+		let deg_3 = deg_2+en_add3*3.6;
+		let deg_4 = deg_3+en_add4*3.6;
 		let deg_5 = deg_4+en_5*3.6;
 		let deg_6 = deg_5+en_6*3.6;
 		let deg_7 = deg_6+en_7*3.6;
-		let deg_8 = deg_7+en_8*3.6;
+		let deg_8 = deg_7+en_add8*3.6;
 
+		//console.log(en_less+en_2+en_5+en_6+en_7+(en_add*3);
+		//console.log(en_1+en_2+en_3+en_4+en_5+en_6+en_7+en_8);
+		
 
-		$(pie_1.el).css("background","conic-gradient(#000000 "+en_1+"%, transparent "+en_1+"%)");
+		$(pie_1.el).css("background","conic-gradient(#000000 "+ en_less+"%, transparent "+en_less+"%)");
 		$(pie_2.el).css("background","conic-gradient(#000000 "+en_2+"%, transparent "+en_2+"%)");
-		$(pie_3.el).css("background","conic-gradient(#000000 "+en_3+"%, transparent "+en_3+"%)");
-		$(pie_4.el).css("background","conic-gradient(#000000 "+en_4+"%, transparent "+en_4+"%)");
+		$(pie_3.el).css("background","conic-gradient(#000000 "+en_add3+"%, transparent "+en_add3+"%)");
+		$(pie_4.el).css("background","conic-gradient(#000000 "+en_add4+"%, transparent "+en_add4+"%)");
 		$(pie_5.el).css("background","conic-gradient(#FFFFFF "+en_5+"%, transparent "+en_5+"%)");
 		$(pie_6.el).css("background","conic-gradient(#FFFFFF "+en_6+"%, transparent "+en_6+"%)");
 		$(pie_7.el).css("background","conic-gradient(#FFFFFF "+en_7+"%, transparent "+en_7+"%)");
-		$(pie_8.el).css("background","conic-gradient(#FFFFFF "+en_8+"%, transparent "+en_8+"%)");
+		$(pie_8.el).css("background","conic-gradient(#FFFFFF "+en_add8+"%, transparent "+en_add8+"%)");
 
 		$(title_name.el).text(title+" est de "+ene_total+" MW");
 		$(pie_text_result_1.el).html(enText_final);
@@ -2235,46 +2252,6 @@ function HomeSlider_slide_data_2(key,color,type,title,type_en,title_en,data_num,
 	}
 }
 
-
-function Incr_anim(num,element,pre,un){
-
-		let ii=0;
-		let int;
-
-		this.start = function(){
-			
-
-			int = setInterval(function(){
-				if (ii < num){
-					ii= ii+Math.round(num/50);
-
-					if(pre=="prev"){
-						$(element).text(un+ii);
-					}else if(pre=="after"){
-						$(element).text(ii+un);
-					}
-					
-				
-				}else{
-
-					if(pre=="prev"){
-						$(element).text(un+num);
-					}else if(pre=="after"){
-						$(element).text(num+un);
-					}
-					clearInterval(int);
-				}
-
-			},20);
-		}
-
-		this.reset = function(){
-			clearInterval(int);
-			ii=0;
-			
-		}
-}
-
 function HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,duration,media_type,filter_key,i){
 	this.key = key;
 	this.color = color;
@@ -2284,25 +2261,44 @@ function HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,
 	this.data_num = data_num;
 	this.i = i;
 
+	let bar_w1=0;
+	let bar_w2 = 0;
+
+	let nn1,nn2;
+
+	this.data_apply = function(val1,val2){
+		dt_1 = val1;
+		dt_2 = val2;
+		
+		bar_w1 = 600;
+		bar_w2 = (bar_w1*dt_2)/dt_1;
+
+		$(data_num_1.el).text(dt_1+" MW");
+		$(data_num_2.el).text(dt_2+" MW");
+
+		nn1 = new Incr_anim(dt_1,".homeSlide__slide__titleBlock__dataNum1","after"," MW");
+		nn2 = new Incr_anim(dt_2,".homeSlide__slide__titleBlock__dataNum2","after"," MW");
+
+
+	}
 
 	let dt_text1 = "hydraulique";
-	let dt_text2 = "éolien";
+	let dt_text2 = "éolien+solaire";
 	let dt_text3 = "solaire";
 	let dt_textFinal= "personnes alimentées";
 
 	let dt_text1_en = "hydraulic";
-	let dt_text2_en = "eolian";
+	let dt_text2_en = "eolian+solar";
 	let dt_text3_en = "solar";
 	let dt_textFinal_en = "people powered";
 
-	let dt_1 = 3052;
+	/*let dt_1 = 3052;
 	let dt_2 = 1343;
 	let dt_3 = 479;
-	let dt_final = 6405;
+	let dt_final = 6405;*/
 
-	let bar_w1 = 600;
-	let bar_w2 = (bar_w1*dt_2)/dt_1;
-	let bar_w3 = (bar_w1*dt_3)/dt_1;
+	
+	//let bar_w3 = (bar_w1*dt_3)/dt_1;
 
 	let data_timer = 0;
 	let timer_content;
@@ -2330,15 +2326,15 @@ function HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,
 			let data_text_2 = new Box("div","homeSlide__slide__titleBlock__dataText2 dataText",data_text_wrap.el);
 			$(data_text_2.el).text(dt_text2);
 
-			let data_text_3 = new Box("div","homeSlide__slide__titleBlock__dataText3 dataText",data_text_wrap.el);
-			$(data_text_3.el).text(dt_text3);
+			/*let data_text_3 = new Box("div","homeSlide__slide__titleBlock__dataText3 dataText",data_text_wrap.el);
+			$(data_text_3.el).text(dt_text3);*/
 
 		let dataBar_wrap = new Box("div","homeSlide__slide__titleBlock__dataBar_wrap",data_wrap.el);
 
 			let data_1 = new Box("div","homeSlide__slide__titleBlock__data data_1",dataBar_wrap.el);
 				let data_bar_1 = new Box("div","homeSlide__slide__titleBlock__dataBar1 dataBar",data_1.el);
 				let data_num_1 = new Box("div","homeSlide__slide__titleBlock__dataNum1",data_1.el);
-				$(data_num_1.el).text(dt_1+" MW");
+
 				$(data_bar_1.el).css("width","0px");
 
 
@@ -2346,21 +2342,21 @@ function HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,
 			let data_2 = new Box("div","homeSlide__slide__titleBlock__data data_2",dataBar_wrap.el);
 				let data_bar_2 = new Box("div","homeSlide__slide__titleBlock__dataBar2 dataBar",data_2.el);
 				let data_num_2 = new Box("div","homeSlide__slide__titleBlock__dataNum2 ",data_2.el);
-				$(data_num_2.el).text(dt_2+" MW");
+				
 				$(data_bar_2.el).css("width","0px");
 
-			let data_3 = new Box("div","homeSlide__slide__titleBlock__data data_3",dataBar_wrap.el);
+			/*let data_3 = new Box("div","homeSlide__slide__titleBlock__data data_3",dataBar_wrap.el);
 				let data_bar_3 = new Box("div","homeSlide__slide__titleBlock__dataBar3 dataBar",data_3.el);
 				let data_num_3 = new Box("div","homeSlide__slide__titleBlock__dataNum3",data_3.el);
 				$(data_num_3.el).text(dt_3+" MW");
-				$(data_bar_3.el).css("width","0px");
+				$(data_bar_3.el).css("width","0px");*/
 
-	let dataFinal_wrap = new Box("div","homeSlide__slide__titleBlock__dataFinal_wrap",titleBlock.el);
+	/*let dataFinal_wrap = new Box("div","homeSlide__slide__titleBlock__dataFinal_wrap",titleBlock.el);
 		$(dataFinal_wrap.el).css("opacity","0");
 			let dataFinal = new Box("div","homeSlide__slide__titleBlock__dataFinal",dataFinal_wrap.el);
 			let dataFinalText = new Box("div","homeSlide__slide__titleBlock__dataFinalText",dataFinal_wrap.el);
 			$(dataFinal.el).text("= "+dt_final);
-			$(dataFinalText.el).text(dt_textFinal);
+			$(dataFinalText.el).text(dt_textFinal);*/
 
 
 	let timeBar = new Box("div","time-bar",titleBlock.el);
@@ -2369,8 +2365,8 @@ function HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,
 		$(title_name.el).text(title);
 		$(data_text_1.el).text(dt_text1);
 		$(data_text_2.el).text(dt_text2);
-		$(data_text_3.el).text(dt_text3);
-		$(dataFinalText.el).text(dt_textFinal);
+		//$(data_text_3.el).text(dt_text3);
+		//$(dataFinalText.el).text(dt_textFinal);
 
 	}
 
@@ -2378,16 +2374,15 @@ function HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,
 		$(title_name.el).text(title_en);
 		$(data_text_1.el).text(dt_text1_en);
 		$(data_text_2.el).text(dt_text2_en);
-		$(data_text_3.el).text(dt_text3_en);
-		$(dataFinalText.el).text(dt_textFinal_en);
+		//$(data_text_3.el).text(dt_text3_en);
+		//$(dataFinalText.el).text(dt_textFinal_en);
 		
 	}
 
 	let titleAnim, titleAnim2,titleAnim3,titleAnim4,titleAnim5;
-	let nn1 = new Incr_anim(dt_1,".homeSlide__slide__titleBlock__dataNum1","after"," MW");
-	let nn2 = new Incr_anim(dt_2,".homeSlide__slide__titleBlock__dataNum2","after"," MW");
-	let nn3 = new Incr_anim(dt_3,".homeSlide__slide__titleBlock__dataNum3","after"," MW");
-	let nn4 = new Incr_anim(dt_final,".homeSlide__slide__titleBlock__dataFinal","prev","= ");
+	
+	//let nn3 = new Incr_anim(dt_3,".homeSlide__slide__titleBlock__dataNum3","after"," MW");
+	//let nn4 = new Incr_anim(dt_final,".homeSlide__slide__titleBlock__dataFinal","prev","= ");
 	
 	
 
@@ -2425,7 +2420,7 @@ function HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,
 		},nu*2);
 
 		
-		titleAnim4 = setTimeout(function(){
+		/*titleAnim4 = setTimeout(function(){
 				$(data_text_3.el).addClass("active");
 				$(data_bar_3.el).css({"width": bar_w3+"px","opacity":"1"});
 				$(data_num_3.el).css("opacity","1");
@@ -2437,7 +2432,7 @@ function HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,
 			$(dataFinal_wrap.el).css("opacity","1");
 			nn4.start();
 		
-		},nu*4);
+		},nu*4);*/
 		
 		
 		timer_content = setInterval(function(){
@@ -2497,29 +2492,29 @@ function HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,
 		clearTimeout(titleAnim);
 		clearTimeout(titleAnim2);
 		clearTimeout(titleAnim3);
-		clearTimeout(titleAnim4);
-		clearTimeout(titleAnim5);
+		//clearTimeout(titleAnim4);
+		//clearTimeout(titleAnim5);
 	
 		nn1.reset();
 		nn2.reset();
-		nn3.reset();
-		nn4.reset();
+		//nn3.reset();
+		//nn4.reset();
 		$(titleText.el).removeClass("top");
 		$(data_wrap.el).css("opacity","0");
 
 		$(data_text_1.el).removeClass("active");
 		$(data_text_2.el).removeClass("active");
-		$(data_text_3.el).removeClass("active");
+		//$(data_text_3.el).removeClass("active");
 
 		$(data_bar_1.el).css({"width": "0px"});
 		$(data_bar_2.el).css({"width": "0px"});
-		$(data_bar_3.el).css({"width": "0px"});
+		//$(data_bar_3.el).css({"width": "0px"});
 
 		$(data_num_1.el).css("opacity","0");
 		$(data_num_2.el).css("opacity","0");
-		$(data_num_3.el).css("opacity","0");
+		//$(data_num_3.el).css("opacity","0");
 
-		$(dataFinal_wrap.el).css("opacity","0");
+		//$(dataFinal_wrap.el).css("opacity","0");
 
 
 	}
@@ -2706,10 +2701,6 @@ function Menu_button(){
 
 		}
 	}
-
-	
-
-
 }
 
 function Menu_lang_buttons(){
@@ -2804,10 +2795,6 @@ function Menu_lang_buttons(){
 		
 	}	
 }
-
-
-
-
 
 
 function Menu_filters(key,filter_key,filter_name,filter_name_en,i){
@@ -3162,8 +3149,6 @@ function Menu_slides(filter_key,color,intro_img,type,title,type_en,title_en,i){
 }
 
 
-	
-
 function goToSlide(that){
 
 		if (isNaN(that)){
@@ -3190,6 +3175,45 @@ function Box(type,name,wrap){
 	}
 	
 
+}
+
+function Incr_anim(num,element,pre,un){
+
+		let ii=0;
+		let int;
+
+		this.start = function(){
+			
+
+			int = setInterval(function(){
+				if (ii < num){
+					ii= ii+Math.round(num/50);
+
+					if(pre=="prev"){
+						$(element).text(un+ii);
+					}else if(pre=="after"){
+						$(element).text(ii+un);
+					}
+					
+				
+				}else{
+
+					if(pre=="prev"){
+						$(element).text(un+num);
+					}else if(pre=="after"){
+						$(element).text(num+un);
+					}
+					clearInterval(int);
+				}
+
+			},20);
+		}
+
+		this.reset = function(){
+			clearInterval(int);
+			ii=0;
+			
+		}
 }
 
 

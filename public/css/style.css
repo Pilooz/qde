@@ -708,8 +708,8 @@ body{
   }
 
   .pie_0 {
-    background: white;
-    opacity: .2;
+    opacity: .4;
+    border: 1px solid white
   }
 
   .homeSlide__slide__data_video{
@@ -1494,7 +1494,8 @@ body{
       }
 
       .questionnaire__reponses__li.goodgood {
-        background: rgba(255,255,255,.5);
+        background: rgba(255,255,255,1);
+        color : rgb(89, 165, 53);
         
       }
 
