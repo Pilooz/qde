@@ -8,3 +8,5 @@ config/config.json
 medias/videos/
 # dynamic data 
 public/data/*.json
+index.js
+package.json

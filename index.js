@@ -59,19 +59,19 @@ app.get('/', function (req, res) {
 })
 
 // POST method route
-.post('/', function (req, res) { 
+.post('/', function (req, res) {
   // Sensors have updated their values
   dataPresence = dataPresenceNewVal;
   presence = dataPresence.detector0 || dataPresence.detector1
   console.log("presence="+presence);
 
-  // If someone is detected (presence=0 : the sensors are active on low level), 
+  // If someone is detected (presence=0 : the sensors are active on low level),
   // send a socket to browser
   if (presence==0) {
 	console.log("Hey ! Someone is here...");
-  	io.emit('presence', { "presence": 1 } );  
-  } 
-  // If not, let the browser timeout running to switch of app 
+  	io.emit('presence', { "presence": 1 } );
+  }
+  // If not, let the browser timeout running to switch of app
   res.end();
 });
 
@@ -97,13 +97,13 @@ io.on('connection', function (socket) {
   // Récupération des données de production CNR
   //
   socket.on('ask_for_cnr_data', function(send_response) {
-   var api_response = fs.readFileSync(conf.api_tokens.cnr.url);
-   send_response(JSON.parse(api_response));
+  var api_response = fs.readFileSync(conf.api_tokens.cnr.url);
+  send_response(JSON.parse(api_response));
   });
 
   //
   // Récupération des données ATMO
-  // 
+  //
   socket.on('ask_for_atmo_data', function(send_response) {
     var api_response = {};
 
@@ -132,11 +132,11 @@ io.on('connection', function (socket) {
     // 1. Sending request for authorization
     https.get(options, (resp) => {
       let data = '';
-    
+
       resp.on('data', (chunk) => {
         data += chunk;
       });
-    
+
       // The whole response has been received. Print out the result.
       resp.on('end', () => {
         res = JSON.parse(data);
@@ -162,13 +162,12 @@ io.on('connection', function (socket) {
 
           }).on("error", (err) => {
             console.log("Error in retrieving data from RTE : " + err.message);
-          });      
+          });
         });
-    
+
       }).on("error", (err) => {
         console.log("Error in retrieving authorization for RTE : " + err.message);
       });
-    });  
+    });
   });
 });
-
