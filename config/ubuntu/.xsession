@@ -13,6 +13,7 @@ unclutter -idle 1 &
 
 # Minimize TeamViewer Window
 winTV=`xdotool search --name "TeamViewer"`
+echo $winTV > /tmp/tv_id.log
 xdotool windowfocus $winTV
 xdotool windowminimize $winTV
 
