@@ -28,6 +28,11 @@ $(function(){
 	var homeSlider_slides = [];
 	var questions = [];
 
+	var i_date = new Date();
+	var i_day = i_date.getDate();
+	var i_month = i_date.getMonth();
+	var i_year = i_date.getFullYear();
+
 
 
 	var menu;
@@ -1344,7 +1349,7 @@ function HomeSlider_slide_data_0(key,color,type,title,type_en,title_en,data_num,
 			let titleText = new Box("div","homeSlide__slide__titleBlock__title",titleBlock.el);
 				
 				let title_type = new Box("h3","homeSlide__slide__titleBlock__title__type",titleText.el);
-				$(title_type.el).text("info "+pll_date);
+				$(title_type.el).text("info "+ i_day+"/"+i_month+1+"/"+i_year);
 
 				let title_name = new Box("h2","homeSlide__slide__titleBlock__title__name",titleText.el);
 				$(title_name.el).text(title)
@@ -1378,8 +1383,6 @@ function HomeSlider_slide_data_0(key,color,type,title,type_en,title_en,data_num,
 
 		pll_val_max = Math.round(pll_valeur);
 		//pll_val_max = 27;
-
-		$(title_type.el).text("info "+pll_date);
 
 		if (pll_val_max >0 && pll_val_max <= 16){
 
@@ -1788,13 +1791,10 @@ function HomeSlider_slide_data_1(key,color,type,title,type_en,title_en,data_num,
 
 			let titleText = new Box("div","homeSlide__slide__titleBlock__title homeSlide__slide__titleBlock__title__pie",titleBlock.el);
 				
-				var d = new Date();
-  				var j = d.getDate();
-  				var m = d.getMonth();
-  				var y = d.getFullYear();
+				
 
 				let title_type = new Box("h3","homeSlide__slide__titleBlock__title__type ",titleText.el);
-				$(title_type.el).text("info "+ j+"/"+m+1+"/"+y);
+				$(title_type.el).text("info "+ i_day+"/"+i_month+1+"/"+i_year);
 
 				let title_name = new Box("h2","homeSlide__slide__titleBlock__title__name",titleText.el);
 								
@@ -1850,10 +1850,10 @@ function HomeSlider_slide_data_1(key,color,type,title,type_en,title_en,data_num,
 		en_clean = Math.round(en_clean * 100) / 100;
 
 		
-		let en_add3 = en_3+1.5;
-		let en_add4 = en_4+1.5;
-		let en_add8 = en_8+1.5;
-		let en_less = en_1-(1.5*3);
+		let en_add3 = en_3+1;
+		let en_add4 = en_4+1;
+		let en_add8 = en_8+1;
+		let en_less = en_1-(1*3);
 
 
 		let deg_1 = en_less*3.6;
@@ -1976,7 +1976,7 @@ function HomeSlider_slide_data_1(key,color,type,title,type_en,title_en,data_num,
 		},timee*3);
 
 		pie_timer_4 = setTimeout(function(){
-			$(pie_4.el).css({"opacity":".3"});
+			$(pie_4.el).css({"opacity":".2"});
 			$(pie_text_4.el).addClass("active");
 		},timee*4);
 		
@@ -2311,7 +2311,7 @@ function HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,
 	let titleText = new Box("div","homeSlide__slide__titleBlock__title",titleBlock.el);
 				
 				let title_type = new Box("h3","homeSlide__slide__titleBlock__title__type",titleText.el);
-				$(title_type.el).text("info "+pll_date);
+				$(title_type.el).text("info "+ i_day+"/"+i_month+1+"/"+i_year);
 
 				let title_name = new Box("h2","homeSlide__slide__titleBlock__title__name",titleText.el);
 				$(title_name.el).text(title);
