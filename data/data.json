@@ -1,5 +1,69 @@
 {
   "slides" : {
+    "anooki_gestes" : {
+      "filter_key" : "video",
+      "media_type" : "video",
+      "color" : "#32A9FB",
+      "intro_anim" : "medias/animations/anooki-jump.png",
+      "intro_audio" : "medias/animations/anooki-jump.wav",
+      "intro_img" : "medias/previews/anooki_gestes.jpg",
+      "type" : "Vidéo",
+      "title" : "Les Anooki adoptent les bons gestes",
+      "video" : "medias/videos/anooki_gestes.mp4",
+      "type_en" : "Video",
+      "title_en" : "The Anooki change their habits",
+      "video_en" : "medias/videos/anooki_gestes.mp4",
+      "shad" : "off"
+    },
+    "anooki_deplacements" : {
+      "filter_key" : "video",
+      "media_type" : "video",
+      "color" : "#D91DC9",
+      "intro_anim" : "medias/animations/anooki-jump.png",
+      "intro_audio" : "medias/animations/anooki-jump.wav",
+      "intro_img" : "medias/previews/anooki_deplace.png",
+      "type" : "Vidéo",
+      "title" : "Les Anooki changent leurs déplacements",
+      "video" : "medias/videos/anooki_deplacements.mp4",
+      "type_en" : "Video",
+      "title_en" : "The Anooki change their moves",
+      "video_en" : "medias/videos/anooki_deplacements.mp4",
+      "shad" : "off"
+    },
+    "anooki_enr" : {
+      "filter_key" : "video",
+      "media_type" : "video",
+      "color" : "#E76100",
+      "intro_anim" : "medias/animations/anooki-jump.png",
+      "intro_audio" : "medias/animations/anooki-jump.wav",
+      "intro_img" : "medias/previews/anooki_enr.png",
+      "type" : "Vidéo",
+      "title" : "Les Anooki découvrent les énergies renouvelables",
+      "video" : "medias/videos/anooki_EnR.mp4",
+      "type_en" : "Video",
+      "title_en" : "The Anooki discover the renewable energies",
+      "video_en" : "medias/videos/anooki_EnR.mp4",
+      "shad" : "off"
+    },
+    "Quiz5" : {
+      "filter_key" : "question",
+      "media_type" : "quiz",
+      "color" : "#5B70DE",
+      "questions" : [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "intro_anim" : "medias/animations/anooki-jump.png",
+      "intro_audio" : "medias/animations/anooki-jump.wav",
+      "intro_img" : "medias/previews/prev_quizz.png",
+      "type" : "Quiz",
+      "title" : "Testez vos connaissances en 5 questions",
+      "type_en" : "Quiz",
+      "title_en" : "Test your knowledge with 5 questions"
+    },
     "tech_hydrogen" : {
       "filter_key" : "video",
       "media_type" : "video",
@@ -59,70 +123,6 @@
       "title_en" : "solar power: how does it work?",
       "video_en" : "medias/videos/tech_solaire_EN.mp4",
       "shad" : "on"
-    },
-    "Quiz5" : {
-      "filter_key" : "question",
-      "media_type" : "quiz",
-      "color" : "#5B70DE",
-      "questions" : [
-        "0",
-        "1",
-        "2",
-        "3",
-        "4"
-      ],
-      "intro_anim" : "medias/animations/anooki-jump.png",
-      "intro_audio" : "medias/animations/anooki-jump.wav",
-      "intro_img" : "medias/previews/prev_quizz.png",
-      "type" : "Quiz",
-      "title" : "Testez vos connaissances en 5 questions",
-      "type_en" : "Quiz",
-      "title_en" : "Test your knowledge with 5 questions"
-    },
-    "anooki_enr" : {
-      "filter_key" : "video",
-      "media_type" : "video",
-      "color" : "#E76100",
-      "intro_anim" : "medias/animations/anooki-jump.png",
-      "intro_audio" : "medias/animations/anooki-jump.wav",
-      "intro_img" : "medias/previews/anooki_enr.png",
-      "type" : "Vidéo",
-      "title" : "Les Anooki découvrent les EnR",
-      "video" : "medias/videos/anooki_EnR.mp4",
-      "type_en" : "Video",
-      "title_en" : "The Anooki discover the ERs",
-      "video_en" : "medias/videos/anooki_EnR.mp4",
-      "shad" : "off"
-    },
-    "anooki_deplacements" : {
-      "filter_key" : "video",
-      "media_type" : "video",
-      "color" : "#D91DC9",
-      "intro_anim" : "medias/animations/anooki-jump.png",
-      "intro_audio" : "medias/animations/anooki-jump.wav",
-      "intro_img" : "medias/previews/anooki_deplace.png",
-      "type" : "Vidéo",
-      "title" : "Les Anooki changent leurs déplacements",
-      "video" : "medias/videos/anooki_deplacements.mp4",
-      "type_en" : "Video",
-      "title_en" : "The Anooki change their moves",
-      "video_en" : "medias/videos/anooki_deplacements.mp4",
-      "shad" : "off"
-    },
-    "anooki_gestes" : {
-      "filter_key" : "video",
-      "media_type" : "video",
-      "color" : "#32A9FB",
-      "intro_anim" : "medias/animations/anooki-jump.png",
-      "intro_audio" : "medias/animations/anooki-jump.wav",
-      "intro_img" : "medias/previews/anooki_gestes.jpg",
-      "type" : "Vidéo",
-      "title" : "Les Anooki adoptent les bons gestes",
-      "video" : "medias/videos/anooki_gestes.mp4",
-      "type_en" : "Video",
-      "title_en" : "The Anooki change their habits",
-      "video_en" : "medias/videos/anooki_gestes.mp4",
-      "shad" : "off"
     },
     "Quiz15" : {
       "filter_key" : "question",
@@ -321,9 +321,9 @@
       "message" : "Soit l’équivalent d’un tour du monde en voiture.",
       "question_en" : "What is the volume of CO2 produced per inhabitant in France in one year?",
       "responses_en" : {
-        "reponse_1" : "Less than 5 tonnes",
-        "reponse_2" : "Between 5 and 10 tonnes",
-        "reponse_3" : "More than 10 tonnes"
+        "reponse_1" : "Less than 5 tons",
+        "reponse_2" : "Between 5 and 10 tons",
+        "reponse_3" : "More than 10 tons"
       },
       "message_en" : "That is the equivalent of driving around the world in a car."
     },
@@ -674,7 +674,7 @@
     "durations" : {
       "menu_timer" : "600",
       "duration_titles" : "3",
-      "duration_quiz" : "10",
+      "duration_quiz" : "11",
       "question__resultAnim__duration" : "3",
       "question_resultMessage_duration" : "6",
       "duration_infos" : "5",
@@ -691,7 +691,7 @@
       ],
       "filter_2" : [
         "Vidéos",
-        "Video",
+        "Videos",
         ".video"
       ],
       "filter_3" : [
