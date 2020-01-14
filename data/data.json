@@ -1,18 +1,18 @@
 {
   "slides" : {
-    "anooki_gestes" : {
+    "anooki_enr" : {
       "filter_key" : "video",
       "media_type" : "video",
-      "color" : "#32A9FB",
+      "color" : "#E76100",
       "intro_anim" : "medias/animations/anooki-jump.png",
       "intro_audio" : "medias/animations/anooki-jump.wav",
-      "intro_img" : "medias/previews/anooki_gestes.jpg",
+      "intro_img" : "medias/previews/anooki_enr.png",
       "type" : "Vidéo",
-      "title" : "Les Anooki adoptent les bons gestes",
-      "video" : "medias/videos/anooki_gestes.mp4",
+      "title" : "Les Anooki découvrent les énergies renouvelables",
+      "video" : "medias/videos/anooki_EnR.mp4",
       "type_en" : "Video",
-      "title_en" : "The Anooki change their habits",
-      "video_en" : "medias/videos/anooki_gestes.mp4",
+      "title_en" : "The Anooki discover the renewable energies",
+      "video_en" : "medias/videos/anooki_EnR.mp4",
       "shad" : "off"
     },
     "anooki_deplacements" : {
@@ -30,19 +30,19 @@
       "video_en" : "medias/videos/anooki_deplacements.mp4",
       "shad" : "off"
     },
-    "anooki_enr" : {
+    "anooki_gestes" : {
       "filter_key" : "video",
       "media_type" : "video",
-      "color" : "#E76100",
+      "color" : "#32A9FB",
       "intro_anim" : "medias/animations/anooki-jump.png",
       "intro_audio" : "medias/animations/anooki-jump.wav",
-      "intro_img" : "medias/previews/anooki_enr.png",
+      "intro_img" : "medias/previews/anooki_gestes.jpg",
       "type" : "Vidéo",
-      "title" : "Les Anooki découvrent les énergies renouvelables",
-      "video" : "medias/videos/anooki_EnR.mp4",
+      "title" : "Les Anooki adoptent les bons gestes",
+      "video" : "medias/videos/anooki_gestes.mp4",
       "type_en" : "Video",
-      "title_en" : "The Anooki discover the renewable energies",
-      "video_en" : "medias/videos/anooki_EnR.mp4",
+      "title_en" : "The Anooki change their habits",
+      "video_en" : "medias/videos/anooki_gestes.mp4",
       "shad" : "off"
     },
     "Quiz5" : {
@@ -63,21 +63,6 @@
       "title" : "Testez vos connaissances en 5 questions",
       "type_en" : "Quiz",
       "title_en" : "Test your knowledge with 5 questions"
-    },
-    "tech_hydrogen" : {
-      "filter_key" : "video",
-      "media_type" : "video",
-      "color" : "#55B5CA",
-      "intro_anim" : "medias/animations/anooki-pile.png",
-      "intro_audio" : "medias/animations/anooki-pile.wav",
-      "intro_img" : "medias/previews/tech-hydrogene.jpg",
-      "type" : "Vidéo",
-      "title" : "Comprendre l'hydrogène",
-      "video" : "medias/videos/tech_hydrogene_FR.mp4",
-      "type_en" : "Video",
-      "title_en" : "Hydrogen: how does it work?",
-      "video_en" : "medias/videos/tech_hydrogene_EN.mp4",
-      "shad" : "on"
     },
     "tech_eolien" : {
       "filter_key" : "video",
@@ -107,6 +92,21 @@
       "type_en" : "Video",
       "title_en" : "hydropower: how does it work?",
       "video_en" : "medias/videos/tech_hydroelec_EN.mp4",
+      "shad" : "on"
+    },
+    "tech_hydrogen" : {
+      "filter_key" : "video",
+      "media_type" : "video",
+      "color" : "#55B5CA",
+      "intro_anim" : "medias/animations/anooki-pile.png",
+      "intro_audio" : "medias/animations/anooki-pile.wav",
+      "intro_img" : "medias/previews/tech-hydrogene.jpg",
+      "type" : "Vidéo",
+      "title" : "Comprendre l'hydrogène",
+      "video" : "medias/videos/tech_hydrogene_FR.mp4",
+      "type_en" : "Video",
+      "title_en" : "Hydrogen: how does it work?",
+      "video_en" : "medias/videos/tech_hydrogene_EN.mp4",
       "shad" : "on"
     },
     "tech_solaire" : {
