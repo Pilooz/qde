@@ -674,7 +674,7 @@
     "durations" : {
       "menu_timer" : "600",
       "duration_titles" : "3",
-      "duration_quiz" : "11",
+      "duration_quiz" : "15",
       "question__resultAnim__duration" : "3",
       "question_resultMessage_duration" : "6",
       "duration_infos" : "5",
