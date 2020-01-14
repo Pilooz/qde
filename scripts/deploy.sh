@@ -119,6 +119,9 @@ cp $cur_rep_name/config/config.json $new_rep_name/config/
 ls ./$new_rep_name/config/config.json
 check
 
+comment "Recopier une version des data CNR"
+cp $cur_rep_name/public/data/PuissanceCNR.json $new_rep_name/public/data/
+
 comment "rechargement de la définition des services"
 sudo systemctl daemon-reload
 check
@@ -179,8 +182,12 @@ check
 # Pour l'instant, recopier les videos depuis /home/cnr/medias vers $production_link/medias/videos
 cd $production_link/medias/
 comment "Synchroniser les vidéos depuis /home/cnr/medias/videos vers $production_link/medias/videos"
-#cp  medias/videos/* $production_link/medias/videos/*
 ln -s $working_dir/medias/videos videos
+
+#Raffraichir le navigateur chromium
+comment "Relancer Chromium"
+chromium_pid=$(ps a | grep "chromium" | grep "localhost:8000" | cut -d" " -f2)
+kill -TERM $chromium_pid
 
 fin_normale
 

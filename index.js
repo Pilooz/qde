@@ -97,8 +97,13 @@ io.on('connection', function (socket) {
   // Récupération des données de production CNR
   //
   socket.on('ask_for_cnr_data', function(send_response) {
-    var api_response = fs.readFileSync(conf.api_tokens.cnr.url);
-    send_response(JSON.parse(api_response));
+    var default_data = '[{"typeproduction":"Hydraulique","puissancetempsreel":1886,"unite":"MW","horodatage":"26/11/2019 13:20:19"},{"typeproduction":"ENR","puissancetempsreel":115,"unite":"MW","horodatage":"26/11/2019 13:20:19"}]';
+    if (fs.existsSync(conf.api_tokens.cnr.url)) {
+      var api_response = fs.readFileSync(conf.api_tokens.cnr.url);
+      send_response(JSON.parse(api_response));
+    } else {
+      send_response(JSON.parse(default_data));
+    }
   });
 
   //
