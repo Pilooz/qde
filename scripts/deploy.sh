@@ -184,6 +184,11 @@ cd $production_link/medias/
 comment "Synchroniser les vidéos depuis /home/cnr/medias/videos vers $production_link/medias/videos"
 ln -s $working_dir/medias/videos videos
 
+#Raffraichir le navigateur chromium
+comment "Relancer Chromium"
+chromium_pid=$(ps a | grep "chromium" | grep "localhost:8000" | cut -d" " -f2)
+kill -TERM $chromium_pid
+
 fin_normale
 
 
