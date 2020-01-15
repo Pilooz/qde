@@ -150,7 +150,7 @@ body{
   background-color: black;
 }
 
-.blocker{
+.app-on{
   display: block;
   width: 100%;
   height: 100vh;
@@ -160,7 +160,11 @@ body{
   z-index: 5000;
 }
 
-.blocker2{
+.app-on.off {
+  display: none;
+}
+
+.loading-page{
   display: flex;
   align-items: center;
   justify-content: center;
@@ -175,23 +179,20 @@ body{
   font-size: 20px;
 }
 
-.blocker2.off {
+.loading-page.off {
   display: none;
 }
 
-.blocker.off {
-  display: none;
-}
 
-.container {
+
+.container.off {
   /*display: none;*/
   opacity: 0;
-  transition: all .3s;
+  transition: all .1s;
 
 }
 
-.container.active {
-  /*display: block;*/
+.container{
   transition: all .3s .3s;
   opacity: 1;
 }

@@ -60,14 +60,16 @@ $(function(){
 	var rte_key = "";
 	var atmo_key = "";
 
+	var presence = 0;
+	var timer_presence;
+
 //OBJECTS _____________
 
 
 
-
-
-
-
+/*----------------------------------------------------------------
+	Récupération des données
+----------------------------------------------------------------*/
 function init(callback){
 
 	$.getJSON("/data/data.json", function(data,index) {
@@ -261,8 +263,11 @@ function init(callback){
 				$(".container").addClass("slicked");
 			}
 
+
+			
+
 			/*----------------------------------------------------------------
-				Socket de récupération des données des diverses productions 
+				SOCKET RTE - Socket de récupération des données des diverses productions 
 				électriques
 			----------------------------------------------------------------*/
 			get_rte_api = function(){
@@ -310,7 +315,7 @@ function init(callback){
 			}
 
 			/*----------------------------------------------------------------
-				Socket de récupération des données de qualité de l'air
+				SOCKET ATMO - Socket de récupération des données de qualité de l'air
 				chez ATMO
 			----------------------------------------------------------------*/
 			get_atmo_api = function(){
@@ -325,7 +330,7 @@ function init(callback){
 			}
 	
 			/*------------------------------------------------------------
-			 Socket de récupération des données de production de la CNR
+			 	SOCKET CNR - Socket de récupération des données de production de la CNR
 			 ------------------------------------------------------------*/
 			get_cnr_api = function() {
   				socket.emit('ask_for_cnr_data', function(data) {
@@ -340,22 +345,50 @@ function init(callback){
   				});
 			}
 
+
+			/*----------------------------------------------------------------
+				SOCKET PRESENCE - Socket de détection de présence.
+				Lorsque présence vaut 1, les détecteurs ont détecté quelqu'un.
+			----------------------------------------------------------------*/
+
+			
+
+			socket.on('presence', function(data){
+				
+				if (data.presence == 1 && presence == 0) {
+
+					// Il n'y avait personne et quelqu'un est détecté
+					
+
+					// start timer
+					timer_presence(600000); 
+					
+					screen__on();
+					presence = 1;
+
+				}else if(data.presence == 1 && presence == 1){
+					
+					// Il y avait quelqu'un et une nouvelle personne est détecté 
+
+					// rénitialiser le timer
+					timer_presence(600000); //  timer à 0 et l'active avec temps en ms, ici 600000ms = 10min
+					
+				}
+
+
+			});
+			
+
 			callback();
-			console.log(slides_menu);
 			
 
 	})
 }
 
 
-$( document ).ready(function() {
-    console.log( "ready!" );
-   $(".blocker2").addClass("off");
-});
 
-//$(window).on("load",function(){
-//		$(".blocker2").addClass("off");
-//	})
+
+
 
 /*----------------------------------------------------------------
 	Initalisation de l'application
@@ -376,35 +409,133 @@ init(function(){
 });
 
 
-/*----------------------------------------------------------------
-Empêcher le click droit / long touch sur tactile 
-----------------------------------------------------------------*/
-	
-document.addEventListener('contextmenu', event => event.preventDefault());
-
 
 /*----------------------------------------------------------------
-Fonction de réveil de l'application appelée par le listener sur
-l'élément 'blocker', mais aussi par le la socket de gestion de présence
+PAGE DE CHARGEMENT lorsque on réactualise la page. 
+La page bloque l'activation de l'app au clic jusqu'à ce que le contenu soit chargé.
+Ensuite on supprime la page "loading-page" avec la classe "off".
 -----------------------------------------------------------------*/
-function reveiller_application() {
-  if ($(".container").hasClass("off")) {
-	screen__on();
-	$(".blocker").addClass("off");
-	$(".container").removeClass("off");
-  } else {
-	screen__off();
-	$(".blocker").removeClass("off");
-	$(".container").addClass("off");
-  }
+
+$( document ).ready(function() {
+    console.log( "ready!" );
+   $(".loading-page").addClass("off");
+});
+
+
+
+
+
+
+
+/*----------------------------------------------------------------
+	LISTENER pour réveiller l'app lors du CLICK sur "app-on"
+	Supprimer l'ecran noir au click et lancer l'appli.
+----------------------------------------------------------------*/
+$(".app-on").click(function(){
+	 if ($(".container").hasClass("off")) {
+		screen__on();
+		
+  	} else {
+		screen__off();
+		
+  	}
+});
+
+/*----------------------------------------------------------------
+	LISTENER pour éteindre l'écran lors d'un KEYPRESS de la touche "entrée"
+----------------------------------------------------------------*/
+$(document).keypress(function(event){
+		
+		var keycode = (event.keyCode ? event.keyCode : event.which);
+		if(keycode == '13'){
+			/*if (!$(".container").hasClass("active")) {
+				screen__on();
+			}else{
+				screen__off();
+			}*/
+
+			screen__off();
+		}
+});
+
+
+/*----------------------------------------------------------------
+	FONCTION pour réveiller l'écran
+----------------------------------------------------------------*/
+function screen__on(){
+
+	
+		
+		let current = $(".slick-current").attr("data-slick-index");
+		goToSlide(0);
+
+		$(".menu_slide_0").addClass("anim");
+
+		menu.move(".menu_slide_"+current,"","",function(){
+			homeSlider.open();
+		});
+		
+		if(current == "0") {
+			homeSlider_slides[0].intro__play(function(){
+				
+				homeSlider_slides[0].content__play();
+			});
+		}
+		
+		$(".black-screen").addClass("off");
+		$(".container").removeClass("off");
+
+		// éteindre l'écran au bout de 10min si personne detecté
+		
+
+	
+
+	
+	
 }
 
 /*----------------------------------------------------------------
-	Listener sur l'élément 'blocker', supprimer l'ecran noir au click et lancer l'appli
+	TIMERS de présence
 ----------------------------------------------------------------*/
-$(".blocker").click(function(){
-	reveiller_application();
-});
+
+function timer_presence(temps){
+	
+	clearTimeout(timer_presence);
+	timer_presence = setTimeout(function(){
+
+			screen__off();
+			presence = 0;
+
+	}, temps);
+
+}
+
+
+
+
+/*----------------------------------------------------------------
+	FONCTION pour éteindre l'écran
+----------------------------------------------------------------*/
+function screen__off(){
+	$(".black-screen").removeClass("off");
+	$(".container").addClass("off");
+
+	filters[0].reset();
+	homeSlider_slides[0].intro__reset();
+	homeSlider_slides[0].content__reset();
+	menuNav_timer.off();
+	changeCurrent(0); // mettre à nouveau la slide 0 active 
+
+	if ($(".homeSlide").hasClass("active")){
+		btn__menu.clickAction();
+	}
+	
+	
+}
+
+
+
+
 
 /*----------------------------------------------------------------
 	Raffraichir les données de qualité de l'air 
@@ -413,11 +544,16 @@ $(".blocker").click(function(){
 function dataRefresh(){
 	data_refresh_timer = setInterval(function(){
 
+		// récupération de "l'heure actuelle"
 		var date = new Date();
 		var hour = date.getHours();
 		var minutes = date.getMinutes();
 
-		if(hour == data_refresh_time[0] && minutes == data_refresh_time[1]){ // Check the time
+		//vérification si "l'heure actuelle" est égale à "l'heure de rafraichissement".
+		// l'heure de rafraichissement est définit dans le fichier data.json sous l'intitulé "data_refresh_time".
+
+		if(hour == data_refresh_time[0] && minutes == data_refresh_time[1]){ 
+
 			get_atmo_api();
 			get_rte_api();
 			get_cnr_api();
@@ -426,84 +562,20 @@ function dataRefresh(){
 	}, 10000)
 }
 
+
+
+
+
+
 /*----------------------------------------------------------------
 
+	OBJETS
+
 ----------------------------------------------------------------*/
-function screen__on(){
-
-	let current = $(".slick-current").attr("data-slick-index");
-	goToSlide(0);
-
-	$(".menu_slide_0").addClass("anim");
-
-	menu.move(".menu_slide_"+current,"","",function(){
-		homeSlider.open();
-	});
-	
-	if(current == "0") {
-		homeSlider_slides[0].intro__play(function(){
-			
-			homeSlider_slides[0].content__play();
-		});
-	}
-	
-	$(".container").addClass("active");
-	
-}
-
-/*----------------------------------------------------------------
-	Eteindre l'écran
-----------------------------------------------------------------*/
-$(document).keypress(function(event){
-		
-		var keycode = (event.keyCode ? event.keyCode : event.which);
-		if(keycode == '13'){
-
-			if (!$(".container").hasClass("active")) {
-				screen__on();
-
-
-			}else{
-				
-				screen__off();
-
-			}
-			
-		}
-});
-
-
-
-function screen__off(){
-	$(".container").removeClass("active");
-	
-	filters[0].reset();
-	homeSlider_slides[0].intro__reset();
-	homeSlider_slides[0].content__reset();
-	menuNav_timer.off();
-	changeCurrent(0);
-
-	if ($(".homeSlide").hasClass("active")){
-		btn__menu.clickAction();
-	}
-	
-}
-
-/*----------------------------------------------------------------
-	Changer le slide courant
-----------------------------------------------------------------*/
-function changeCurrent(num){
-	let slide = slides_menu[num].menuSlide.el;
-	
-	$(".menuNav").find(".current").removeClass("current");
-	$(slide).addClass("current");
-	menu.move(slide,"zoom","noAnim");
-}
 
 var filtered = []; //list of slide id that are actives [0,3,4,5]
 var blockLast = false;
 var filterActive = false;
-
 
 function HomeSlider(){
 
@@ -3163,8 +3235,15 @@ function goToSlide(that){
 }
 
 
-//FUNCTIONS _____________
+/*----------------------------------------------------------------
 
+GLOBAL FUNCTIONS
+
+----------------------------------------------------------------*/
+
+/*----------------------------------------------------------------
+Objet permettant de créer et intégrer rapidement des bloc html
+----------------------------------------------------------------*/
 function Box(type,name,wrap){
 
 	this.el = document.createElement(type);
@@ -3177,6 +3256,9 @@ function Box(type,name,wrap){
 
 }
 
+/*----------------------------------------------------------------
+ANIMATION D'INCREMENTATION DE NOMBRES
+----------------------------------------------------------------*/
 function Incr_anim(num,element,pre,un){
 
 		let ii=0;
@@ -3214,6 +3296,23 @@ function Incr_anim(num,element,pre,un){
 			ii=0;
 			
 		}
+}
+
+/*----------------------------------------------------------------
+Empêcher le click droit / long touch sur tactile 
+----------------------------------------------------------------*/
+	
+document.addEventListener('contextmenu', event => event.preventDefault());
+
+/*----------------------------------------------------------------
+	Changer la slide active dans le slider 
+----------------------------------------------------------------*/
+function changeCurrent(num){
+	let slide = slides_menu[num].menuSlide.el;
+	
+	$(".menuNav").find(".current").removeClass("current");
+	$(slide).addClass("current");
+	menu.move(slide,"zoom","noAnim");
 }
 
 

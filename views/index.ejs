@@ -11,8 +11,8 @@
 </head>
 <body>
 
-	<div class="blocker"></div>
-	<div class="blocker2">loading...</div>
+	<div class="app-on black-screen"></div>
+	<div class="loading-page">loading...</div>
 
 	<div class="container off">
 		
@@ -49,14 +49,7 @@
 			msg: "Browser has been connected at socket on port <%=port%>.\nBrowser is up !"
 		});
 		
-		socket.on('presence', function(data){
-			if (data.presence == 1 && presence == 0) {
-				// Il n'y avait personne, maintenant il y a quelqu'un
-				console.log("Il n'y avait personne, maintenant il y a quelqu'un");
-				presence = data.presence;				
-				reveiller_application();
-			}
-		});
+		
 	</script>
 	
 </body>
