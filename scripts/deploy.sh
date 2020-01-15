@@ -64,6 +64,9 @@ exec 2>&1
 
 # Préparer le travail
 etape "Préparer le travail"
+comment "Faire le ménage dans les vieux journaux"
+journalctl --vacuum-time=7
+
 comment "repertoire de l'application : "$working_dir"/"$cur_rep_name
 cd $working_dir"/"$cur_rep_name
 current_commit=$(git rev-parse --short HEAD)
