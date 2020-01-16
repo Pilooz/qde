@@ -176,7 +176,7 @@
       "duration" : "11",
       "intro_img" : "medias/previews/data_air.png",
       "type" : "Infos live",
-      "title" : "Qualité de l'air à Lyon",
+      "title" : "Indice de pollution à Lyon",
       "type_en" : "Infos live",
       "title_en" : "Air quality in Lyon",
       "color_states" : [
