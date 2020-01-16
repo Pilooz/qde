@@ -65,7 +65,7 @@ $(function(){
 
 	var filteredOut = false;
 
-	
+
 	var duree_timer_presence = 1000; // durée en seconde pour simplifier 
 
 //OBJECTS _____________
@@ -1029,7 +1029,7 @@ function HomeSlider_slide_quiz(key,color,intro_anim,intro_audio,questions_select
 					//Animation after timer_intro 
 					timer_intro = setTimeout(function(){
 						
-						$(titleBlock.el).addClass("off");
+						//$(titleBlock.el).addClass("off");
 						
 						if(callback){
 							callback();
@@ -1081,12 +1081,18 @@ function HomeSlider_slide_quiz(key,color,intro_anim,intro_audio,questions_select
 		// Click sur une réponse 
 		$(document).unbind("click").on("click",".questionnaire__reponses__li",function(){
 
+
+
 			if(questionEnded == false){
+
 				if (counter < counter_max){
+					
 					questionEnd(this,function(){
+						
 						questionRestart();
 					});
 				}else{
+					console.log("questionEnd");
 					questionEnd(this,function(){
 						questionScore();
 					});
@@ -1150,63 +1156,60 @@ function HomeSlider_slide_quiz(key,color,intro_anim,intro_audio,questions_select
 		function questionEnd(that,callback){
 			questionEnded = true;
 
-					let o = counter-1;
+			let o = counter-1;
 					//let o = counter;
 					let reponse_ok = questions[questions_selection[o]].response_ok;
 					
+					// ANIMATION SELON LA REPONSE 
+					if(that=="pause"){
 
-				if(that=="pause"){
-					
-					
+					}else{
 
-				}else{
 
-					
-					if($(that).hasClass(reponse_ok)){
+						if($(that).hasClass(reponse_ok)){
 
-						$(that).addClass("click_anim").addClass("goodgood");
-						$(questions[questions_selection[o]].content.el).addClass("good");
-						$(questions[questions_selection[o]].quizAnim_img.el).attr("src",response__ok__anim);
-						quiz_good_sound.play();
+							$(that).addClass("click_anim").addClass("goodgood");
+							$(questions[questions_selection[o]].content.el).addClass("good");
+							$(questions[questions_selection[o]].quizAnim_img.el).attr("src",response__ok__anim);
+							quiz_good_sound.play();
 
-						$(questions[questions_selection[o]].quizResponseMessage.el).css("background","#59A535");
-						score++;
+							$(questions[questions_selection[o]].quizResponseMessage.el).css("background","#59A535");
+							score++;
 
-					}else {
+						}else {
 
-						$(that).addClass("click_anim").addClass("bad");
+							$(that).addClass("click_anim").addClass("bad");
 						//$(questions[questions_selection[o]].quizResponses_wrap.el).find("."+reponse_ok).addClass("good");
 
 						$(questions[questions_selection[o]].content.el).addClass("bad");
 						$(questions[questions_selection[o]].quizAnim_img.el).attr("src",response__false__anim);
-						 quiz_bad_sound.play();
+						quiz_bad_sound.play();
 
 						$(questions[questions_selection[o]].quizResponseMessage.el).css("background","#CD0000");
 						
-						 
+
 					}
 
 				}
 
 				
-	
+				// Response message apparition
+				timer_questionMess = setTimeout(function(){
+					console.log("reponse");
+					$(questions[questions_selection[o]].quizResponseMessage.el).addClass("active");
 
-					// Response message apparition
-					timer_questionMess = setTimeout(function(){
-
-						$(questions[questions_selection[o]].quizResponseMessage.el).addClass("active");
-
-					},quiz_resultAnim__duration*1000);
+				},quiz_resultAnim__duration*1000);
 
 
-					if(callback){
+				// Callback
+				if(callback){
 
-						timer_questionShow = setTimeout(function(){
+					timer_questionShow = setTimeout(function(){
 
-							callback();
+						callback();
 
-						},quiz_resultAnim__duration*1000+quiz_result_duration*1000);
-					}
+					},quiz_resultAnim__duration*1000+quiz_result_duration*1000);
+				}
 					
 
 
