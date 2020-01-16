@@ -150,6 +150,8 @@ body{
   background-color: black;
 }
 
+.noCursor { cursor: none; }
+
 .app-on{
   display: block;
   width: 100%;
@@ -159,6 +161,7 @@ body{
   top: 0;
   z-index: 5000;
 }
+
 
 .app-on.off {
   display: none;
@@ -216,6 +219,8 @@ body{
   60% {transform: scale(.9);}
   100% {transform: scale(1);}
 }
+
+
 
 .false_anim {
   /*animation: false_anim .3s ease-in;*/
@@ -429,15 +434,17 @@ body{
 
 /* FILTERS____________________________________________*/
 
-  
+  .filters__wrapper{
+    position: absolute;
+    left: 50%;
+    bottom: 235px;
+    transform: translate(-50%,0);
 
+  }
+        
 
 
   .filters__wrap {
-    position: absolute;
-    left: 0;
-    bottom: 235px;
-    width : 100%;
     z-index: 1;
     transition: all .3s;
     display: flex;

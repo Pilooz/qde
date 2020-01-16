@@ -1,7 +1,7 @@
 {
   "slides" : {
     "anooki_enr" : {
-      "filter_key" : "video",
+      "filter_key" : "videos",
       "media_type" : "video",
       "color" : "#E76100",
       "intro_anim" : "medias/animations/anooki-jump.png",
@@ -16,7 +16,7 @@
       "shad" : "off"
     },
     "anooki_deplacements" : {
-      "filter_key" : "video",
+      "filter_key" : "videos",
       "media_type" : "video",
       "color" : "#D91DC9",
       "intro_anim" : "medias/animations/anooki-jump.png",
@@ -31,7 +31,7 @@
       "shad" : "off"
     },
     "anooki_gestes" : {
-      "filter_key" : "video",
+      "filter_key" : "videos",
       "media_type" : "video",
       "color" : "#32A9FB",
       "intro_anim" : "medias/animations/anooki-jump.png",
@@ -65,7 +65,7 @@
       "title_en" : "Test your knowledge with 5 questions"
     },
     "tech_eolien" : {
-      "filter_key" : "video",
+      "filter_key" : "videos",
       "media_type" : "video",
       "color" : "#42B398",
       "intro_anim" : "medias/animations/anooki-eolienne.png",
@@ -80,7 +80,7 @@
       "shad" : "on"
     },
     "tech_hydroelec" : {
-      "filter_key" : "video",
+      "filter_key" : "videos",
       "media_type" : "video",
       "color" : "#158ABE",
       "intro_anim" : "medias/animations/anooki-hydro.png",
@@ -95,7 +95,7 @@
       "shad" : "on"
     },
     "tech_hydrogen" : {
-      "filter_key" : "video",
+      "filter_key" : "videos",
       "media_type" : "video",
       "color" : "#55B5CA",
       "intro_anim" : "medias/animations/anooki-pile.png",
@@ -110,7 +110,7 @@
       "shad" : "on"
     },
     "tech_solaire" : {
-      "filter_key" : "video",
+      "filter_key" : "videos",
       "media_type" : "video",
       "color" : "#FFA41B",
       "intro_anim" : "medias/animations/anooki-solaire.png",
@@ -119,6 +119,21 @@
       "type" : "Vidéo",
       "title" : "Comprendre l'énergie solaire",
       "video" : "medias/videos/tech_solaire_FR.mp4",
+      "type_en" : "Video",
+      "title_en" : "solar power: how does it work?",
+      "video_en" : "medias/videos/tech_solaire_EN.mp4",
+      "shad" : "on"
+    },
+    "vidTest" : {
+      "filter_key" : "videos",
+      "media_type" : "video",
+      "color" : "#FFA41B",
+      "intro_anim" : "medias/animations/anooki-solaire.png",
+      "intro_audio" : "medias/animations/anooki-solaire.wav",
+      "intro_img" : "medias/previews/tech_solaire.png",
+      "type" : "Vidéo",
+      "title" : "Comprendre l'énergie solaire",
+      "video" : "medias/videos/vidTest.mov",
       "type_en" : "Video",
       "title_en" : "solar power: how does it work?",
       "video_en" : "medias/videos/tech_solaire_EN.mp4",
@@ -194,7 +209,7 @@
       "media_type" : "data",
       "color" : "#5598E8",
       "data_num" : "1",
-      "duration" : "2000",
+      "duration" : "15",
       "intro_img" : "medias/previews/data_france.png",
       "type" : "Infos live",
       "title" : "La production d'énergie en France",
@@ -675,7 +690,7 @@
       "menu_timer" : "600",
       "duration_titles" : "3",
       "duration_quiz" : "15",
-      "question__resultAnim__duration" : "3",
+      "question__resultAnim__duration" : "200",
       "question_resultMessage_duration" : "6",
       "duration_infos" : "5",
       "data_refresh_time" : [
@@ -692,7 +707,7 @@
       "filter_2" : [
         "Vidéos",
         "Videos",
-        ".video"
+        ".videos"
       ],
       "filter_3" : [
         "Quiz",
@@ -718,6 +733,7 @@
       "timer__sound" : "medias/sounds/timer_sound.wav",
       "score_text" : "Votre score est",
       "score_text_en" : "Your score is"
-    }
+    },
+    "cursor" : "active"
   }
 }

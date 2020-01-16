@@ -63,6 +63,8 @@ $(function(){
 	var presence = 0;
 	var timer_presence;
 
+	var filteredOut = false;
+
 //OBJECTS _____________
 
 
@@ -87,6 +89,8 @@ function init(callback){
 			score_text_en = data.settings.questions.score_text_en;
 			data_refresh_time = data.settings.durations.data_refresh_time;
 			menuNav__timeout__duration = data.settings.durations.menu_timer;
+			cursor = data.settings.cursor;
+			if(cursor!=="active"){$("body").addClass("noCursor")}
 
 
 			menu = new Menu();
@@ -137,7 +141,6 @@ function init(callback){
 
 						shad = value.shad;
 						
-						console.log(media_type);
 						
 						
 
@@ -351,18 +354,18 @@ function init(callback){
 				Lorsque présence vaut 1, les détecteurs ont détecté quelqu'un.
 			----------------------------------------------------------------*/
 
-			
-
-			socket.on('presence', function(data){
-				
+			// SOCKET PRESENCE À ACTIVER APRÈS TESTS 
+			/*socket.on('presence', function(data){
+				data.presence=1;
 				if (data.presence == 1 && presence == 0) {
 
 					// Il n'y avait personne et quelqu'un est détecté
 					
 
+
 					// start timer
-					timer_presence(600000); 
-					
+					timer_presence(100); 
+
 					screen__on();
 					presence = 1;
 
@@ -371,12 +374,44 @@ function init(callback){
 					// Il y avait quelqu'un et une nouvelle personne est détecté 
 
 					// rénitialiser le timer
-					timer_presence(600000); //  timer à 0 et l'active avec temps en ms, ici 600000ms = 10min
+					timer_presence(100); //  timer à 0 et l'active avec temps en ms, ici 600000ms = 10min
 					
 				}
 
 
-			});
+			});*/
+
+			presenceTest = function(){
+
+				duree_timer = 1000; // durée en seconde pour simplifier 
+				 
+				duree_timer = duree_timer*1000;
+				data.presence=1;
+				if (data.presence == 1 && presence == 0) {
+
+					// Il n'y avait personne et quelqu'un est détecté
+					
+					let i=0;
+					
+
+					// start timer
+					timer_presence(duree_timer); 
+
+					screen__on();
+					presence = 1;
+
+				}else if(data.presence == 1 && presence == 1){
+					
+					// Il y avait quelqu'un et une nouvelle personne est détecté 
+
+					// rénitialiser le timer
+					timer_presence(duree_timer); //  timer à 0 et l'active avec temps en ms, ici 600000ms = 10min
+					
+				}
+
+			}
+			
+			
 			
 
 			callback();
@@ -404,7 +439,7 @@ init(function(){
 	get_atmo_api();
 	get_cnr_api();
 	dataRefresh();
-
+	presenceTest();
 
 });
 
@@ -464,8 +499,8 @@ $(document).keypress(function(event){
 ----------------------------------------------------------------*/
 function screen__on(){
 
-	
-		
+		console.log("screenOn");
+
 		let current = $(".slick-current").attr("data-slick-index");
 		goToSlide(0);
 
@@ -485,13 +520,6 @@ function screen__on(){
 		$(".black-screen").addClass("off");
 		$(".container").removeClass("off");
 
-		// éteindre l'écran au bout de 10min si personne detecté
-		
-
-	
-
-	
-	
 }
 
 /*----------------------------------------------------------------
@@ -499,7 +527,6 @@ function screen__on(){
 ----------------------------------------------------------------*/
 
 function timer_presence(temps){
-	
 	clearTimeout(timer_presence);
 	timer_presence = setTimeout(function(){
 
@@ -507,6 +534,8 @@ function timer_presence(temps){
 			presence = 0;
 
 	}, temps);
+
+
 
 }
 
@@ -517,20 +546,23 @@ function timer_presence(temps){
 	FONCTION pour éteindre l'écran
 ----------------------------------------------------------------*/
 function screen__off(){
+	
+	console.log("screenOff");
+
 	$(".black-screen").removeClass("off");
 	$(".container").addClass("off");
 
 	filters[0].reset();
 	homeSlider_slides[0].intro__reset();
 	homeSlider_slides[0].content__reset();
-	menuNav_timer.off();
+	
 	changeCurrent(0); // mettre à nouveau la slide 0 active 
-
+	
 	if ($(".homeSlide").hasClass("active")){
 		btn__menu.clickAction();
 	}
 	
-	
+	menuNav_timer.off();
 }
 
 
@@ -586,7 +618,7 @@ function HomeSlider(){
 			toCompare=currentSlide; // current slide in variable to compare in after 
 
 
-			if (currentSlide == filtered.length-1) { // if currentSlide is the last one
+			if (currentSlide == filtered.length-1) { // l'avant dernière
 				blockLast = false;
 			}
 
@@ -596,12 +628,15 @@ function HomeSlider(){
 
 			cuurrent = currentSlide;
 
-			console.log(toCompare+"  "+currentSlide);
+			console.log("filtered: "+filtered.length);
+			console.log("toCompare: "+toCompare);
+			console.log("currentSlide: "+currentSlide);
+			console.log("blockLast :"+blockLast);
 
-			if(toCompare != currentSlide && blockLast == false){ // 
+			if(toCompare != currentSlide && blockLast == false){ //
 
-
-				if (currentSlide == filtered.length-1) { //  to swipe at last slide in filter
+				
+				if (currentSlide == filtered.length-1) { //  si c'est l'avant dernière slide blocklast true pour la prochaine
 					blockLast = true;
 
 				}
@@ -611,15 +646,18 @@ function HomeSlider(){
 					homeSlider_slides[filtered[i]].content__reset();
 				}
 
-				console.log(filtered);
-				console.log(currentSlide);
-
+				console.log("play_afterChange");
 				homeSlider_slides[filtered[currentSlide]].intro__play(function(){ // play the slide
-
+					
 					
 					homeSlider_slides[filtered[currentSlide]].content__play();
 				});
 
+			}else {
+				if (currentSlide == filtered.length-1) { //  si c'est l'avant dernière slide blocklast true pour la prochaine
+					blockLast = true;
+					console.log("blockLast2 :"+blockLast);
+				}
 			}
 		});
 
@@ -738,6 +776,7 @@ function HomeSlider_slide_vid(key,color,intro_anim,intro_audio,video,type,title,
 	}
 
 	this.intro__play = function(callback){
+		console.log("intro_play");
 		$(titleText.el).addClass("active");
 					$(titleAnim.el).addClass("active");
 
@@ -763,8 +802,8 @@ function HomeSlider_slide_vid(key,color,intro_anim,intro_audio,video,type,title,
 					timer_intro = setTimeout(function(){
 						
 						durationInfo();
-						$(titleBlock.el).addClass("off");
-						
+
+						$(titleBlock.el).addClass("off"); /// SLIDE GO DOWN 
 						if(callback){
 							callback();
 						}
@@ -799,20 +838,21 @@ function HomeSlider_slide_vid(key,color,intro_anim,intro_audio,video,type,title,
 
 	this.intro__reset = function(){
 		let animSound = $(sound.el)[0];
-					if (animSound== undefined){
-					}else {
-						animSound.pause();
-						
-					}
+			if (animSound== undefined){
+			}else {
+			animSound.pause();
+			}
 
 				$(titleText.el).removeClass("active");
 				$(titleAnim.el).removeClass("active");
 				$(titleBlock.el).removeClass("off").removeClass("none");
 				clearTimeout(timer_intro);
+				this.playing = false;
 	}
 
 	this.content__play = function(){
-		console.log("play");
+
+		console.log("content-playyy");
 		let vid = $(videoo.el).get(0),
 		vid_duration = vid.duration;
 				
@@ -838,20 +878,26 @@ function HomeSlider_slide_vid(key,color,intro_anim,intro_audio,video,type,title,
 					
 					if (percent >= 100.00){
 
+						console.log("blockLast :"+blockLast);
 						if(filterActive==true && blockLast == true){
 
 							$(".menuNav .current").removeClass("current");
-							$(".menu_slide_0").addClass("current");
+							//$(".menu_slide_0").addClass("current");
+
+
 
 							homeSlider.close();
-							filters[0].reset();
+							filters[0].reset(function(){
+								//goToSlide(-1);
+							});
 
 							/*$(".slick-track .slick-current").removeClass("slick-current");
 							$(".homeSlide__slide[data-slick-index=0]").addClass("slick-current");*/
 							//goToSlide(-1);
 
+							filteredOut = true;
 							filterActive = false;
-
+							
 
 						}else{
 							clearInterval(timer_content);
@@ -880,7 +926,6 @@ function HomeSlider_slide_vid(key,color,intro_anim,intro_audio,video,type,title,
 	}
 
 	this.content__pause = function(){
-
 		clearTimeout(timer_intro);
 		clearInterval(timer_content);
 		let vid = $(videoo.el).get(0);
@@ -889,20 +934,20 @@ function HomeSlider_slide_vid(key,color,intro_anim,intro_audio,video,type,title,
 }
 
 
-function HomeSlider_slide_quiz(key,color,intro_anim,intro_audio,questions_selection,scoreImg,type,title,type_en,title_en,shad,media_type,filter_key,i){
+function HomeSlider_slide_quiz(key,color,intro_anim,intro_audio,questions_selection,intro_img,type,title,type_en,title_en,shad,media_type,filter_key,i){
 	this.key = key;
 	this.color = color;
 	this.intro_anim = intro_anim;
 	this.intro_audio = intro_audio;
 	this.questions_selection = questions_selection;
-	this.scoreImg = scoreImg;
+	this.intro_img = intro_img;
 	this.type = type;
 	this.title = title;
 	this.type_en = type_en;
 	this.title_en = title_en;
 	this.i = i;
 	this.shad = shad;
-
+	let scoreTextm ="sur";
 	
 
 
@@ -914,7 +959,7 @@ function HomeSlider_slide_quiz(key,color,intro_anim,intro_audio,questions_select
 		let timeBar = new Box("div","time-bar",homeSlide.el);
 
 			let titleImg = new Box("img","homeSlide__slide__titleBlock__img",titleBlock.el);
-				$(titleImg.el).attr("src",this.scoreImg);
+				$(titleImg.el).attr("src",this.intro_img);
 
 			let titleText = new Box("div","homeSlide__slide__titleBlock__title",titleBlock.el);
 				
@@ -935,7 +980,7 @@ function HomeSlider_slide_quiz(key,color,intro_anim,intro_audio,questions_select
 				let quizScore = new Box("div","question_score",homeSlide.el);
 				$(quizScore.el).css("background",questions[questions_selection[0]].color_back);
 					let quizScore_img = new Box("img","question_score_img",quizScore.el);
-					$(quizScore_img.el).attr("src",scoreImg);
+					$(quizScore_img.el).attr("src",intro_img);
 					let quizScore_text_wrap = new Box("div","question_score_text_wrap",quizScore.el);
 						let quizScore_supText = new Box("div","question_score_supText", quizScore_text_wrap.el);
 						let quizScore_text = new Box("div","question_score_text",quizScore_text_wrap.el);
@@ -950,16 +995,18 @@ function HomeSlider_slide_quiz(key,color,intro_anim,intro_audio,questions_select
 	this.french_mode = function(){
 		$(title_type.el).text(type)
 		$(title_name.el).text(title);
-		
+		$(quizScore_supText.el).text(score_text);
+		scoreTextm = "sur";
 		for (i=0;i<questions_selection.length;i++){
 			questions[questions_selection[i]].french_mode();
 		}
 	}
 
 	this.english_mode = function(){
-
+		scoreTextm = "out of";
 		$(title_type.el).text(type_en)
 		$(title_name.el).text(title_en);
+		$(quizScore_supText.el).text(score_text_en);
 		
 		for (i=0;i<questions_selection.length;i++){
 			questions[questions_selection[i]].english_mode();
@@ -979,7 +1026,7 @@ function HomeSlider_slide_quiz(key,color,intro_anim,intro_audio,questions_select
 					//Animation after timer_intro 
 					timer_intro = setTimeout(function(){
 						
-						//$(titleBlock.el).addClass("off");
+						$(titleBlock.el).addClass("off");
 						
 						if(callback){
 							callback();
@@ -1013,7 +1060,7 @@ function HomeSlider_slide_quiz(key,color,intro_anim,intro_audio,questions_select
 	let scoreOn = false;
 	let score=0;
 
-	
+	let counter=0;
 
 	this.content__play = function(){
 		$(questions[questions_selection[0]].content.el).addClass("active");
@@ -1021,7 +1068,7 @@ function HomeSlider_slide_quiz(key,color,intro_anim,intro_audio,questions_select
 		let that = this;
 		//this.playing = true;
 		let counter_max = questions_selection.length;
-		let counter =0;
+		counter =0;
 		let percent;
 
 
@@ -1063,7 +1110,6 @@ function HomeSlider_slide_quiz(key,color,intro_anim,intro_audio,questions_select
 					
 					if (percent >= 100.00){
 
-							console.log(counter);
 
 							/*let resp1 = $(questions[questions_selection[counter-1]].content.el).find(".reponse_1");
 							let resp2 = $(questions[questions_selection[counter-1]].content.el).find(".reponse_2");
@@ -1194,7 +1240,8 @@ function HomeSlider_slide_quiz(key,color,intro_anim,intro_audio,questions_select
 			quiz_timer_sound.currentTime = 0;
 			percent = 0;
 			
-			$(quizScore_text.el).text(score+" sur "+questions_selection.length);
+
+			$(quizScore_text.el).text(score+" "+scoreTextm+" "+questions_selection.length);
 			$(quizScore.el).addClass("active");
 
 
@@ -1210,7 +1257,14 @@ function HomeSlider_slide_quiz(key,color,intro_anim,intro_audio,questions_select
 
 	this.content__reset = function(element){
 
-		//questions[questions_selection[counter]].anim_reset();
+		
+
+		if(counter>0){
+
+			let ooo = counter-1;
+			questions[questions_selection[ooo]].anim_reset();
+		}
+		
 		questionEnded = false;
 		score = 0;
 		clearTimeout(timer_questionMess);
@@ -1347,6 +1401,8 @@ function Question(num,response_ok,color_back,question,responses,message,question
 
 	this.anim_reset =function(){
 		$(titleAnim.el).removeClass("active");
+		$(this.quizAnim_img.el).attr("src","");
+
 		let animSound = $(sound.el)[0];
 			if (animSound== undefined){
 		}else {
@@ -1740,7 +1796,7 @@ function HomeSlider_slide_data_0(key,color,type,title,type_en,title_en,data_num,
 						if(filterActive==true && blockLast == true){
 
 							$(".menuNav .current").removeClass("current");
-							$(".menu_slide_0").addClass("current");
+							//$(".menu_slide_0").addClass("current");
 
 							homeSlider.close();
 							filters[0].reset();
@@ -1937,8 +1993,6 @@ function HomeSlider_slide_data_1(key,color,type,title,type_en,title_en,data_num,
 		let deg_7 = deg_6+en_7*3.6;
 		let deg_8 = deg_7+en_add8*3.6;
 
-		//console.log(en_less+en_2+en_5+en_6+en_7+(en_add*3);
-		//console.log(en_1+en_2+en_3+en_4+en_5+en_6+en_7+en_8);
 		
 
 		$(pie_1.el).css("background","conic-gradient(#000000 "+ en_less+"%, transparent "+en_less+"%)");
@@ -1955,14 +2009,14 @@ function HomeSlider_slide_data_1(key,color,type,title,type_en,title_en,data_num,
 
 
 		
-		$(pie_text_5.el).text(enText_5+" "+en_5+"%");
-		$(pie_text_6.el).text(enText_6+" "+en_6+"%");
-		$(pie_text_7.el).text(enText_7+" "+en_7+"%");
-		$(pie_text_8.el).text(enText_8+" "+en_8+"%");
-		$(pie_text_1.el).text(en_1+"% "+enText_1);
-		$(pie_text_2.el).text(en_2+"% "+enText_2);
-		$(pie_text_3.el).text(en_3+"% "+enText_3);
-		$(pie_text_4.el).text(en_4+"% "+enText_4);
+		$(pie_text_5.el).text(enText_5+" "+en_5+" %");
+		$(pie_text_6.el).text(enText_6+" "+en_6+" %");
+		$(pie_text_7.el).text(enText_7+" "+en_7+" %");
+		$(pie_text_8.el).text(enText_8+" "+en_8+" %");
+		$(pie_text_1.el).text(en_1+" % "+enText_1);
+		$(pie_text_2.el).text(en_2+" % "+enText_2);
+		$(pie_text_3.el).text(en_3+" % "+enText_3);
+		$(pie_text_4.el).text(en_4+" % "+enText_4);
 
 		$(pie_2.el).css({"transform":"rotate("+deg_1+"deg)"});
 		$(pie_3.el).css({"transform":"rotate("+deg_2+"deg)"});
@@ -2120,7 +2174,7 @@ function HomeSlider_slide_data_1(key,color,type,title,type_en,title_en,data_num,
 						if(filterActive==true && blockLast == true){
 
 							$(".menuNav .current").removeClass("current");
-							$(".menu_slide_0").addClass("current");
+							//$(".menu_slide_0").addClass("current");
 
 							homeSlider.close();
 							filters[0].reset();
@@ -2272,7 +2326,7 @@ function HomeSlider_slide_data_2(key,color,type,title,type_en,title_en,data_num,
 						if(filterActive==true && blockLast == true){
 
 							$(".menuNav .current").removeClass("current");
-							$(".menu_slide_0").addClass("current");
+							//$(".menu_slide_0").addClass("current");
 
 							homeSlider.close();
 							filters[0].reset();
@@ -2529,7 +2583,7 @@ function HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,
 						if(filterActive==true && blockLast == true){
 
 							$(".menuNav .current").removeClass("current");
-							$(".menu_slide_0").addClass("current");
+							//$(".menu_slide_0").addClass("current");
 
 							homeSlider.close();
 							filters[0].reset();
@@ -2632,7 +2686,6 @@ function MenuNav__timer() {
 
 
 				menuNav_i+=1;
-				console.log(menuNav_i);
 
 			         
 			    if (menuNav__scrolled) {
@@ -2655,7 +2708,6 @@ function MenuNav__timer() {
 		}
 
 		this.off =function(){
-			console.log("offf");
 			menuNav_i =0;
 			clearInterval(menuNav__timeout);
 		}
@@ -2670,7 +2722,8 @@ function Menu(){
 	this.menuNav = new Box("div","menuNav",this.menuNav__wrap.el),
 	this.spacer_start = new Box("div","spacer spacer_start",this.menuNav.el),
 	this.spacer_end = new Box("div","spacer spacer_end",this.menuNav.el);*/
-	let filter_wrap = new Box("ul","filters__wrap active",".container");
+	let filter_wrapper = new Box("div","filters__wrapper",".container");
+	let filter_wrap = new Box("ul","filters__wrap active",".filters__wrapper");
 	this.halfSlide;
 	this.spacerWidth;
 	this.move__duration = .1;
@@ -2749,27 +2802,54 @@ function Menu_button(){
 			}else{
 				homeSlider_slides[slick_index].intro__reset();
 				homeSlider_slides[slick_index].content__reset();
+				//homeSlider_slides[slick_index].playing == false;
 			}
 
 		}else {
 
 			menuNav_timer.off();
 			
-			let slick_index = $(".slick-current").attr("data-slick-index");
-			menu.move(".menu_slide_"+slick_index,"","",function(){
-				homeSlider.open();
-			});
-
-
-			if(homeSlider_slides[slick_index].playing == true){
-				homeSlider_slides[slick_index].content__play();
-			}else{
-				homeSlider_slides[slick_index].intro__play(function(){
-					
-					homeSlider_slides[slick_index].content__play();
-				});
+			if(filteredOut == true){
+				console.log("rrrrr");
+				var slick_index = 0;
 				
+				menu.move(".menu_slide_"+slick_index,"","",function(){
+					homeSlider.open();
+				});
+				goToSlide(0);
+				if(homeSlider_slides[slick_index].playing == true){
+					homeSlider_slides[slick_index].content__play();
+				}else{
+					homeSlider_slides[slick_index].intro__play(function(){
+						
+						homeSlider_slides[slick_index].content__play();
+					});
+					
+				}
+
+				filteredOut = false;
+
+			}else{
+				console.log("uuuuu");
+				
+				let slick_index = $(".slick-current").attr("data-slick-index");
+				
+				menu.move(".menu_slide_"+slick_index,"","",function(){
+					homeSlider.open();
+				});
+
+				if(homeSlider_slides[slick_index].playing == true){
+					homeSlider_slides[slick_index].content__play();
+				}else{
+					homeSlider_slides[slick_index].intro__play(function(){
+						
+						homeSlider_slides[slick_index].content__play();
+					});
+					
+				}
 			}
+			
+			
 
 		}
 	}
@@ -2943,6 +3023,7 @@ function Menu_filters(key,filter_key,filter_name,filter_name_en,i){
 			}
 			
 			filtered =[];
+
 
 			$(".homeSlide__slide").each(function(index){
 				filtered[index] = $(this).attr("data-slick-index");
@@ -3130,6 +3211,7 @@ function Menu_slides(filter_key,color,intro_img,type,title,type_en,title_en,i){
 
 	this.e_click = function(){
 		menuNav_timer.off();
+		filteredOut == false;
 
 		if (cuurrent !== filtered.length-1) { //  annulel le blocklast false afin que aftermove fonctinne correctement à nouveau
 			blockLast = false;
@@ -3155,7 +3237,6 @@ function Menu_slides(filter_key,color,intro_img,type,title,type_en,title_en,i){
 		// add class current to this 
 		let itsCurrent;
 
-		console.log(cuurrent+"  "+toCompare);
 
 		if ($(this).hasClass("current")) {
 			itsCurrent = true; // ouvre le contenu directement ici sans passer par aftermove 
@@ -3171,7 +3252,8 @@ function Menu_slides(filter_key,color,intro_img,type,title,type_en,title_en,i){
 
 		}
 
-			
+		
+
 		
 
 		// move the menu and open the slide
@@ -3193,12 +3275,13 @@ function Menu_slides(filter_key,color,intro_img,type,title,type_en,title_en,i){
 						
 					}
 				}*/
+				console.log("filterActive: "+filterActive);
 
 				if(itsCurrent || homeSlideLength==1 ){
-					console.log("current");
 
+					console.log("play_click");
 					if(homeSlider_slides[filtered[slick_index]].playing == true){
-					homeSlider_slides[filtered[slick_index]].content__play();
+						homeSlider_slides[filtered[slick_index]].content__play();
 					}else{
 						homeSlider_slides[filtered[slick_index]].intro__play(function(){
 							homeSlider_slides[filtered[slick_index]].content__play();
