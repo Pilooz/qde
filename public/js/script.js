@@ -65,6 +65,9 @@ $(function(){
 
 	var filteredOut = false;
 
+	
+	var duree_timer_presence = 1000; // durée en seconde pour simplifier 
+
 //OBJECTS _____________
 
 
@@ -383,9 +386,9 @@ function init(callback){
 
 			presenceTest = function(){
 
-				duree_timer = 1000; // durée en seconde pour simplifier 
+				
 				 
-				duree_timer = duree_timer*1000;
+				duree_timer_presence = duree_timer_presence*1000;
 				data.presence=1;
 				if (data.presence == 1 && presence == 0) {
 
@@ -395,7 +398,7 @@ function init(callback){
 					
 
 					// start timer
-					timer_presence(duree_timer); 
+					timer_presence(duree_timer_presence); 
 
 					screen__on();
 					presence = 1;
