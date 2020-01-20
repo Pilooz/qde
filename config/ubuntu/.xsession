@@ -12,13 +12,14 @@ ratpoison &
 unclutter -idle 1 &
 
 # Minimize TeamViewer Window
-winTV=`xdotool search --name "TeamViewer"`
-echo $winTV > /tmp/tv_id.log
-xdotool windowfocus $winTV
-xdotool windowminimize $winTV
+#/home/cnr/minimize_teamviewer.sh &
+#winTV=`xdotool search --name "TeamViewer"`
+#echo $winTV > /tmp/tv-id.log
+#xdotool windowfocus $winTV
+#xdotool windowminimize $winTV
 
 # Launch chromium for ever
 while true; do 
 	chromium http://localhost:8000/ --window-size=1920,1080 --start-fullscreen --kiosk --incognito --noerrdialogs --disable-translate --no-first-run --fast --fast-start --disable-infobars --disable-pinch --edge-touch-filtering --start-maximized --system-gesture-start-width=200 --overscroll-history-navigation=0;
-	sleep 1s; 
+	sleep 2s; 
 done
