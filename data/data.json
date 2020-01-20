@@ -124,21 +124,6 @@
       "video_en" : "medias/videos/tech_solaire_EN.mp4",
       "shad" : "on"
     },
-    "vidTest" : {
-      "filter_key" : "videos",
-      "media_type" : "video",
-      "color" : "#FFA41B",
-      "intro_anim" : "medias/animations/anooki-solaire.png",
-      "intro_audio" : "medias/animations/anooki-solaire.wav",
-      "intro_img" : "medias/previews/tech_solaire.png",
-      "type" : "Vidéo",
-      "title" : "Comprendre l'énergie solaire",
-      "video" : "medias/videos/vidTest.mov",
-      "type_en" : "Video",
-      "title_en" : "solar power: how does it work?",
-      "video_en" : "medias/videos/tech_solaire_EN.mp4",
-      "shad" : "on"
-    },
     "Quiz15" : {
       "filter_key" : "question",
       "media_type" : "quiz",
