@@ -279,17 +279,18 @@ function init(callback){
 			get_rte_api = function(){
 
 				socket.emit('ask_for_rte_data', function(data){
+					console.log(data);
 					let all_en = data.actual_generations_per_production_type;
 		
-					ene_1 = all_en[7].values[all_en[7].values.length-1].value;
-					ene_2 = all_en[1].values[all_en[1].values.length-1].value;
-					ene_3 = all_en[2].values[all_en[2].values.length-1].value;
-					ene_4 = all_en[3].values[all_en[3].values.length-1].value;
-					ene_5 = all_en[10].values[all_en[10].values.length-1].value;
-					ene_6 = all_en[8].values[all_en[8].values.length-1].value;
-					ene_7 = all_en[4].values[all_en[4].values.length-1].value+all_en[5].values[all_en[5].values.length-1].value+all_en[6].values[all_en[6].values.length-1].value;
-					ene_8 = all_en[0].values[all_en[0].values.length-1].value;
-					ene_total = ene_1+ene_2+ene_3+ene_4+ene_5+ene_6+ene_7+ene_8;
+					ene_1 = all_en[7].values[all_en[7].values.length-1].value || 0;
+					ene_2 = all_en[1].values[all_en[1].values.length-1].value || 0;
+					ene_3 = all_en[2].values[all_en[2].values.length-1].value || 0;
+					ene_4 = all_en[3].values[all_en[3].values.length-1].value || 0;
+					ene_5 = all_en[10].values[all_en[10].values.length-1].value || 0;
+					ene_6 = all_en[8].values[all_en[8].values.length-1].value || 0;
+					ene_7 = all_en[4].values[all_en[4].values.length-1].value+all_en[5].values[all_en[5].values.length-1].value+all_en[6].values[all_en[6].values.length-1].value || 0;
+					ene_8 = all_en[0].values[all_en[0].values.length-1].value || 0;
+					ene_total = ene_1+ene_2+ene_3+ene_4+ene_5+ene_6+ene_7+ene_8 || 1;
 					ene_total = Math.round(ene_total*100)/100;
 
 
@@ -327,10 +328,10 @@ function init(callback){
 			get_atmo_api = function(){
 				socket.emit('ask_for_atmo_data', function(data){
 					pll_d = data.indices.data[1];
-					pll_date = pll_d.date;
-					pll_couleur = pll_d.couleur_html;
-					pll_qualificatif = pll_d.qualificatif;
-					pll_valeur = pll_d.valeur;
+					pll_date = pll_d.date || "";
+					pll_couleur = pll_d.couleur_html || "#ffffff";
+					pll_qualificatif = pll_d.qualificatif || "";
+					pll_valeur = pll_d.valeur || 0;
 					homeSlider_data_0.data_apply(pll_valeur,pll_date);// attribuer data to slide 
 				});
 			}
@@ -342,8 +343,8 @@ function init(callback){
   				socket.emit('ask_for_cnr_data', function(data) {
     				// Ici tu charges les data dans les variables deton app...
 
-					dt_1 = data[0].puissancetempsreel;
-					dt_2 = data[1].puissancetempsreel;
+					dt_1 = data[0].puissancetempsreel || 0;
+					dt_2 = data[1].puissancetempsreel || 0;
 
 					homeSlider_data_3.data_apply(dt_1,dt_2);
 					

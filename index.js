@@ -26,6 +26,7 @@ app.use(morgan('combined', {stream: accessLogStream}));
 app.set('view engine', 'ejs');
 // All resources in public dir
 app.use('/', express.static(__dirname + '/public'));
+const data_cache_dir = __dirname + '/public/data';
 
 
 /*------------------------------------------------------------------------
@@ -82,6 +83,27 @@ http.listen(port, function(){
   console.log('Http server is listening on port %d', port);
 });
 
+
+function cache_data(f, data) {
+	var filename = data_cache_dir + '/' + f + '.json';
+	fs.writeFile(filename, data, 'ascii', function(err){
+		if (err) {
+			console.log(err);
+		} else {
+			console.log(filename + " has been written succefully.");
+		}
+
+	});
+}
+
+function get_cached_data(f) {
+	var filename = data_cache_dir + '/' + f + '.json';
+	if (fs.existsSync(filename)) {
+		return JSON.parse(fs.readFileSync(filename));
+	} else {
+		console.log(filename + " does'not exist !");
+	}
+}
 /*------------------------------------------------------------------------
   Sockets for data services
 ------------------------------------------------------------------------*/
@@ -114,11 +136,13 @@ io.on('connection', function (socket) {
 
     getJSON( conf.api_tokens.atmo.url + conf.api_tokens.atmo.key )
     .then(function(api_response) {
+      // Recording the file into public/data, for caching purpose
+      cache_data('atmo', JSON.stringify(api_response));
       send_response(api_response);
     }).catch(function(error) {
       console.log(error);
+      send_response(get_cached_data('atmo'));
     });
-
   });
 
   //
@@ -141,7 +165,6 @@ io.on('connection', function (socket) {
       resp.on('data', (chunk) => {
         data += chunk;
       });
-
       // The whole response has been received. Print out the result.
       resp.on('end', () => {
         res = JSON.parse(data);
@@ -162,17 +185,25 @@ io.on('connection', function (socket) {
           });
           resp2.on('end', () => {
             res2 = JSON.parse(data2);
+            // Recording the file into public/data, for caching purpose
+            cache_data('rte', data2);
             // So returning them to browser
             send_response(res2);
 
-          }).on("error", (err) => {
-            console.log("Error in retrieving data from RTE : " + err.message);
+          }).on("error", (e) => {
+            console.log("Error in retrieving data from RTE : " + e.Error);
+            send_response(get_cached_data('rte'));
           });
         });
 
-      }).on("error", (err) => {
-        console.log("Error in retrieving authorization for RTE : " + err.message);
+      }).on("error", (e) => {
+        console.log("Error in retrieving authorization for RTE : " + e.Error);
+        send_response(get_cached_data('rte'));
       });
+    }).on("error", (e) => {
+    	// Trapping DNS errors if no internet
+    	console.log(e.Error);
+    	send_response(get_cached_data('rte'));
     });
   });
 });

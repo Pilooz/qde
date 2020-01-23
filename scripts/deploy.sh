@@ -122,8 +122,8 @@ cp $cur_rep_name/config/config.json $new_rep_name/config/
 ls ./$new_rep_name/config/config.json
 check
 
-comment "Recopier une version des data CNR"
-cp $cur_rep_name/public/data/PuissanceCNR.json $new_rep_name/public/data/
+comment "Recopier le cache de data"
+cp $cur_rep_name/public/data/*.json $new_rep_name/public/data/
 
 comment "rechargement de la définition des services"
 sudo systemctl daemon-reload
