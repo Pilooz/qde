@@ -59,6 +59,13 @@ app.get('/', function (req, res) {
   res.render('index', { port: port } );
 })
 
+// Simuler la présence
+.get('/presence', function(req, res) {
+  console.log('Simulation de présence.');
+  io.emit('presence', { "presence": 1 } );
+  res.end();
+})
+
 // POST method route
 .post('/', function (req, res) {
   // Sensors have updated their values

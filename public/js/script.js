@@ -65,8 +65,8 @@ $(function(){
 
 	var filteredOut = false;
 
-
-	var duree_timer_presence = 1000; // durée en seconde pour simplifier 
+	var screen_state = false; // False lorsque l'écran est éteint, True lorsqu'il est allumé
+	const duree_timer_presence = 10; // durée en seconde pour simplifier 
 
 //OBJECTS _____________
 
@@ -359,67 +359,32 @@ function init(callback){
 			----------------------------------------------------------------*/
 
 			// SOCKET PRESENCE À ACTIVER APRÈS TESTS 
-			/*socket.on('presence', function(data){
+			socket.on('presence', function(data){
+				console.log('data.presence=' + data.presence);
+				console.log('presence=' + presence);
 				data.presence=1;
 				if (data.presence == 1 && presence == 0) {
 
 					// Il n'y avait personne et quelqu'un est détecté
-					
-
+					console.log("Il n'y avait personne et quelqu'un est détecté...");
 
 					// start timer
-					timer_presence(100); 
-
+					start_decount();
 					screen__on();
-					presence = 1;
 
 				}else if(data.presence == 1 && presence == 1){
 					
-					// Il y avait quelqu'un et une nouvelle personne est détecté 
-
+					// Il y avait quelqu'un et une nouvelle personne est détectée
+					console.log("Il y avait quelqu'un et une nouvelle personne est détectée...");
 					// rénitialiser le timer
-					timer_presence(100); //  timer à 0 et l'active avec temps en ms, ici 600000ms = 10min
+					start_decount();
 					
 				}
 
 
-			});*/
-
-			presenceTest = function(){
-
-				
-				 
-				duree_timer_presence = duree_timer_presence*1000;
-				data.presence=1;
-				if (data.presence == 1 && presence == 0) {
-
-					// Il n'y avait personne et quelqu'un est détecté
-					
-					let i=0;
-					
-
-					// start timer
-					timer_presence(duree_timer_presence); 
-
-					screen__on();
-					presence = 1;
-
-				}else if(data.presence == 1 && presence == 1){
-					
-					// Il y avait quelqu'un et une nouvelle personne est détecté 
-
-					// rénitialiser le timer
-					timer_presence(duree_timer); //  timer à 0 et l'active avec temps en ms, ici 600000ms = 10min
-					
-				}
-
-			}
-			
-			
-			
+			});
 
 			callback();
-			
 
 	})
 }
@@ -442,9 +407,9 @@ init(function(){
 	get_rte_api();
 	get_atmo_api();
 	get_cnr_api();
-	dataRefresh();
-	presenceTest();
-
+	dataRefresh();	
+	screen__on();
+	start_decount();
 });
 
 
@@ -462,18 +427,15 @@ $( document ).ready(function() {
 
 
 
-
-
-
-
 /*----------------------------------------------------------------
 	LISTENER pour réveiller l'app lors du CLICK sur "app-on"
 	Supprimer l'ecran noir au click et lancer l'appli.
 ----------------------------------------------------------------*/
 $(".app-on").click(function(){
-	 if ($(".container").hasClass("off")) {
+	 //if ($(".container").hasClass("off")) {
+	 if(!screen_state) {
+	 	start_decount();
 		screen__on();
-		
   	} else {
 		screen__off();
 		
@@ -487,13 +449,11 @@ $(document).keypress(function(event){
 		
 		var keycode = (event.keyCode ? event.keyCode : event.which);
 		if(keycode == '13'){
-			/*if (!$(".container").hasClass("active")) {
-				screen__on();
-			}else{
+			if (screen_state) {
 				screen__off();
-			}*/
-
-			screen__off();
+			} else {
+				screen__on();
+			}
 		}
 });
 
@@ -504,6 +464,7 @@ $(document).keypress(function(event){
 function screen__on(){
 
 		console.log("screenOn");
+		screen_state = true;
 
 		let current = $(".slick-current").attr("data-slick-index");
 		goToSlide(0);
@@ -523,27 +484,25 @@ function screen__on(){
 		
 		$(".black-screen").addClass("off");
 		$(".container").removeClass("off");
-
+		presence = 1;
 }
 
 /*----------------------------------------------------------------
 	TIMERS de présence
 ----------------------------------------------------------------*/
-
-function timer_presence(temps){
+function init_timer() {
 	clearTimeout(timer_presence);
+}
+
+function start_decount(){
+	init_timer();
 	timer_presence = setTimeout(function(){
 
 			screen__off();
 			presence = 0;
 
-	}, temps);
-
-
-
+	}, duree_timer_presence * 1000); // La durée est déclarée en seconde, il faut en faire des millisec.
 }
-
-
 
 
 /*----------------------------------------------------------------
@@ -552,6 +511,7 @@ function timer_presence(temps){
 function screen__off(){
 	
 	console.log("screenOff");
+	screen_state = false;
 
 	$(".black-screen").removeClass("off");
 	$(".container").addClass("off");
@@ -567,11 +527,8 @@ function screen__off(){
 	}
 	
 	menuNav_timer.off();
+	presence = 0;
 }
-
-
-
-
 
 /*----------------------------------------------------------------
 	Raffraichir les données de qualité de l'air 
@@ -597,10 +554,6 @@ function dataRefresh(){
 		
 	}, 10000)
 }
-
-
-
-
 
 
 /*----------------------------------------------------------------
@@ -1860,18 +1813,9 @@ function HomeSlider_slide_data_0(key,color,type,title,type_en,title_en,data_num,
 				$(backcol_4.el).css("opacity","1");
 				$(backcol_5.el).css("opacity","1");
 				$(backcol_6.el).css("opacity","1");
-				
-
-
-
-
 	
 	}
 
-	
-
-
-	
 
 	this.content__play = function(){
 		this.intro__play();
@@ -2232,10 +2176,6 @@ function HomeSlider_slide_data_1(key,color,type,title,type_en,title_en,data_num,
 
 
 	}
-
-	
-
-
 	
 
 	this.content__play = function(){
@@ -3413,9 +3353,6 @@ function changeCurrent(num){
 	menu.move(slide,"zoom","noAnim");
 }
 
-
-
 });
-
 
 
