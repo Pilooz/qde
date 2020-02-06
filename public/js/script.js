@@ -66,7 +66,7 @@ $(function(){
 	var filteredOut = false;
 
 	var screen_state = false; // False lorsque l'écran est éteint, True lorsqu'il est allumé
-	const duree_timer_presence = 10; // durée en seconde pour simplifier 
+	const duree_timer_presence = 1000; // durée en seconde pour simplifier 
 
 //OBJECTS _____________
 
