@@ -223,9 +223,11 @@
       "duration" : "12",
       "intro_img" : "medias/previews/data_cnr.png",
       "type" : "Infos live",
-      "title" : "Production d'énergie CNR",
+      "title" : "Production d'énergie CNR en 2019",
       "type_en" : "Infos live",
-      "title_en" : "CNR energy production"
+      "title_en" : "CNR energy production",
+      "value1" : "17",
+      "value2" : "6205322"
     },
     "part_cnr" : {
       "filter_key" : "partner",

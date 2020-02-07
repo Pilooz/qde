@@ -189,7 +189,9 @@ function init(callback){
 							homeSlider_slides[i] = new HomeSlider_slide_data_2(key,color,type,title,type_en,title_en,data_num,video,video_en,duration,media_type,filter_key,i);
 
 						}else if(data_num == 3){
-							homeSlider_slides[i] = new HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,duration,media_type,filter_key,i);
+							var val1 = value.value1;
+							var val2 = value.value2;
+							homeSlider_slides[i] = new HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,duration,media_type,filter_key,val1,val2,i);
 							homeSlider_data_3 = homeSlider_slides[i];
 						}
 
@@ -339,7 +341,7 @@ function init(callback){
 			/*------------------------------------------------------------
 			 	SOCKET CNR - Socket de récupération des données de production de la CNR
 			 ------------------------------------------------------------*/
-			get_cnr_api = function() {
+			/*get_cnr_api = function() {
   				socket.emit('ask_for_cnr_data', function(data) {
     				// Ici tu charges les data dans les variables deton app...
 
@@ -350,7 +352,7 @@ function init(callback){
 					
 
   				});
-			}
+			}*/
 
 
 			/*----------------------------------------------------------------
@@ -406,7 +408,7 @@ init(function(){
 	homeSlider.display();
 	get_rte_api();
 	get_atmo_api();
-	get_cnr_api();
+	//get_cnr_api();
 	dataRefresh();	
 	screen__on();
 	start_decount();
@@ -2333,7 +2335,7 @@ function HomeSlider_slide_data_2(key,color,type,title,type_en,title_en,data_num,
 	}
 }
 
-function HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,duration,media_type,filter_key,i){
+function HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,duration,media_type,filter_key,val1,val2,i){
 	this.key = key;
 	this.color = color;
 	this.type = type;
@@ -2347,21 +2349,24 @@ function HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,
 
 	let nn1,nn2;
 
-	this.data_apply = function(val1,val2){
+	// plus besoin de connection api car valeurs en dur
+	/*this.data_apply = function(val1,val2){ 
 		dt_1 = val1;
 		dt_2 = val2;
 		
-		bar_w1 = 600;
+		
 		bar_w2 = (bar_w1*dt_2)/dt_1;
 
 		$(data_num_1.el).text(dt_1+" MW");
-		$(data_num_2.el).text(dt_2+" MW");
+		//$(data_num_2.el).text(dt_2+" MW");
 
 		nn1 = new Incr_anim(dt_1,".homeSlide__slide__titleBlock__dataNum1","after"," MW");
 		nn2 = new Incr_anim(dt_2,".homeSlide__slide__titleBlock__dataNum2","after"," MW");
 
 
-	}
+	}*/
+
+
 
 	let dt_text1 = "hydraulique";
 	let dt_text2 = "éolien+solaire";
@@ -2373,10 +2378,16 @@ function HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,
 	let dt_text3_en = "solar";
 	let dt_textFinal_en = "people powered";
 
+	
+
+	bar_w1 = 600;
+
+	let dt_final = parseInt(val2,10);
+
 	/*let dt_1 = 3052;
 	let dt_2 = 1343;
 	let dt_3 = 479;
-	let dt_final = 6405;*/
+	*/
 
 	
 	//let bar_w3 = (bar_w1*dt_3)/dt_1;
@@ -2404,8 +2415,8 @@ function HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,
 			let data_text_1 = new Box("div","homeSlide__slide__titleBlock__dataText1 dataText",data_text_wrap.el);
 			$(data_text_1.el).text(dt_text1);
 
-			let data_text_2 = new Box("div","homeSlide__slide__titleBlock__dataText2 dataText",data_text_wrap.el);
-			$(data_text_2.el).text(dt_text2);
+			/*let data_text_2 = new Box("div","homeSlide__slide__titleBlock__dataText2 dataText",data_text_wrap.el);
+			$(data_text_2.el).text(dt_text2);*/
 
 			/*let data_text_3 = new Box("div","homeSlide__slide__titleBlock__dataText3 dataText",data_text_wrap.el);
 			$(data_text_3.el).text(dt_text3);*/
@@ -2415,16 +2426,16 @@ function HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,
 			let data_1 = new Box("div","homeSlide__slide__titleBlock__data data_1",dataBar_wrap.el);
 				let data_bar_1 = new Box("div","homeSlide__slide__titleBlock__dataBar1 dataBar",data_1.el);
 				let data_num_1 = new Box("div","homeSlide__slide__titleBlock__dataNum1",data_1.el);
-
+				$(data_num_1.el).text(dt_1+" MW");
 				$(data_bar_1.el).css("width","0px");
 
 
 
-			let data_2 = new Box("div","homeSlide__slide__titleBlock__data data_2",dataBar_wrap.el);
+			/*let data_2 = new Box("div","homeSlide__slide__titleBlock__data data_2",dataBar_wrap.el);
 				let data_bar_2 = new Box("div","homeSlide__slide__titleBlock__dataBar2 dataBar",data_2.el);
 				let data_num_2 = new Box("div","homeSlide__slide__titleBlock__dataNum2 ",data_2.el);
 				
-				$(data_bar_2.el).css("width","0px");
+				$(data_bar_2.el).css("width","0px");*/
 
 			/*let data_3 = new Box("div","homeSlide__slide__titleBlock__data data_3",dataBar_wrap.el);
 				let data_bar_3 = new Box("div","homeSlide__slide__titleBlock__dataBar3 dataBar",data_3.el);
@@ -2432,38 +2443,41 @@ function HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,
 				$(data_num_3.el).text(dt_3+" MW");
 				$(data_bar_3.el).css("width","0px");*/
 
-	/*let dataFinal_wrap = new Box("div","homeSlide__slide__titleBlock__dataFinal_wrap",titleBlock.el);
+	let dataFinal_wrap = new Box("div","homeSlide__slide__titleBlock__dataFinal_wrap",titleBlock.el);
 		$(dataFinal_wrap.el).css("opacity","0");
 			let dataFinal = new Box("div","homeSlide__slide__titleBlock__dataFinal",dataFinal_wrap.el);
 			let dataFinalText = new Box("div","homeSlide__slide__titleBlock__dataFinalText",dataFinal_wrap.el);
 			$(dataFinal.el).text("= "+dt_final);
-			$(dataFinalText.el).text(dt_textFinal);*/
+			$(dataFinalText.el).text(dt_textFinal);
 
 
 	let timeBar = new Box("div","time-bar",titleBlock.el);
 
+	dt_1 = parseInt(val1,10);
+	nn1 = new Incr_anim(dt_1,".homeSlide__slide__titleBlock__dataNum1","after"," TWh");
+
 	this.french_mode = function(){
 		$(title_name.el).text(title);
 		$(data_text_1.el).text(dt_text1);
-		$(data_text_2.el).text(dt_text2);
+		//$(data_text_2.el).text(dt_text2);
 		//$(data_text_3.el).text(dt_text3);
-		//$(dataFinalText.el).text(dt_textFinal);
+		$(dataFinalText.el).text(dt_textFinal);
 
 	}
 
 	this.english_mode = function(){
 		$(title_name.el).text(title_en);
 		$(data_text_1.el).text(dt_text1_en);
-		$(data_text_2.el).text(dt_text2_en);
+		//$(data_text_2.el).text(dt_text2_en);
 		//$(data_text_3.el).text(dt_text3_en);
-		//$(dataFinalText.el).text(dt_textFinal_en);
+		$(dataFinalText.el).text(dt_textFinal_en);
 		
 	}
 
 	let titleAnim, titleAnim2,titleAnim3,titleAnim4,titleAnim5;
 	
 	//let nn3 = new Incr_anim(dt_3,".homeSlide__slide__titleBlock__dataNum3","after"," MW");
-	//let nn4 = new Incr_anim(dt_final,".homeSlide__slide__titleBlock__dataFinal","prev","= ");
+	let nn4 = new Incr_anim(dt_final,".homeSlide__slide__titleBlock__dataFinal","prev","= ");
 	
 	
 
@@ -2490,7 +2504,7 @@ function HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,
 
 		},nu);
 
-		titleAnim3 = setTimeout(function(){
+		/*titleAnim3 = setTimeout(function(){
 				$(data_text_2.el).addClass("active");
 				$(data_bar_2.el).css({"width": bar_w2+"px","opacity":"1"});
 				$(data_num_2.el).css("opacity","1");
@@ -2498,7 +2512,7 @@ function HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,
 
 				nn2.start();
 
-		},nu*2);
+		},nu*2);*/
 
 		
 		/*titleAnim4 = setTimeout(function(){
@@ -2506,14 +2520,14 @@ function HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,
 				$(data_bar_3.el).css({"width": bar_w3+"px","opacity":"1"});
 				$(data_num_3.el).css("opacity","1");
 				nn3.start();
-		},nu*3);
+		},nu*3);*/
 
 		
 		titleAnim5 = setTimeout(function(){
 			$(dataFinal_wrap.el).css("opacity","1");
 			nn4.start();
 		
-		},nu*4);*/
+		},nu*2);
 		
 		
 		timer_content = setInterval(function(){
@@ -2577,25 +2591,25 @@ function HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,
 		//clearTimeout(titleAnim5);
 	
 		nn1.reset();
-		nn2.reset();
+		//nn2.reset();
 		//nn3.reset();
-		//nn4.reset();
+		nn4.reset();
 		$(titleText.el).removeClass("top");
 		$(data_wrap.el).css("opacity","0");
 
 		$(data_text_1.el).removeClass("active");
-		$(data_text_2.el).removeClass("active");
+		//$(data_text_2.el).removeClass("active");
 		//$(data_text_3.el).removeClass("active");
 
 		$(data_bar_1.el).css({"width": "0px"});
-		$(data_bar_2.el).css({"width": "0px"});
+		//$(data_bar_2.el).css({"width": "0px"});
 		//$(data_bar_3.el).css({"width": "0px"});
 
 		$(data_num_1.el).css("opacity","0");
-		$(data_num_2.el).css("opacity","0");
+		//$(data_num_2.el).css("opacity","0");
 		//$(data_num_3.el).css("opacity","0");
 
-		//$(dataFinal_wrap.el).css("opacity","0");
+		$(dataFinal_wrap.el).css("opacity","0");
 
 
 	}
@@ -3294,39 +3308,57 @@ function Box(type,name,wrap){
 
 }
 
+function numSpace(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+}
+
 /*----------------------------------------------------------------
 ANIMATION D'INCREMENTATION DE NOMBRES
 ----------------------------------------------------------------*/
 function Incr_anim(num,element,pre,un){
 
-		let ii=0;
+
+		let ii=1;
 		let int;
+
+		if(num<50){
+			 var div = 10;
+			 var ti = 100;
+		}else{
+			 var div = 50;
+			 var ti = 20;
+		}
+		
 
 		this.start = function(){
 			
 
 			int = setInterval(function(){
 				if (ii < num){
-					ii= ii+Math.round(num/50);
+					ii= ii+Math.round(num/div);
+
+					let ooo = numSpace(ii);
 
 					if(pre=="prev"){
-						$(element).text(un+ii);
+						$(element).text(un+ooo);
 					}else if(pre=="after"){
-						$(element).text(ii+un);
+						$(element).text(ooo+un);
 					}
 					
 				
 				}else{
 
+					let ooo = numSpace(num);
+
 					if(pre=="prev"){
-						$(element).text(un+num);
+						$(element).text(un+ooo);
 					}else if(pre=="after"){
-						$(element).text(num+un);
+						$(element).text(ooo+un);
 					}
 					clearInterval(int);
 				}
 
-			},20);
+			},ti);
 		}
 
 		this.reset = function(){

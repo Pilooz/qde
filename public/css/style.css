@@ -1069,10 +1069,12 @@ body{
       font-size: 30px;
       text-transform: uppercase;
       padding-right: 10px;
+      display: none;
     }
 
     .homeSlide__slide__titleBlock__dataBar_wrap{
-
+      margin-top: 40px;
+      margin-left: 215px;
     }
  
 
