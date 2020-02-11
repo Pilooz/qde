@@ -1084,6 +1084,12 @@ body{
       font-size: 30px;
     }
 
+    .data_3 .homeSlide__slide__titleBlock__data{
+      font-size: 60px;
+      align-items: center;
+    }
+
+
     .dataText,.homeSlide__slide__titleBlock__data{
       margin-bottom: 17px;
     }

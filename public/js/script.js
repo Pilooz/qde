@@ -2426,7 +2426,7 @@ function HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,
 			let data_1 = new Box("div","homeSlide__slide__titleBlock__data data_1",dataBar_wrap.el);
 				let data_bar_1 = new Box("div","homeSlide__slide__titleBlock__dataBar1 dataBar",data_1.el);
 				let data_num_1 = new Box("div","homeSlide__slide__titleBlock__dataNum1",data_1.el);
-				$(data_num_1.el).text(dt_1+" MW");
+				$(data_num_1.el).text(1+" TWh");
 				$(data_bar_1.el).css("width","0px");
 
 
@@ -2527,7 +2527,7 @@ function HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,
 			$(dataFinal_wrap.el).css("opacity","1");
 			nn4.start();
 		
-		},nu*2);
+		},nu*2.6);
 		
 		
 		timer_content = setInterval(function(){
@@ -3336,7 +3336,7 @@ function Incr_anim(num,element,pre,un){
 			int = setInterval(function(){
 				if (ii < num){
 					ii= ii+Math.round(num/div);
-
+					console.log("iiiii"+ii);
 					let ooo = numSpace(ii);
 
 					if(pre=="prev"){
