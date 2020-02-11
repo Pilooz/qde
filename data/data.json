@@ -218,16 +218,16 @@
     "data_cnr" : {
       "filter_key" : "data",
       "media_type" : "data",
-      "color" : "#7b9344",
+      "color" : "#78A700",
       "data_num" : "3",
       "duration" : "12",
       "intro_img" : "medias/previews/data_cnr.png",
       "type" : "Infos live",
       "title" : "Production d'énergie CNR en 2019",
       "type_en" : "Infos live",
-      "title_en" : "CNR energy production",
-      "value1" : "17",
-      "value2" : "6205322"
+      "title_en" : "CNR energy production in 2019",
+      "value1" : "15,5",
+      "value2" : "6037237"
     },
     "part_cnr" : {
       "filter_key" : "partner",
