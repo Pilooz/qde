@@ -30,10 +30,18 @@ $(function(){
 
 	var i_date = new Date();
 	var i_day = i_date.getDate();
-	var i_month = i_date.getMonth();
+	var i_month = i_date.getMonth()+1;
 	var i_year = i_date.getFullYear();
 
 
+	if (i_day < 10){
+		i_day = "0"+i_day;
+	}
+
+	if(i_month < 10){
+		i_month = "0"+i_month;
+	}
+	
 
 	var menu;
 	var homeSlider;
@@ -281,7 +289,6 @@ function init(callback){
 			get_rte_api = function(){
 
 				socket.emit('ask_for_rte_data', function(data){
-					console.log(data);
 					let all_en = data.actual_generations_per_production_type;
 		
 					ene_1 = all_en[7].values[all_en[7].values.length-1].value || 0;
@@ -587,10 +594,6 @@ function HomeSlider(){
 
 			cuurrent = currentSlide;
 
-			console.log("filtered: "+filtered.length);
-			console.log("toCompare: "+toCompare);
-			console.log("currentSlide: "+currentSlide);
-			console.log("blockLast :"+blockLast);
 
 			if(toCompare != currentSlide && blockLast == false){ //
 
@@ -605,7 +608,6 @@ function HomeSlider(){
 					homeSlider_slides[filtered[i]].content__reset();
 				}
 
-				console.log("play_afterChange");
 				homeSlider_slides[filtered[currentSlide]].intro__play(function(){ // play the slide
 					
 					
@@ -615,7 +617,6 @@ function HomeSlider(){
 			}else {
 				if (currentSlide == filtered.length-1) { //  si c'est l'avant dernière slide blocklast true pour la prochaine
 					blockLast = true;
-					console.log("blockLast2 :"+blockLast);
 				}
 			}
 		});
@@ -735,7 +736,6 @@ function HomeSlider_slide_vid(key,color,intro_anim,intro_audio,video,type,title,
 	}
 
 	this.intro__play = function(callback){
-		console.log("intro_play");
 		$(titleText.el).addClass("active");
 					$(titleAnim.el).addClass("active");
 
@@ -811,7 +811,6 @@ function HomeSlider_slide_vid(key,color,intro_anim,intro_audio,video,type,title,
 
 	this.content__play = function(){
 
-		console.log("content-playyy");
 		let vid = $(videoo.el).get(0),
 		vid_duration = vid.duration;
 				
@@ -837,7 +836,6 @@ function HomeSlider_slide_vid(key,color,intro_anim,intro_audio,video,type,title,
 					
 					if (percent >= 100.00){
 
-						console.log("blockLast :"+blockLast);
 						if(filterActive==true && blockLast == true){
 
 							$(".menuNav .current").removeClass("current");
@@ -1048,7 +1046,6 @@ function HomeSlider_slide_quiz(key,color,intro_anim,intro_audio,questions_select
 						questionRestart();
 					});
 				}else{
-					console.log("questionEnd");
 					questionEnd(this,function(){
 						questionScore();
 					});
@@ -1157,7 +1154,6 @@ function HomeSlider_slide_quiz(key,color,intro_anim,intro_audio,questions_select
 				
 				// Response message apparition
 				timer_questionMess = setTimeout(function(){
-					console.log("reponse");
 					$(questions[questions_selection[o]].quizResponseMessage.el).addClass("active");
 
 				},quiz_resultAnim__duration*1000);
@@ -1447,7 +1443,7 @@ function HomeSlider_slide_data_0(key,color,type,title,type_en,title_en,data_num,
 			let titleText = new Box("div","homeSlide__slide__titleBlock__title",titleBlock.el);
 				
 				let title_type = new Box("h3","homeSlide__slide__titleBlock__title__type",titleText.el);
-				$(title_type.el).text("info "+ i_day+"/"+i_month+1+"/"+i_year);
+				$(title_type.el).text("info "+ i_day+"/"+i_month+"/"+i_year);
 
 				let title_name = new Box("h2","homeSlide__slide__titleBlock__title__name",titleText.el);
 				$(title_name.el).text(title)
@@ -1883,7 +1879,7 @@ function HomeSlider_slide_data_1(key,color,type,title,type_en,title_en,data_num,
 				
 
 				let title_type = new Box("h3","homeSlide__slide__titleBlock__title__type ",titleText.el);
-				$(title_type.el).text("info "+ i_day+"/"+i_month+1+"/"+i_year);
+				$(title_type.el).text("info "+ i_day+"/"+i_month+"/"+i_year);
 
 				let title_name = new Box("h2","homeSlide__slide__titleBlock__title__name",titleText.el);
 								
@@ -2403,7 +2399,7 @@ function HomeSlider_slide_data_3(key,color,type,title,type_en,title_en,data_num,
 	let titleText = new Box("div","homeSlide__slide__titleBlock__title",titleBlock.el);
 				
 				let title_type = new Box("h3","homeSlide__slide__titleBlock__title__type",titleText.el);
-				$(title_type.el).text("info "+ i_day+"/"+i_month+1+"/"+i_year);
+				$(title_type.el).text("info "+ i_day+"/"+i_month+"/"+i_year);
 
 				let title_name = new Box("h2","homeSlide__slide__titleBlock__title__name",titleText.el);
 				$(title_name.el).text(title);
@@ -2779,7 +2775,6 @@ function Menu_button(){
 			menuNav_timer.off();
 			
 			if(filteredOut == true){
-				console.log("rrrrr");
 				var slick_index = 0;
 				
 				menu.move(".menu_slide_"+slick_index,"","",function(){
@@ -2799,7 +2794,6 @@ function Menu_button(){
 				filteredOut = false;
 
 			}else{
-				console.log("uuuuu");
 				
 				let slick_index = $(".slick-current").attr("data-slick-index");
 				
@@ -3244,11 +3238,9 @@ function Menu_slides(filter_key,color,intro_img,type,title,type_en,title_en,i){
 						
 					}
 				}*/
-				console.log("filterActive: "+filterActive);
 
 				if(itsCurrent || homeSlideLength==1 ){
 
-					console.log("play_click");
 					if(homeSlider_slides[filtered[slick_index]].playing == true){
 						homeSlider_slides[filtered[slick_index]].content__play();
 					}else{
@@ -3336,7 +3328,6 @@ function Incr_anim(num,element,pre,un){
 			int = setInterval(function(){
 				if (ii < num){
 					ii= ii+Math.round(num/div);
-					console.log("iiiii"+ii);
 					let ooo = numSpace(ii);
 
 					if(pre=="prev"){
