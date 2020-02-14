@@ -238,10 +238,10 @@
       "intro_img" : "medias/previews/part_CNR.jpg",
       "type" : "Partenaire",
       "title" : "CNR",
-      "video" : "medias/videos/part_CNR_identite_FR.mov",
+      "video" : "medias/videos/part_CNR_identite_FR.mp4",
       "type_en" : "Partner",
       "title_en" : "CNR",
-      "video_en" : "medias/videos/part_CNR_identite_EN.mov",
+      "video_en" : "medias/videos/part_CNR_identite_EN.mp4",
       "shad" : "on"
     },
     "part_engie" : {
