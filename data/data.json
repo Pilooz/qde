@@ -64,6 +64,51 @@
       "type_en" : "Quiz",
       "title_en" : "Test your knowledge with 5 questions"
     },
+    "garage-mobilite" : {
+      "filter_key" : "videos",
+      "media_type" : "video",
+      "color" : "#8F5F6A",
+      "intro_anim" : "medias/animations/Anooki-Air1.png",
+      "intro_audio" : "medias/animations/Anooki-Air1.wav",
+      "intro_img" : "medias/previews/garage_mobilite.png",
+      "type" : "Vidéo",
+      "title" : "La mobilité durable",
+      "video" : "medias/videos/garage-mobilite-FR.mp4",
+      "type_en" : "Video",
+      "title_en" : "Sustainable mobility",
+      "video_en" : "medias/videos/garage-mobilite-EN.mp4",
+      "shad" : "on"
+    },
+    "garage-enr" : {
+      "filter_key" : "videos",
+      "media_type" : "video",
+      "color" : "#35A0BD",
+      "intro_anim" : "medias/animations/Anooki-ENR.png",
+      "intro_audio" : "medias/animations/Anooki-ENR.wav",
+      "intro_img" : "medias/previews/garage_ENR.png",
+      "type" : "Vidéo",
+      "title" : "Les énergies renouvelables",
+      "video" : "medias/videos/garage-ENR-FR.mp4",
+      "type_en" : "Video",
+      "title_en" : "Renewable energies",
+      "video_en" : "medias/videos/garage-ENR-EN.mp4",
+      "shad" : "on"
+    },
+    "garage-transition" : {
+      "filter_key" : "videos",
+      "media_type" : "video",
+      "color" : "#72576A",
+      "intro_anim" : "medias/animations/anooki-eolienne.png",
+      "intro_audio" : "medias/animations/anooki-eolienne.wav",
+      "intro_img" : "medias/previews/garage_transition.png",
+      "type" : "Vidéo",
+      "title" : "La transition écologique",
+      "video" : "medias/videos/garage-transition-FR.mp4",
+      "type_en" : "Video",
+      "title_en" : "The energy transition",
+      "video_en" : "medias/videos/garage-transition-EN.mp4",
+      "shad" : "on"
+    },
     "tech_eolien" : {
       "filter_key" : "videos",
       "media_type" : "video",
@@ -122,6 +167,21 @@
       "type_en" : "Video",
       "title_en" : "solar power: how does it work?",
       "video_en" : "medias/videos/tech_solaire_EN.mp4",
+      "shad" : "on"
+    },
+    "tech_bifaciale" : {
+      "filter_key" : "videos",
+      "media_type" : "video",
+      "color" : "#FFA41B",
+      "intro_anim" : "medias/animations/anooki-solaire.png",
+      "intro_audio" : "medias/animations/anooki-solaire.wav",
+      "intro_img" : "medias/previews/garage_bifaciale.png",
+      "type" : "Vidéo",
+      "title" : "Comprendre la technologie bifaciale",
+      "video" : "medias/videos/garage-bifaciale-FR.mp4",
+      "type_en" : "Video",
+      "title_en" : "bifacial technology: how does it work?",
+      "video_en" : "medias/videos/garage-bifaciale-EN.mp4",
       "shad" : "on"
     },
     "Quiz15" : {
@@ -371,7 +431,7 @@
       "id" : "5",
       "color_back" : "#3D50B6",
       "response_ok" : "reponse_2",
-      "question" : "Quel est l’objectif du nombre véhicules électriques en circulation en France en 2035 ?",
+      "question" : "Quel est l’objectif du nombre de véhicules électriques en circulation en France en 2035 ?",
       "responses" : {
         "reponse_1" : "5,3 millions",
         "reponse_2" : "15,6 millions",
@@ -487,16 +547,16 @@
       "response_ok" : "reponse_2",
       "question" : "Depuis quand l’hydrogène est-il utilisé pour les transports ?",
       "responses" : {
-        "reponse_1" : "since antiquity",
-        "reponse_2" : "since the 18th century ",
-        "reponse_3" : "since 5 years ago"
+        "reponse_1" : "depuis l'antiquité",
+        "reponse_2" : "depuis le 18e siècle",
+        "reponse_3" : "depuis 5 ans"
       },
       "message" : "À l'occasion du premier voyage aérien dans un ballon appelé « aérostat à gaz hydrogène »",
       "question_en" : "Since when has hydrogen been used for transport?",
       "responses_en" : {
-        "reponse_1" : "5%",
-        "reponse_2" : "50%",
-        "reponse_3" : "95%"
+        "reponse_1" : "since antiquity",
+        "reponse_2" : "since the 18th century ",
+        "reponse_3" : "since 5 years ago"
       },
       "message_en" : "When the first airborne trip was made in a balloon called a “hydrogen aerostat”."
     },
