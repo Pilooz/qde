@@ -540,7 +540,7 @@ function screen__off(){
 }
 
 /*----------------------------------------------------------------
-	Raffraichir les données de qualité de l'air 
+	Raffraichir les données api
 	à intervalles réguliers
 ----------------------------------------------------------------*/
 function dataRefresh(){
@@ -556,9 +556,29 @@ function dataRefresh(){
 
 		if(hour == data_refresh_time[0] && minutes == data_refresh_time[1]){ 
 
+			i_date = new Date();
+			i_day = i_date.getDate();
+			i_month = i_date.getMonth()+1;
+			i_year = i_date.getFullYear();
+
+			if (i_day < 10){
+				i_day = "0"+i_day;
+			}
+
+			if(i_month < 10){
+				i_month = "0"+i_month;
+			}
+
 			get_atmo_api();
 			get_rte_api();
-			get_cnr_api();
+			//get_cnr_api();
+
+			
+
+
+			
+
+
 		}
 		
 	}, 10000)
@@ -1037,17 +1057,17 @@ function HomeSlider_slide_quiz(key,color,intro_anim,intro_audio,questions_select
 
 
 
-			if(questionEnded == false){
+			if(questionEnded == false){ // vérifier si le timer est toujours en cours (éviter de cliquer pendant l'anim false si l'utilisateur n'a pas cliqué)
 
-				if (counter < counter_max){
+				if (counter < counter_max){ // vérifier si c'était la dernière question
 					
-					questionEnd(this,function(){
+					questionEnd(this,function(){ // lancer le process lors d'une réponse de question
 						
-						questionRestart();
+						questionRestart(); // callback après que "questionEnd" ait fini : démarrer la question suivante  
 					});
 				}else{
-					questionEnd(this,function(){
-						questionScore();
+					questionEnd(this,function(){ // lancer le process lors d'une réponse de question
+						questionScore(); // callback après que "questionEnd" ait fini : afficher résultat car c'était la dernière question  
 					});
 				}
 			}
@@ -1112,11 +1132,13 @@ function HomeSlider_slide_quiz(key,color,intro_anim,intro_audio,questions_select
 		}
 
 		function questionEnd(that,callback){
+
+			// that = l'élément sur lequel on clique lorsqu'on répond
+
 			questionEnded = true;
 
 			let o = counter-1;
-					//let o = counter;
-					let reponse_ok = questions[questions_selection[o]].response_ok;
+			let reponse_ok = questions[questions_selection[o]].response_ok;
 					
 					// ANIMATION SELON LA REPONSE 
 					if(that=="pause"){
@@ -1124,26 +1146,38 @@ function HomeSlider_slide_quiz(key,color,intro_anim,intro_audio,questions_select
 					}else{
 
 
-						if($(that).hasClass(reponse_ok)){
+						if($(that).hasClass(reponse_ok)){ // si bonne réponse
 
-							$(that).addClass("click_anim").addClass("goodgood");
-							$(questions[questions_selection[o]].content.el).addClass("good");
-							$(questions[questions_selection[o]].quizAnim_img.el).attr("src",response__ok__anim);
-							quiz_good_sound.play();
+							$(that).addClass("click_anim").addClass("goodgood"); // changer aspect du bouton en correct
+							$(questions[questions_selection[o]].content.el).addClass("good"); // changer couleur de fond "vert"
 
-							$(questions[questions_selection[o]].quizResponseMessage.el).css("background","#59A535");
-							score++;
+							// reset apng anim good
+							let anim_src = response__ok__anim;
+							anim_src = anim_src+"?a="+Math.random();
+							
+
+							$(questions[questions_selection[o]].quizAnim_img.el).attr("src",anim_src ); // lancer animation Good
+							quiz_good_sound.play(); // activer son Good
+
+							$(questions[questions_selection[o]].quizResponseMessage.el).css("background","#59A535"); // couleur fond message
+							score++; // ajouter +1 au score
 
 						}else {
 
-							$(that).addClass("click_anim").addClass("bad");
+							$(that).addClass("click_anim").addClass("bad"); // changer aspect du bouton en mauvais
 						//$(questions[questions_selection[o]].quizResponses_wrap.el).find("."+reponse_ok).addClass("good");
 
-						$(questions[questions_selection[o]].content.el).addClass("bad");
-						$(questions[questions_selection[o]].quizAnim_img.el).attr("src",response__false__anim);
-						quiz_bad_sound.play();
+						$(questions[questions_selection[o]].content.el).addClass("bad"); // changer couleur de fond "rouge"
 
-						$(questions[questions_selection[o]].quizResponseMessage.el).css("background","#CD0000");
+						// reset apng anim false
+						let anim_src = response__false__anim;
+						anim_src = anim_src+"?a="+Math.random();
+							
+
+						$(questions[questions_selection[o]].quizAnim_img.el).attr("src",anim_src); //lancer animation Bad
+						quiz_bad_sound.play(); //lancer son Bad
+
+						$(questions[questions_selection[o]].quizResponseMessage.el).css("background","#CD0000"); // couleur fond message
 						
 
 
@@ -1197,7 +1231,7 @@ function HomeSlider_slide_quiz(key,color,intro_anim,intro_audio,questions_select
 
 		function questionScore(){
 
-			scoreOn = true;
+			scoreOn = true; // score window active
 			$(timeBar.el).css("width","0");
 			quiz_timer = 0;
 			quiz_timer_sound.pause();
@@ -1553,6 +1587,10 @@ function HomeSlider_slide_data_0(key,color,type,title,type_en,title_en,data_num,
 			$(good_sound.el).attr("src",sounds[5]);
 		
 		}
+
+		$(title_type.el).text("info "+ i_day+"/"+i_month+"/"+i_year);
+
+
 	}
 	this.data_apply();
 
@@ -1929,7 +1967,10 @@ function HomeSlider_slide_data_1(key,color,type,title,type_en,title_en,data_num,
 
 		let resultAnim;
 		let en_clean;
+	
 	this.data_apply =function(){
+
+		$(title_type.el).text("info "+ i_day+"/"+i_month+"/"+i_year);
 
 		en_clean = en_5+en_6+en_7+en_8;
 		en_clean = Math.round(en_clean * 100) / 100;
