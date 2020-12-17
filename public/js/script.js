@@ -440,13 +440,13 @@ $( document ).ready(function() {
 ----------------------------------------------------------------*/
 $(".app-on").click(function(){
 
-	 /*if(!screen_state) {
+	 if(!screen_state) {
 	 	start_decount();
 		screen__on();
   	} else {
 		screen__off();
 		
-  	}*/
+  	}
 });
 
 /*----------------------------------------------------------------
@@ -495,7 +495,7 @@ function screen__on(){
 		$(".black-screen").addClass("off");
 		$(".container").removeClass("off");
 		presence = 1;
-	},3000);
+	}, 150);
 }
 
 /*----------------------------------------------------------------
@@ -511,7 +511,6 @@ function start_decount(){
 
 			screen__off();
 			presence = 0;
-
 	}, duree_timer_presence * 1000); // La durée est déclarée en seconde, il faut en faire des millisec.
 }
 
