@@ -495,7 +495,7 @@ function screen__on(){
 		$(".black-screen").addClass("off");
 		$(".container").removeClass("off");
 		presence = 1;
-	}, 150);
+	}, 3000);
 }
 
 /*----------------------------------------------------------------
