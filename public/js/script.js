@@ -54,6 +54,7 @@ $(function(){
 	var pll_couleur;
 	var pll_qualificatif;
 	var pll_valeur;
+	var pll_sous_indices;
 
 	var dt_1;
 	var dt_2;
@@ -336,12 +337,14 @@ function init(callback){
 			----------------------------------------------------------------*/
 			get_atmo_api = function(){
 				socket.emit('ask_for_atmo_data', function(data){
-					pll_d = data.indices.data[1];
-					pll_date = pll_d.date || "";
+					console.log(data);
+					pll_d = data.data[0];
+					pll_date = pll_d.date_calcul || "";
 					pll_couleur = pll_d.couleur_html || "#ffffff";
 					pll_qualificatif = pll_d.qualificatif || "";
-					pll_valeur = pll_d.valeur || 0;
-					homeSlider_data_0.data_apply(pll_valeur,pll_date);// attribuer data to slide 
+					pll_valeur = pll_d.indice || 0;
+					pll_sous_indices = pll_d.sous_indices;
+					homeSlider_data_0.data_apply(pll_valeur,pll_date,pll_sous_indices);// attribuer data to slide 
 				});
 			}
 	
@@ -1513,100 +1516,40 @@ function HomeSlider_slide_data_0(key,color,type,title,type_en,title_en,data_num,
 
 
 
-	this.data_apply = function(pll_valeur,pll_date){
+	this.data_apply = function(pll_valeur,pll_date, pll_sous_indices){
+		console.log("data_apply : val = " + pll_valeur);
+		// Calculer un indice entre 0 et 100 à partir de la moyenne des sous indices
+		var indice_moyen = 0;
+		var nb_indices = 0;
+		$.each(pll_sous_indices, function(indx, polluant){
+			console.log(polluant);
+			indice_moyen += polluant.indice / 6;		
+			nb_indices++;
+		});
+		pll_val_max = Math.round(100 * indice_moyen / nb_indices);
 
-		pll_val_max = Math.round(pll_valeur);
-		//pll_val_max = 27;
+                // Affichage vidéo anooki et qualificatif pollution
+		if(lang="fr"){
+                	$(title_qualificatif.el).text(pll_quali_fr[pll_valeur]);
+                }else if (lang="en"){
+                	$(title_qualificatif.el).text(pll_quali_en[pll_valeur]);
+                }
 
-		if (pll_val_max >0 && pll_val_max <= 16){
-
-			pll_quali_in = 0;
-			if(lang="fr"){
-				$(title_qualificatif.el).text(pll_quali_fr[pll_quali_in]);
-								
-			}else if (lang="en"){
-				$(title_qualificatif.el).text(pll_quali_en[pll_quali_in]);
-			}
-
-			$(good_anim_img.el).attr("src",videos[0]);
-			$(good_sound.el).attr("src",sounds[0]);
-
-		}else if (pll_val_max >16 && pll_val_max <= 33){
-
-			pll_quali_in = 1;
-			if(lang="fr"){
-				$(title_qualificatif.el).text(pll_quali_fr[pll_quali_in]);
-								
-			}else if (lang="en"){
-				$(title_qualificatif.el).text(pll_quali_en[pll_quali_in]);
-			}
-
-			$(good_anim_img.el).attr("src",videos[1]);
-			$(good_sound.el).attr("src",sounds[1]);
-
-		}else if (pll_val_max >33 && pll_val_max <= 50){
-			pll_quali_in = 2;
-			if(lang="fr"){
-				$(title_qualificatif.el).text(pll_quali_fr[pll_quali_in]);
-								
-			}else if (lang="en"){
-				$(title_qualificatif.el).text(pll_quali_en[pll_quali_in]);
-			}
-
-			$(good_anim_img.el).attr("src",videos[2]);
-			$(good_sound.el).attr("src",sounds[2]);
-		
-		}else if (pll_val_max >50 && pll_val_max <= 67){
-			pll_quali_in = 3;
-			if(lang="fr"){
-				$(title_qualificatif.el).text(pll_quali_fr[pll_quali_in]);
-								
-			}else if (lang="en"){
-				$(title_qualificatif.el).text(pll_quali_en[pll_quali_in]);
-			}
-
-			$(good_anim_img.el).attr("src",videos[3]);
-			$(good_sound.el).attr("src",sounds[3]);
-		
-		}else if (pll_val_max >67 && pll_val_max <= 85){
-			pll_quali_in = 4;
-			if(lang="fr"){
-				$(title_qualificatif.el).text(pll_quali_fr[pll_quali_in]);
-								
-			}else if (lang="en"){
-				$(title_qualificatif.el).text(pll_quali_en[pll_quali_in]);
-			}
-
-			$(good_anim_img.el).attr("src",videos[4]);
-			$(good_sound.el).attr("src",sounds[4]);
-		
-		}else if (pll_val_max >85) {
-			pll_quali_in = 5;
-			if(lang="fr"){
-				$(title_qualificatif.el).text(pll_quali_fr[pll_quali_in]);
-								
-			}else if (lang="en"){
-				$(title_qualificatif.el).text(pll_quali_en[pll_quali_in]);
-			}
-
-			$(good_anim_img.el).attr("src",videos[5]);
-			$(good_sound.el).attr("src",sounds[5]);
-		
-		}
-
+              	$(good_anim_img.el).attr("src",videos[pll_valeur]);
+                $(good_sound.el).attr("src",sounds[pll_valeur]);
+	
 		$(title_type.el).text("info "+ i_day+"/"+i_month+"/"+i_year);
-
 
 	}
 	this.data_apply();
 
 	this.french_mode = function(){
-		$(title_qualificatif.el).text(pll_quali_fr[pll_quali_in]);
+		$(title_qualificatif.el).text(pll_quali_fr[pll_valeur]);
 		$(title_name.el).text(title);
 	}
 
 	this.english_mode = function(){
-		$(title_qualificatif.el).text(pll_quali_en[pll_quali_in]);
+		$(title_qualificatif.el).text(pll_quali_en[pll_valeur]);
 		$(title_name.el).text(title_en);
 	}
 	
@@ -1673,79 +1616,6 @@ function HomeSlider_slide_data_0(key,color,type,title,type_en,title_en,data_num,
 						}
 					$(backcol_6.el).css("opacity",op[5]);*/
 				}
-
-				
-					/*if(val>0 && val<=11){
-
-
-						if(op[0]>0){
-							op[0]=op[0]-0.1;
-						}
-						
-						$(backcol_1.el).css("opacity",op[0]);
-					
-
-					}if(val>11 && val<=21){
-
-						if(op[1]>0){
-							op[1]=op[1]-0.1;
-						}
-						$(backcol_2.el).css("opacity",op[1]);
-
-					}if(val>21 && val<=31){
-
-						if(op[2]>0){
-							op[2]=op[2]-0.1;
-						}
-						$(backcol_3.el).css("opacity",op[2]);
-
-					}if(val>31 && val<=41){
-
-						if(op[3]>0){
-							op[3]=op[3]-0.1;
-						}
-						$(backcol_4.el).css("opacity",op[3]);
-
-					}if(val>41 && val<=51){
-
-						if(op[4]>0){
-							op[4]=op[4]-0.1;
-						}
-						$(backcol_5.el).css("opacity",op[4]);
-
-					}if(val>51 && val<=61){
-
-						if(op[5]>0){
-							op[5]=op[5]-0.1;
-						}
-						$(backcol_6.el).css("opacity",op[5]);
-
-					}if(val>61 && val<=71){
-
-						if(op[6]>0){
-							op[6]=op[6]-0.1;
-						}
-						$(backcol_7.el).css("opacity",op[6]);
-
-					}if(val>71 && val<=81){
-
-						if(op[7]>0){
-							op[7]=op[7]-0.1;
-						}
-						$(backcol_8.el).css("opacity",op[7]);
-
-					}if(val>81 && val<=91){
-
-						if(op[8]>0){
-							op[8]=op[8]-0.1;
-						}
-						$(backcol_9.el).css("opacity",op[8]);
-
-					}*/
-
-
-
-
 
 			}else{
 				clearInterval(val_int);

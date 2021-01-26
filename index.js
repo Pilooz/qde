@@ -138,13 +138,16 @@ io.on('connection', function (socket) {
   //
   // Récupération des données ATMO
   //
+  // Au 21 décembre 2020, l'API change de format.
+  // -> les résultats sont plus complets, l'url change et la structure de la réponse aussi.
+  //
   socket.on('ask_for_atmo_data', function(send_response) {
-    var api_response = {};
-
+    var api_response = {}; 
+    console.log(conf.api_tokens.atmo.url + conf.api_tokens.atmo.key);
     getJSON( conf.api_tokens.atmo.url + conf.api_tokens.atmo.key )
     .then(function(api_response) {
       // Recording the file into public/data, for caching purpose
-      cache_data('atmo', JSON.stringify(api_response));
+      cache_data('atmo', JSON.stringify(api_response, null, 2));
       send_response(api_response);
     }).catch(function(error) {
       console.log(error);
