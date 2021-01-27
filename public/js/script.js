@@ -1439,8 +1439,9 @@ function HomeSlider_slide_data_0(key,color,type,title,type_en,title_en,data_num,
 	let data_timer = 0;
 	let timer_content;
 
-	let pll_quali_fr = ["Très bon","Bon","moyen","Médiocre","Mauvais","Très mauvais"];
-	let pll_quali_en = ["Very good","Good","middle","Poor","Bad","Very bad"];
+	//let pll_quali_fr = ["Très bon","Bon","moyen","Médiocre","Mauvais","Très mauvais"];
+	let pll_quali_fr = ["Indisponble","Bon","Moyen","Dégradé", "Mauvais","Très mauvais", "Extrêmement mauvais"];
+	let pll_quali_en = ["Not available","Good","Middle","Poor","Bad","Very bad", "Extremly bad"];
 	let pll_quali_in;
 	
 
